@@ -34,10 +34,12 @@ export default async function LessonPage({ params }: { params: Promise<{ moduleS
             <div className="flex flex-wrap items-center gap-4 text-[0.68rem] font-extrabold tracking-[0.08em] text-[var(--ink-soft)]/60 uppercase"><span>{lesson.kind}</span><span className="inline-flex items-center gap-1"><Clock3 size={13} /> {lesson.estimatedMinutes} min</span>{lesson.isComplete && <span className="inline-flex items-center gap-1 text-[var(--forest)]"><Check size={13} /> Complete</span>}</div>
             {embedUrl && <div className="mt-8 aspect-video overflow-hidden rounded-2xl bg-black shadow-xl"><iframe src={embedUrl} title={lesson.title} className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen /></div>}
             <div className="mt-9"><LessonBody body={lesson.body} /></div>
-            {lesson.resourceUrl && <a href={lesson.resourceUrl} target="_blank" rel="noreferrer" className="button-secondary mt-6"><Download size={16} /> Open lesson resource</a>}
-            {lesson.kind === "ASSIGNMENT" && <AssignmentForm lessonId={lesson.id} />}
+            {lesson.resourceUrl && <a href={lesson.resourceUrl} target="_blank" rel="noreferrer" className="button-secondary mt-6"><Download size={16} /> Open source manual</a>}
+            {lesson.kind === "ASSIGNMENT" && !lesson.isComplete && <AssignmentForm lessonId={lesson.id} />}
             <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--line)] pt-7">
-              {lesson.kind !== "ASSIGNMENT" && !lesson.isComplete ? <form action={completeAction}><button className="button-primary"><Check size={17} /> Mark complete</button></form> : <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--forest)]"><Check size={16} /> Lesson complete</span>}
+              {!lesson.isComplete && lesson.kind !== "ASSIGNMENT" && <form action={completeAction}><button className="button-primary"><Check size={17} /> Mark complete</button></form>}
+              {!lesson.isComplete && lesson.kind === "ASSIGNMENT" && <span className="text-sm font-extrabold text-[var(--ink-soft)]">Submit your response above to complete this lesson.</span>}
+              {lesson.isComplete && <span className="inline-flex items-center gap-2 text-sm font-extrabold text-[var(--forest)]"><Check size={16} /> Lesson complete</span>}
               {lesson.isComplete && <Link href={nextHref} className="button-secondary">{nextLesson ? "Next lesson" : "Module checkpoint"} <ArrowRight size={16} /></Link>}
             </div>
           </div>

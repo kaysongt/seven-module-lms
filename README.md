@@ -1,6 +1,6 @@
 # Seven-Module LMS
 
-A production-oriented learning platform for a focused seven-module program. The working brand is **KingsWord Learning / The Formation Path**; program copy, modules, lessons, assessments, release dates, and publication status can be managed from the staff area.
+A production-oriented learning platform for **KingsWord Training Institute's Believers Training** program. Program copy, modules, lessons, assessments, release dates, and publication status can be managed from the staff area.
 
 ## What is included
 
@@ -45,7 +45,15 @@ Configure `.env` before seeding:
 - `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD`: optional first administrator
 - `SEED_STUDENT_EMAIL` and `SEED_STUDENT_PASSWORD`: optional local demo student; omit these in production
 
-The seed creates the program, exactly seven modules, two working lessons per module, and three checkpoint questions per module. Seed lesson copy explicitly identifies itself as working material. Replace it with approved curriculum before accepting real students.
+The seed creates the complete approved curriculum from the seven BT student manuals:
+
+- Seven ordered modules
+- Ten reading lessons per module
+- One review and personal integration assignment per module
+- Five manual-specific checkpoint questions per module, with an 80% pass mark
+- A source-manual link on every lesson
+
+The normalized curriculum is stored in `src/content/manual-curriculum.json`. Checkpoint questions are stored in `src/content/manual-assessments.ts`.
 
 ## Staff workflow
 
@@ -73,7 +81,7 @@ npm run build
 
 - Email delivery is not connected. Staff copy the secure activation link from the admissions queue.
 - Payment is not implemented because no tuition, currency, refund, or enrollment-after-payment policy was provided. Admissions currently activate enrollment manually.
-- The working brand and seed curriculum are editable foundations, not approved final content.
+- Curriculum remains editable by administrators, but reseeding restores the approved manual-backed source content.
 - The system supports one program with exactly seven ordered modules.
 
 See [DEPLOY.md](./DEPLOY.md) for the production checklist.

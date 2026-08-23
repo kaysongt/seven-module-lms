@@ -5,7 +5,7 @@ import { PublicNav } from "@/components/public-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { getPublicProgram } from "@/lib/public-program";
 
-export const metadata: Metadata = { title: "Curriculum", description: "Explore the seven-module Formation Path curriculum." };
+export const metadata: Metadata = { title: "Curriculum", description: "Explore all seven Believers Training modules." };
 
 export const dynamic = "force-dynamic";
 
@@ -16,10 +16,10 @@ export default async function CurriculumPage() {
       <PublicNav />
       <section className="border-b border-[var(--line)] py-20 md:py-28">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
-          <span className="eyebrow">Seven connected modules</span>
+          <span className="eyebrow">Believers Training curriculum</span>
           <div>
-            <h1 className="display text-6xl leading-[0.9] font-medium tracking-[-0.05em] md:text-8xl">A path you can see from beginning to end.</h1>
-            <p className="mt-7 max-w-2xl text-base leading-8 text-[var(--ink-soft)]">Each module builds on the one before it. Complete the lessons and checkpoint to open the next stage.</p>
+            <h1 className="display text-6xl leading-[0.9] font-medium tracking-[-0.05em] md:text-8xl">Seven modules. One grounded Christian life.</h1>
+            <p className="mt-7 max-w-2xl text-base leading-8 text-[var(--ink-soft)]">Move from New Covenant foundations to identity, the Word, the Holy Spirit, prayer, purpose, and missional stewardship. Complete each lesson, integration response, and checkpoint to continue.</p>
           </div>
         </div>
       </section>

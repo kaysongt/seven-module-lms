@@ -5,8 +5,9 @@ Deploy this LMS as a **new Vercel project**. Do not attach it to or overwrite an
 ## 1. Approve launch content
 
 - Confirm the program name, organization name, support email, and domain.
-- Replace every working lesson, checkpoint question, objective, and module description.
-- Add approved video and resource URLs.
+- Review the seven imported BT manuals, 77 lessons, and 35 checkpoint questions in the admin curriculum area.
+- Confirm that every lesson opens its approved Google Docs source manual.
+- Add approved video URLs when the recordings are ready.
 - Set module release dates and verify publication states.
 - Confirm the pass mark and certificate wording.
 
@@ -34,7 +35,7 @@ To create the first production administrator, temporarily set `SEED_ADMIN_EMAIL`
 npm run db:seed
 ```
 
-Remove the seed password from local shell history and deployment environment settings after the administrator can sign in. Running the seed again updates working seed records, so do not use it after staff begin editing live curriculum.
+Remove the seed password from local shell history and deployment environment settings after the administrator can sign in. Running the seed again restores the approved manual-backed curriculum, so do not use it after staff begin making intentional live edits unless those edits should be overwritten.
 
 ## 3. Create the Vercel project
 

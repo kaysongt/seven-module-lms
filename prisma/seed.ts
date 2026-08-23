@@ -1,35 +1,10 @@
 /* eslint-disable @next/next/no-assign-module-variable */
 import { PrismaClient } from "@prisma/client";
+import { MANUAL_ASSESSMENTS } from "../src/content/manual-assessments";
 import { hashPassword } from "../src/lib/password";
 import { SEED_MODULES, SITE_CONFIG } from "../src/lib/site-config";
 
 const db = new PrismaClient();
-
-function assessmentQuestions(moduleTitle: string) {
-  return [
-    {
-      order: 1,
-      prompt: `What is the best first response to the central practice in ${moduleTitle}?`,
-      options: ["Move quickly without reflection", "Observe carefully and name the purpose", "Wait for someone else to decide", "Focus only on appearing confident"],
-      correctIndex: 1,
-      explanation: "The course consistently begins with careful observation and a clear purpose before action.",
-    },
-    {
-      order: 2,
-      prompt: "Which habit best supports durable learning?",
-      options: ["One intense session with no review", "Collecting notes without application", "A repeatable rhythm of learning, practice, and reflection", "Avoiding questions until the end"],
-      correctIndex: 2,
-      explanation: "Durable learning depends on a sustainable cycle of learning, practice, and honest reflection.",
-    },
-    {
-      order: 3,
-      prompt: "What should happen after a practice attempt?",
-      options: ["Hide what did not work", "Review the evidence and choose the next adjustment", "Repeat it without reflection", "Judge success only by intention"],
-      correctIndex: 1,
-      explanation: "Reflective review uses evidence to identify a concrete next adjustment.",
-    },
-  ];
-}
 
 async function main() {
   const program = await db.program.upsert({
@@ -66,6 +41,7 @@ async function main() {
         summary: moduleSeed.summary,
         description: moduleSeed.description,
         objectives: moduleSeed.objectives,
+        estimatedMinutes: moduleSeed.lessons.reduce((total, lesson) => total + lesson.estimatedMinutes, 0),
       },
       create: {
         programId: program.id,
@@ -96,17 +72,24 @@ async function main() {
 
     const assessment = await db.assessment.upsert({
       where: { moduleId: module.id },
-      update: { passMark: program.passMark },
+      update: {
+        title: `${moduleSeed.title} Checkpoint`,
+        instructions: "Answer all five questions. A score of 80% is required, and you may retake the checkpoint after reviewing the module.",
+        passMark: program.passMark,
+        status: "PUBLISHED",
+      },
       create: {
         moduleId: module.id,
         title: `${moduleSeed.title} Checkpoint`,
-        instructions: "Answer each question. You may retake this checkpoint after reviewing the module.",
+        instructions: "Answer all five questions. A score of 80% is required, and you may retake the checkpoint after reviewing the module.",
         passMark: program.passMark,
         status: "PUBLISHED",
       },
     });
 
-    for (const question of assessmentQuestions(moduleSeed.title)) {
+    const questions = MANUAL_ASSESSMENTS[moduleSeed.order];
+    if (!questions) throw new Error(`Missing assessment questions for module ${moduleSeed.order}`);
+    for (const question of questions) {
       await db.assessmentQuestion.upsert({
         where: { assessmentId_order: { assessmentId: assessment.id, order: question.order } },
         update: question,

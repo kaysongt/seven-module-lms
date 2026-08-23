@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ApplicationForm } from "@/app/apply/application-form";
 import { Brand } from "@/components/brand";
 
-export const metadata: Metadata = { title: "Apply", description: "Apply for the seven-module Formation Path." };
+export const metadata: Metadata = { title: "Apply", description: "Apply for the seven-module Believers Training program." };
 
 export default function ApplyPage() {
   return (
