@@ -1,0 +1,929 @@
+<title>KingsWord Chicago</title>
+<style>
+  @font-face {
+    font-family: "Fraunces";
+    src: url("{{FONT_FRAUNCES}}") format("woff2-variations");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Manrope";
+    src: url("{{FONT_MANROPE}}") format("woff2-variations");
+    font-weight: 200 800;
+    font-display: swap;
+  }
+
+  /* ---- Tokens: light is the default ground -------------------------- */
+  :root {
+    --midnight: #0a0f24;
+    --indigo: #16204a;
+    --gold: #d9963a;
+    --gold-lt: #f0c579;
+
+    --bg: #f5f2ec;
+    --bg-raised: #ffffff;
+    --bg-sunk: #ebe6dc;
+    --text: #171c30;
+    --text-soft: #3a4160;
+    --text-mute: #6b7191;
+    --rule: #d9d3c6;
+    --accent: #a86a16;
+    --accent-on-bg: #8f5a11;
+    --shadow: 12px 28px 60px -32px rgba(10, 15, 36, 0.45);
+
+    /* Bands that are always dark by design, like a photograph. */
+    --dk-bg: #0a0f24;
+    --dk-raised: #16204a;
+    --dk-text: #f2efe8;
+    --dk-soft: #b9bed4;
+    --dk-rule: rgba(240, 197, 121, 0.22);
+
+    --measure: 64ch;
+    --gutter: clamp(1.25rem, 5vw, 5.5rem);
+    --band: clamp(4.5rem, 9vw, 8.5rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c1129;
+      --bg-raised: #141b3a;
+      --bg-sunk: #080c1e;
+      --text: #f2efe8;
+      --text-soft: #c3c8dc;
+      --text-mute: #8d94b3;
+      --rule: #26305a;
+      --accent: #f0c579;
+      --accent-on-bg: #f0c579;
+      --shadow: 12px 28px 60px -32px rgba(0, 0, 0, 0.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c1129;
+    --bg-raised: #141b3a;
+    --bg-sunk: #080c1e;
+    --text: #f2efe8;
+    --text-soft: #c3c8dc;
+    --text-mute: #8d94b3;
+    --rule: #26305a;
+    --accent: #f0c579;
+    --accent-on-bg: #f0c579;
+    --shadow: 12px 28px 60px -32px rgba(0, 0, 0, 0.8);
+  }
+
+  /* ---- Base --------------------------------------------------------- */
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.09rem);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-variation-settings: "opsz" 108, "SOFT" 0, "WONK" 1;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p { margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  :focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .shell {
+    width: min(100%, 1280px);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .lede {
+    font-size: clamp(1.09rem, 1rem + 0.5vw, 1.3rem);
+    line-height: 1.6;
+    color: var(--text-soft);
+    max-width: var(--measure);
+  }
+
+  /* ---- Buttons ------------------------------------------------------ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.92rem 1.7rem;
+    font-size: 0.83rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn--gold { background: var(--gold); color: #1b1200; }
+  .btn--gold:hover { background: var(--gold-lt); }
+  .btn--ghost { border-color: rgba(242, 239, 232, 0.4); color: #f2efe8; }
+  .btn--ghost:hover { background: rgba(242, 239, 232, 0.1); }
+  .btn--ink {
+    border-color: var(--text);
+    color: var(--text);
+  }
+  .btn--ink:hover { background: var(--text); color: var(--bg); }
+
+  /* ---- Header ------------------------------------------------------- */
+  .masthead {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 20;
+    padding-block: 1.4rem;
+  }
+  .masthead__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+  }
+  .masthead__logo { flex: none; }
+  .masthead__logo img { width: clamp(104px, 11vw, 138px); }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.2vw, 2.1rem);
+    margin-left: auto;
+    list-style: none;
+    padding: 0;
+  }
+  .nav a {
+    font-size: 0.83rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: rgba(242, 239, 232, 0.86);
+    transition: color 0.18s ease;
+  }
+  .nav a:hover { color: var(--gold-lt); }
+
+  /* Small screens swap the inline links for a disclosure panel. Using
+     <details> keeps it keyboard-operable and working without JS. */
+  .nav__menu { display: none; }
+  @media (max-width: 860px) {
+    .nav li:not(.nav__cta):not(.nav__menu) { display: none; }
+    .nav__menu { display: block; }
+  }
+  .mnav > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgba(242, 239, 232, 0.4);
+    border-radius: 2px;
+    color: #f2efe8;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .mnav > summary::-webkit-details-marker { display: none; }
+  .mnav > summary::marker { content: ""; }
+  .mnav[open] > summary { background: rgba(242, 239, 232, 0.12); }
+  .mnav__panel {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: calc(100% + 0.85rem);
+    background: var(--midnight);
+    border: 1px solid rgba(240, 197, 121, 0.28);
+    border-radius: 3px;
+    padding: 0.6rem;
+    display: grid;
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.7);
+  }
+  .mnav__panel a {
+    padding: 0.85rem 1rem;
+    border-radius: 2px;
+    color: rgba(242, 239, 232, 0.9);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .mnav__panel a:hover { background: rgba(242, 239, 232, 0.1); color: var(--gold-lt); }
+
+  /* ---- Hero --------------------------------------------------------- */
+  .hero {
+    position: relative;
+    background: var(--midnight);
+    color: #f2efe8;
+    isolation: isolate;
+    padding-block: clamp(9rem, 19vw, 15rem) clamp(11rem, 17vw, 14rem);
+  }
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+  }
+  .hero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 34%;
+    /* The source frame is a blue-lit sanctuary and reads almost black at full
+       bleed; lift it so the congregation stays legible under the scrim. */
+    filter: brightness(1.5) saturate(1.12) contrast(0.96);
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(104deg, rgba(10, 15, 36, 0.88) 0%, rgba(10, 15, 36, 0.5) 54%, rgba(10, 15, 36, 0.12) 100%),
+      linear-gradient(to top, rgba(10, 15, 36, 0.96) 0%, rgba(10, 15, 36, 0) 40%);
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: end;
+  }
+  @media (max-width: 900px) {
+    .hero__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  .hero .eyebrow { color: var(--gold-lt); }
+  .hero__title {
+    font-size: clamp(3.1rem, 8.6vw, 7rem);
+    font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1;
+    margin-block: 1.1rem 1.4rem;
+  }
+  .hero__title em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 8, "WONK" 1;
+    color: var(--gold-lt);
+  }
+  .hero__lede {
+    color: rgba(242, 239, 232, 0.84);
+    max-width: 48ch;
+    font-size: clamp(1.06rem, 1rem + 0.42vw, 1.26rem);
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2.2rem;
+  }
+  .hero__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 0.4rem;
+  }
+  .hero__stat {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.1rem;
+  }
+  .hero__stat dt {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(242, 239, 232, 0.62);
+  }
+  .hero__stat dd {
+    margin: 0.15rem 0 0;
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 60;
+    font-size: 1.32rem;
+    font-weight: 600;
+  }
+
+  /* ---- Service card, overlapping the hero edge ---------------------- */
+  .times {
+    position: relative;
+    z-index: 5;
+    margin-top: clamp(-7.5rem, -9vw, -5.5rem);
+  }
+  .times__card {
+    background: var(--bg-raised);
+    box-shadow: var(--shadow);
+    border-radius: 3px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 820px) {
+    .times__card { grid-template-columns: minmax(0, 1fr); }
+  }
+  .times__cell {
+    padding: clamp(1.7rem, 3vw, 2.6rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    border-right: 1px solid var(--rule);
+  }
+  .times__cell:last-child { border-right: 0; }
+  @media (max-width: 820px) {
+    .times__cell {
+      border-right: 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .times__cell:last-child { border-bottom: 0; }
+  }
+  .times__cell .eyebrow { color: var(--accent-on-bg); }
+  .times__when {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 90, "WONK" 1;
+    font-size: clamp(1.85rem, 1.4rem + 1.5vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .times__note {
+    color: var(--text-mute);
+    font-size: 0.94rem;
+  }
+  .times__link {
+    margin-top: 0.35rem;
+    font-size: 0.83rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent-on-bg);
+    text-decoration: none;
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+  }
+  .times__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---- Generic band ------------------------------------------------- */
+  .band { padding-block: var(--band); }
+  .band--sunk { background: var(--bg-sunk); }
+  .band--dark {
+    background: var(--dk-bg);
+    color: var(--dk-text);
+  }
+  .band--dark .eyebrow { color: var(--gold-lt); }
+  .band--dark .lede { color: var(--dk-soft); }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2.2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .split--flip > :first-child { order: 2; }
+  @media (max-width: 900px) {
+    .split { grid-template-columns: minmax(0, 1fr); }
+    .split--flip > :first-child { order: 0; }
+  }
+
+  .section-head { max-width: 46ch; }
+  .section-head .eyebrow { color: var(--accent-on-bg); }
+  .section-head h2 {
+    font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.5rem);
+    margin-block: 0.85rem 1.1rem;
+  }
+
+  .figure {
+    position: relative;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .figure img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---- Mission quote ------------------------------------------------ */
+  .creed {
+    border-top: 1px solid var(--dk-rule);
+    border-bottom: 1px solid var(--dk-rule);
+    padding-block: clamp(2.4rem, 5vw, 3.6rem);
+    margin-top: clamp(1.8rem, 3vw, 2.4rem);
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(1.6rem, 5vw, 4rem);
+    align-items: end;
+  }
+  @media (max-width: 900px) {
+    .creed { grid-template-columns: minmax(0, 1fr); }
+  }
+  .creed blockquote {
+    margin: 0;
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 120, "SOFT" 6, "WONK" 1;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 1.05rem + 2vw, 2.55rem);
+    line-height: 1.22;
+    letter-spacing: -0.018em;
+    max-width: 26ch;
+  }
+  .creed__side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-bottom: 0.3rem;
+  }
+  .creed__side p { color: var(--dk-soft); max-width: 34ch; }
+  .creed__attr {
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+  }
+
+  /* ---- Involvement rail --------------------------------------------- */
+  .rail {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px;
+    margin-top: clamp(2.4rem, 5vw, 3.6rem);
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .path {
+    background: var(--bg-raised);
+    padding: clamp(2rem, 3vw, 2.9rem) clamp(1.7rem, 2.4vw, 2.3rem) clamp(1.8rem, 2.6vw, 2.4rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 17.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s ease;
+  }
+  .path:hover { background: var(--bg-sunk); }
+  .path h3 {
+    font-size: clamp(1.42rem, 1.2rem + 0.7vw, 1.72rem);
+    font-variation-settings: "opsz" 54, "WONK" 1;
+  }
+  .path p {
+    color: var(--text-soft);
+    font-size: 1rem;
+    line-height: 1.55;
+    flex: 1;
+  }
+  .path__go {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-on-bg);
+  }
+
+  /* ---- Training / LMS ----------------------------------------------- */
+  .modules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1.5rem 1.8rem;
+    margin-top: clamp(2.2rem, 4vw, 3rem);
+    list-style: none;
+    padding: 0;
+    counter-reset: mod;
+  }
+  .modules li {
+    counter-increment: mod;
+    border-top: 1px solid var(--dk-rule);
+    padding-top: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .modules li::before {
+    content: "Module " counter(mod);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .modules b {
+    font-family: "Fraunces", serif;
+    font-variation-settings: "opsz" 40, "WONK" 1;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  /* ---- Visit / contact ---------------------------------------------- */
+  .visit__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .visit__list li {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.05rem;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .visit__list li:first-child { border-top: 1px solid var(--rule); }
+  .visit__list dt,
+  .visit__key {
+    font-size: 0.71rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+  .visit__val { font-weight: 600; }
+  .visit__val a { color: var(--accent-on-bg); text-underline-offset: 3px; }
+
+  /* ---- Footer ------------------------------------------------------- */
+  .foot {
+    background: var(--midnight);
+    color: rgba(242, 239, 232, 0.72);
+    padding-block: clamp(3.4rem, 6vw, 5rem) 2.2rem;
+    font-size: 0.93rem;
+  }
+  .foot__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-bottom: 2.6rem;
+    border-bottom: 1px solid rgba(242, 239, 232, 0.14);
+  }
+  @media (max-width: 780px) {
+    .foot__top { grid-template-columns: minmax(0, 1fr); }
+  }
+  .foot img { width: 132px; margin-bottom: 1.1rem; }
+  .foot h4 {
+    margin: 0 0 0.9rem;
+    font-size: 0.71rem;
+    font-weight: 800;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    font-family: "Manrope", sans-serif;
+  }
+  .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--gold-lt); text-decoration: underline; text-underline-offset: 3px; }
+  .foot__base {
+    padding-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.6rem;
+    justify-content: space-between;
+    font-size: 0.83rem;
+    color: rgba(242, 239, 232, 0.5);
+  }
+
+  /* ---- Motion ------------------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .btn:hover { transform: none; }
+    html { scroll-behavior: auto; }
+  }
+  html { scroll-behavior: smooth; }
+</style>
+
+<header class="masthead">
+  <div class="shell masthead__inner">
+    <a class="masthead__logo" href="#top" aria-label="KingsWord Chicago home">
+      <img src="{{IMG_LOGO_WHITE}}" alt="KingsWord Everywhere" />
+    </a>
+    <ul class="nav">
+      <li><a href="#welcome">About</a></li>
+      <li><a href="#involved">Get Involved</a></li>
+      <li><a href="#training">Believers Training</a></li>
+      <li><a href="#watch">Watch</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li class="nav__menu">
+        <details class="mnav">
+          <summary>
+            <svg width="15" height="11" viewBox="0 0 15 11" aria-hidden="true" fill="none">
+              <path d="M0 1h15M0 5.5h15M0 10h15" stroke="currentColor" stroke-width="1.6" />
+            </svg>
+            Menu
+          </summary>
+          <div class="mnav__panel">
+            <a href="#welcome">About</a>
+            <a href="#involved">Get Involved</a>
+            <a href="#training">Believers Training</a>
+            <a href="#watch">Watch</a>
+            <a href="#visit">Visit</a>
+          </div>
+        </details>
+      </li>
+      <li class="nav__cta"><a class="btn btn--gold" href="#give">Give</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero__media">
+      <img src="{{IMG_HERO}}" alt="The KingsWord Chicago congregation standing in worship" />
+    </div>
+    <div class="shell hero__grid">
+      <div>
+        <p class="eyebrow">The Apostolic Place &middot; Chicago</p>
+        <h1 class="hero__title">Come as you are.<br /><em>Leave built up.</em></h1>
+        <p class="hero__lede">
+          A Word-centered church on Chicago's West Side, raising people of purpose
+          through the teaching of Scripture and the ministry of the Holy Spirit.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--gold" href="#visit">Plan your visit</a>
+          <a class="btn btn--ghost" href="#watch">Watch a service</a>
+        </div>
+      </div>
+      <dl class="hero__aside">
+        <div class="hero__stat">
+          <dt>Where we meet</dt>
+          <dd>4250 W Walton St</dd>
+        </div>
+        <div class="hero__stat">
+          <dt>Global ministry</dt>
+          <dd>Africa &middot; Europe &middot; N. America</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="shell times" aria-label="Service times and location">
+    <div class="times__card">
+      <div class="times__cell">
+        <p class="eyebrow">Sunday Service</p>
+        <p class="times__when">10:00 AM</p>
+        <p class="times__note">Child care available at every Sunday service.</p>
+      </div>
+      <div class="times__cell">
+        <p class="eyebrow">Friday Service</p>
+        <p class="times__when">7:30 PM</p>
+        <p class="times__note">Midweek teaching, prayer and encounter.</p>
+      </div>
+      <div class="times__cell">
+        <p class="eyebrow">Find us</p>
+        <p class="times__when" style="font-size: 1.32rem; line-height: 1.3;">
+          4250 W Walton Street<br />Chicago, IL 60651
+        </p>
+        <p class="times__note">Free parking in the adjacent lot.</p>
+        <a class="times__link" href="https://maps.google.com/?q=4250+W+Walton+Street+Chicago+IL+60651">
+          Get directions &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="welcome">
+    <div class="shell split reveal">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Who we are</p>
+          <h2>A house that sends people out stronger than they came in.</h2>
+        </div>
+        <p class="lede">
+          KingsWord Chicago is the apostolic headquarters of a global ministry with
+          churches across Africa, Europe and North America. We are here to train,
+          equip and release God's children into their divine purpose &mdash; teaching
+          victory in life through the Word and the ministry of the Holy Spirit.
+        </p>
+        <p class="lede" style="margin-top: 1.1rem;">
+          Whether it is your first Sunday or your fifteenth year, there is a place
+          for you here, and a next step waiting when you are ready to take it.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--ink" href="#involved">Find your place</a>
+        </div>
+      </div>
+      <figure class="figure" style="margin: 0; aspect-ratio: 4 / 5;">
+        <img src="{{IMG_WELCOME}}" alt="Members of KingsWord Chicago together after a Sunday service" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="band band--dark">
+    <div class="shell reveal">
+      <p class="eyebrow">Our mission</p>
+      <div class="creed">
+        <blockquote>To proclaim Jesus, the Anointed One, and present Him clearly to a dying world.</blockquote>
+        <div class="creed__side">
+          <p>
+            That mission shapes everything here &mdash; what gets taught on a Sunday,
+            what we train people for, and who we send out.
+          </p>
+          <p class="creed__attr">Raising a supernatural army</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="involved">
+    <div class="shell reveal">
+      <div class="section-head">
+        <p class="eyebrow">Get involved</p>
+        <h2>Four ways to belong.</h2>
+        <p class="lede">Every one of them starts with a conversation, not a commitment.</p>
+      </div>
+      <div class="rail">
+        <a class="path" href="#visit">
+          <h3>Membership</h3>
+          <p>Understand the house, its vision and its doctrine, then formally make it yours.</p>
+          <span class="path__go">Join the next class &rarr;</span>
+        </a>
+        <a class="path" href="#visit">
+          <h3>Small Groups</h3>
+          <p>Meet through the week with a handful of people who will actually know your name.</p>
+          <span class="path__go">Find a group &rarr;</span>
+        </a>
+        <a class="path" href="#visit">
+          <h3>Units</h3>
+          <p>Serve on a team and help carry the weight of what happens every Sunday.</p>
+          <span class="path__go">Start serving &rarr;</span>
+        </a>
+        <a class="path" href="#visit">
+          <h3>Life Groups</h3>
+          <p>Gather by life stage &mdash; students, singles, couples, parents &mdash; for what you are walking through now.</p>
+          <span class="path__go">See the groups &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--dark" id="training">
+    <div class="shell split split--flip reveal">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Believers Training</p>
+          <h2>Seven modules. One settled believer.</h2>
+        </div>
+        <p class="lede">
+          Our discipleship track takes you through covenant, identity, Scripture, the
+          Holy Spirit, prayer, purpose and stewardship &mdash; seventy-seven lessons with
+          a checkpoint at the end of every module. Work at your own pace, online.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--gold" href="#training">Apply to the program</a>
+          <a class="btn btn--ghost" href="#training">See the curriculum</a>
+        </div>
+      </div>
+      <ul class="modules">
+        <li><b>The New Covenant</b></li>
+        <li><b>Identity in Christ</b></li>
+        <li><b>The Word: The Agent of Change</b></li>
+        <li><b>The Ministry of the Holy Spirit</b></li>
+        <li><b>Spiritual Authority and Prayer</b></li>
+        <li><b>Purpose and Calling</b></li>
+        <li><b>Stewardship and Missional Lifestyle</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band--sunk" id="watch">
+    <div class="shell split reveal">
+      <figure class="figure" style="margin: 0; aspect-ratio: 5 / 4;">
+        <img src="{{IMG_COMMUNITY}}" alt="Members greeting one another in the KingsWord Chicago sanctuary" />
+      </figure>
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Watch</p>
+          <h2>Can't be in the room? Be in the room.</h2>
+        </div>
+        <p class="lede">
+          Every service streams live, and the full archive stays available on demand.
+          If you are travelling, unwell, or still deciding whether to visit, start here.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--ink" href="https://www.youtube.com/@KingsWordEveryWhere">Watch on YouTube</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="visit">
+    <div class="shell split reveal">
+      <div>
+        <div class="section-head">
+          <p class="eyebrow">Plan a visit</p>
+          <h2>What Sunday actually looks like.</h2>
+        </div>
+        <p class="lede">
+          Park in the lot next to the building and come in through the main doors &mdash;
+          someone will be there to meet you. Services run about ninety minutes.
+          Children are welcome in the service or in KingsKids downstairs. Wear
+          whatever you own.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--ink" href="mailto:admin@kingsword.org">Tell us you're coming</a>
+        </div>
+      </div>
+      <dl class="visit__list">
+        <li>
+          <dt>Address</dt>
+          <dd class="visit__val" style="margin: 0;">4250 W Walton Street<br />Chicago, IL 60651</dd>
+        </li>
+        <li>
+          <dt>Phone</dt>
+          <dd class="visit__val" style="margin: 0;"><a href="tel:+17732778701">+1 773 277 8701</a></dd>
+        </li>
+        <li>
+          <dt>Email</dt>
+          <dd class="visit__val" style="margin: 0;"><a href="mailto:admin@kingsword.org">admin@kingsword.org</a></dd>
+        </li>
+        <li>
+          <dt>Children</dt>
+          <dd class="visit__val" style="margin: 0;">Child care at every Sunday service</dd>
+        </li>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="give">
+  <div class="shell">
+    <div class="foot__top">
+      <div>
+        <img src="{{IMG_LOGO_WHITE}}" alt="KingsWord Everywhere" />
+        <p style="max-width: 34ch;">
+          The apostolic headquarters of a global ministry with churches in Africa,
+          Europe and North America.
+        </p>
+        <p style="margin-top: 1.2rem;">
+          <a class="btn btn--gold" href="https://checkout.square.site/">Give online</a>
+        </p>
+      </div>
+      <div>
+        <h4>Gather</h4>
+        <ul>
+          <li><a href="#visit">Plan a visit</a></li>
+          <li><a href="#involved">Get involved</a></li>
+          <li><a href="#training">Believers Training</a></li>
+          <li><a href="#watch">Livestream</a></li>
+          <li><a href="#visit">Children's ministry</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="tel:+17732778701">+1 773 277 8701</a></li>
+          <li><a href="mailto:admin@kingsword.org">admin@kingsword.org</a></li>
+          <li><a href="https://www.youtube.com/@KingsWordEveryWhere">YouTube</a></li>
+          <li><a href="https://maps.google.com/?q=4250+W+Walton+Street+Chicago+IL+60651">4250 W Walton St</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>&copy; 2026 KingsWord Chicago. All rights reserved.</span>
+      <span>Sundays 10:00 AM &middot; Fridays 7:30 PM</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var targets = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window) ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      targets.forEach(function (el) { el.classList.add("is-in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px" });
+    targets.forEach(function (el) { io.observe(el); });
+  })();
+</script>
