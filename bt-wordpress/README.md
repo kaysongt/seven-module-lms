@@ -16,21 +16,34 @@ hand.
 |---|---|
 | Homepage design | **Built and reviewed** — `site/index.html` |
 | Content migration (7 modules / 77 lessons / 35 questions) | **Built and verified** — `content/bt-content-bundle.json` |
+| WordPress block theme | **Built, renders correctly** — `theme/kingsword-chicago/` |
 | LearnDash importer | Not started |
 | Admissions + activation-link plugin | Not started |
-| WordPress block theme | Not started |
 | Remaining pages (About, Children, Give, Contact) | Not started |
+
+The theme has been PHP-syntax-checked and its patterns rendered and reviewed
+via `tools/preview-theme.php`, but it has **not yet run inside WordPress**.
 
 ## Layout
 
 ```
+theme/kingsword-chicago/  The WordPress block theme
+  theme.json                Design tokens: palette, type scale, spacing, fonts
+  style.css                 Theme header + the bespoke layout CSS
+  functions.php             Asset loading, pattern category, image helper
+  templates/                front-page, index, page, single
+  parts/                    header, footer (thin wrappers around patterns)
+  patterns/                 masthead, home-hero, home-sections, site-footer
+  assets/                   Fonts, images, reveal.js + font licenses
 site/
-  index.src.html          Homepage template, with {{ASSET}} placeholders
-  index.html              Built, fully self-contained page (generated)
+  index.src.html          Standalone homepage template, {{ASSET}} placeholders
+  index.html              Built self-contained page (generated) — the design reference
+  theme-preview.html      Theme patterns rendered outside WordPress (generated)
   assets/                 Fonts, photography, logo variants + font licenses
 tools/
   build-content-bundle.mjs  Next.js curriculum -> WordPress-ready JSON
   build-site.mjs            Inlines fonts/images as data URIs -> index.html
+  preview-theme.php         Renders theme patterns with WordPress stubbed out
   shoot.mjs                 CDP screenshots; forces color scheme and page height
 content/
   bt-content-bundle.json    Generated content bundle (do not hand-edit)
@@ -40,12 +53,28 @@ content/
 
 ```bash
 node tools/build-content-bundle.mjs          # regenerate the content bundle
-node tools/build-site.mjs                    # rebuild the homepage
+node tools/build-site.mjs                    # rebuild the standalone homepage
+php tools/preview-theme.php > site/theme-preview.html   # render theme patterns
 node tools/shoot.mjs site/index.html out.png --scheme light --width 1440
 ```
 
 `build-content-bundle.mjs` reads from `C:/Users/kC/seven-module-lms` by default;
 override with `--src <path>`.
+
+PHP is not on `PATH`; use the binary Local ships:
+`~/AppData/Roaming/Local/lightning-services/php-8.2.29+0/bin/win64/php.exe`.
+Local also bundles WP-CLI at
+`~/AppData/Local/Programs/Local/resources/extraResources/bin/wp-cli/wp-cli.phar`.
+
+## Installing the theme in Local
+
+1. In the Local app, create a site (any name; PHP 8.2, MariaDB is fine).
+2. Note its path, e.g. `C:\Users\kC\Local Sites\<site>\app\public`.
+3. Copy or symlink `theme/kingsword-chicago` into that site's
+   `wp-content/themes/` directory.
+4. Activate **KingsWord Chicago** under Appearance → Themes.
+5. Under Settings → Reading, set the homepage to a static page so
+   `templates/front-page.html` is used.
 
 ## Design system
 
@@ -71,8 +100,11 @@ service times and address occupy the most prominent structural position on the
 page — the current site's single worst failure is that neither appears above the
 fold.
 
-Light and dark themes are both defined at token level and handle all three
-viewer states (explicit light, explicit dark, and unset/system).
+The standalone `site/index.html` defines both light and dark themes at token
+level, because a published artifact renders in the viewer's own theme. **The
+WordPress theme deliberately ships one committed light appearance** — a church
+homepage is a front door, not a reading app, and a single look is far less for a
+first-time WordPress maintainer to keep straight.
 
 ## What the redesign fixes
 
@@ -94,6 +126,11 @@ The current site's concrete problems, each addressed:
 
 ## Local constraint
 
-There is no PHP, WP-CLI, Composer, or Docker on this machine, so WordPress code
-here can be authored but not executed. Install Local by Flywheel or XAMPP before
-attempting to run the importer or plugins.
+Local by Flywheel is installed, which supplies PHP 8.2.29 and WP-CLI 2.12.0 (see
+paths above). There is still no PHP or `wp` on `PATH`, and no Composer or Docker.
+No Local site exists yet — creating one is a GUI step.
+
+`tools/preview-theme.php` exists because of this: it stubs the handful of
+WordPress functions the patterns call, so theme output can be rendered and
+reviewed without a running WordPress. It is a development aid only and
+WordPress never loads it.
