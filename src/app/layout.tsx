@@ -3,9 +3,10 @@ import "@fontsource-variable/fraunces";
 import "@fontsource-variable/manrope";
 import "./globals.css";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { getAppUrl } from "@/lib/app-url";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(getAppUrl()),
   title: {
     default: `${SITE_CONFIG.name} | ${SITE_CONFIG.organization}`,
     template: `%s | ${SITE_CONFIG.shortName}`,

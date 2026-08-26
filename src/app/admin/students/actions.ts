@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getAppUrl } from "@/lib/app-url";
 import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { createOpaqueToken, hashToken } from "@/lib/tokens";
@@ -25,7 +26,7 @@ export async function createNewInvitation(userId: string) {
     db.invitation.create({ data: { userId, tokenHash: hashToken(token), expiresAt: new Date(Date.now() + SITE_CONFIG.invitationDays * 24 * 60 * 60 * 1000) } }),
     db.auditLog.create({ data: { actorId: admin.id, action: "invitation.created", entityType: "User", entityId: userId } }),
   ]);
-  const appUrl = (process.env.APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const appUrl = getAppUrl();
   return { email: user.email, url: `${appUrl}/activate/${token}` };
 }
 
