@@ -65,7 +65,28 @@ function render_pattern( string $slug ): string {
 	return preg_replace( '/<!--\s*\/?wp:html\s*-->/', '', $html );
 }
 
-$sections = array( 'masthead', 'home-hero', 'home-sections', 'site-footer' );
+/**
+ * Which patterns make up each page, in render order.
+ *
+ * Mirrors what the matching template in theme/templates/ composes, so a preview
+ * shows the same sequence WordPress would. Add a page here when you add its
+ * template, or the preview and the real site drift apart.
+ */
+const PAGES = array(
+	'home'     => array( 'masthead', 'home-hero', 'home-sections', 'site-footer' ),
+	'about'    => array( 'masthead', 'page-about', 'site-footer' ),
+	'children' => array( 'masthead', 'page-children', 'site-footer' ),
+	'contact'  => array( 'masthead', 'page-contact', 'site-footer' ),
+);
+
+$page = $argv[1] ?? 'home';
+
+if ( ! isset( PAGES[ $page ] ) ) {
+	fwrite( STDERR, sprintf( "Unknown page \"%s\". Known pages: %s\n", $page, implode( ', ', array_keys( PAGES ) ) ) );
+	exit( 1 );
+}
+
+$sections = PAGES[ $page ];
 
 echo "<!doctype html>\n";
 echo "<html lang=\"en\">\n<head>\n";

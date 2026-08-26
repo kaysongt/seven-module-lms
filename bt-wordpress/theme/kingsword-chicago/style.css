@@ -390,7 +390,10 @@ body {
   gap: 0.75rem;
   min-height: 17.5rem;
   text-decoration: none;
-  color: inherit;
+  /* The card paints its own light ground, so it has to state its own text
+     colour too. Inheriting meant that dropping a rail of these into a dark band
+     left the headings near-white on white — invisible. */
+  color: var(--wp--preset--color--ink);
   transition: background-color 0.2s ease;
 }
 .kw-path:hover { background: var(--wp--preset--color--bone-sunk); text-decoration: none; }
@@ -512,4 +515,98 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .kw-reveal { opacity: 1; transform: none; transition: none; }
   .kw-btn:hover { transform: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Interior page hero
+   A shorter relative of .kw-hero for pages below the front page. It carries no
+   photograph: the homepage hero earns a full-bleed image because it is the
+   front door, whereas an interior page should hand the reader its subject and
+   get out of the way. Kept on the midnight ground so the masthead, which is
+   always dark, still reads as part of the same block.
+   ------------------------------------------------------------------------ */
+.kw-page-hero {
+  background: var(--wp--preset--color--midnight);
+  color: #f2efe8;
+  padding-block: clamp(6.5rem, 13vw, 9.5rem) clamp(3.2rem, 6vw, 4.8rem);
+}
+.kw-page-hero__grid {
+  width: min(var(--kw-shell, 1180px), 100% - 2.6rem);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: end;
+}
+.kw-page-hero h1 {
+  margin: 0.5rem 0 0;
+  font-family: var(--wp--preset--font-family--display);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.kw-page-hero h1 em { font-style: italic; color: var(--wp--preset--color--gold-light); }
+.kw-page-hero__lede {
+  margin: 1.1rem 0 0;
+  max-width: 46ch;
+  font-size: clamp(1.02rem, 1.35vw, 1.16rem);
+  line-height: 1.62;
+  color: #cfd3e2;
+}
+
+@media (max-width: 860px) {
+  .kw-page-hero__grid { grid-template-columns: 1fr; align-items: start; }
+}
+
+/* Leaders — reuses the .kw-rail card grid, adding only the portrait frame. */
+.kw-leader__portrait {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--wp--preset--color--bone-sunk);
+  margin-bottom: 1.15rem;
+}
+.kw-leader__role {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--gold-deep, var(--wp--preset--color--slate-mute));
+}
+
+/* ---------------------------------------------------------------------------
+   Contact form
+   Layout and labelling only. Visible <span> labels rather than placeholders,
+   because placeholder-as-label disappears the moment someone starts typing and
+   leaves them guessing which field they are in.
+   ------------------------------------------------------------------------ */
+.kw-form { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1.6rem; }
+.kw-form__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; }
+.kw-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.kw-field > span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--slate-mute);
+}
+.kw-field input,
+.kw-field textarea {
+  font: inherit;
+  color: var(--wp--preset--color--ink);
+  background: var(--wp--preset--color--paper);
+  border: 1px solid var(--wp--preset--color--rule);
+  border-radius: 0;
+  padding: 0.85rem 0.95rem;
+  min-height: 3rem;
+  width: 100%;
+}
+.kw-field textarea { min-height: 8rem; resize: vertical; }
+.kw-field input:focus-visible,
+.kw-field textarea:focus-visible {
+  outline: 2px solid var(--wp--preset--color--gold);
+  outline-offset: 2px;
+  border-color: transparent;
 }
