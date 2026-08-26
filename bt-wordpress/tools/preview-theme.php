@@ -81,6 +81,7 @@ const PAGES = array(
 	'about'    => array( 'masthead', 'page-about', 'site-footer' ),
 	'children' => array( 'masthead', 'page-children', 'site-footer' ),
 	'contact'  => array( 'masthead', 'page-contact', 'site-footer' ),
+	'training' => array( 'masthead', 'page-training', 'site-footer' ),
 );
 
 $page = $argv[1] ?? 'home';

@@ -71,7 +71,7 @@ $kw_commitments = array(
 				<?php esc_html_e( 'We are called to help people build a stronger relationship with the Lord through the preaching and teaching of the Word. We emphasize victory in life by the Word and the ministry of the Holy Spirit. We are anointed to train, equip and release God’s children into the fullness of their God-given purpose.', 'kingsword-chicago' ); ?>
 			</p>
 			<div class="kw-actions">
-				<a class="kw-btn kw-btn--ink" href="/contact/"><?php esc_html_e( 'Talk to someone', 'kingsword-chicago' ); ?></a>
+				<a class="kw-btn kw-btn--ink" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Talk to someone', 'kingsword-chicago' ); ?></a>
 			</div>
 		</div>
 		<figure class="kw-figure kw-figure--tall">
@@ -107,7 +107,7 @@ $kw_commitments = array(
 			<?php foreach ( $kw_leaders as $kw_leader ) : ?>
 				<article class="kw-path">
 					<h3><?php echo esc_html( $kw_leader['name'] ); ?></h3>
-					<p class="kw-leader__role"><?php echo esc_html( $kw_leader['role'] ); ?></p>
+					<p class="kw-path__label"><?php echo esc_html( $kw_leader['role'] ); ?></p>
 					<p><?php echo esc_html( $kw_leader['copy'] ); ?></p>
 				</article>
 			<?php endforeach; ?>

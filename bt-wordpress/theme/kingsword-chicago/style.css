@@ -567,13 +567,17 @@ body {
   background: var(--wp--preset--color--bone-sunk);
   margin-bottom: 1.15rem;
 }
-.kw-leader__role {
+/* Small label above a card heading: a leader's role, a scripture reference,
+   a module number. Must opt out of the flex growth that .kw-path p applies to
+   the card body, or the label stretches and shoves the heading down. */
+.kw-path__label {
+  flex: 0 0 auto;
   margin: 0.35rem 0 0;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--wp--preset--color--gold-deep, var(--wp--preset--color--slate-mute));
+  color: var(--wp--preset--color--slate-mute);
 }
 
 /* ---------------------------------------------------------------------------
@@ -643,3 +647,10 @@ body {
   text-transform: uppercase;
   color: var(--wp--preset--color--slate-mute);
 }
+
+/* The rail's closing call to action. Reads as a card, not a gap. */
+.kw-path--cta { background: var(--wp--preset--color--midnight); }
+.kw-path--cta h3 { color: #f6f2ea; }
+.kw-path--cta p { color: #b9bed4; }
+.kw-path--cta .kw-path__go { color: var(--wp--preset--color--gold-light); }
+.kw-path--cta:hover { background: var(--wp--preset--color--indigo); }

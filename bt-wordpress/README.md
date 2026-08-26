@@ -4,11 +4,20 @@ Rebuild of [chicago.kingsword.org](https://chicago.kingsword.org/) as a WordPres
 site, with the Believers Training LMS folded in as a section of it rather than a
 separate application.
 
-**Target stack:** WordPress + LearnDash. LearnDash was chosen because it covers
-sequential modules, drip release by date, quizzes with a pass mark and retakes,
-assignment submission and instructor review, certificates, and per-course
-discussion natively — which is most of what the existing Next.js LMS does by
-hand.
+**Target stack:** WordPress for the church site; the existing **Next.js LMS
+stays as the training application**, linked from the site as its own tab.
+
+This reverses an earlier plan to rebuild the programme on LearnDash. LearnDash
+would have covered sequential modules, drip release, quizzes with a pass mark,
+assignment review and certificates natively, and kept everything under one
+login. It was dropped because the Next.js app now runs: it is deployed, its
+database holds the real curriculum, and rebuilding working software on a paid
+plugin buys consolidation rather than capability.
+
+The cost of this choice is worth stating plainly. There are two applications,
+two logins, and two visual languages — the training app does not share this
+theme's palette or typefaces, so the handoff will look like a handoff until
+that is addressed.
 
 ## Where this stands
 
@@ -20,9 +29,15 @@ hand.
 | About, Children Ministry, Contact pages | **Built and reviewed** — patterns + page templates |
 | Site navigation | **Built** — absolute links, working from every page |
 | Give | Not a page. The existing site links straight out to Square checkout, so the theme does the same. |
-| LearnDash importer | Not started |
-| Admissions + activation-link plugin | Not started |
-| Believers Training section | Not started — the masthead links `/#training` on the homepage |
+| Believers Training tab | **Built** — `/believers-training/`, explains the programme and hands off to the Next.js app |
+| LearnDash importer | **Dropped** — see the stack note above |
+| Admissions + activation-link plugin | **Dropped** — the Next.js app already does applications and activation links |
+| Training app URL | **Needs setting** — `KINGSWORD_TRAINING_URL` in `theme/kingsword-chicago/inc/site-links.php` |
+
+While `KINGSWORD_TRAINING_URL` is empty the training page still reads correctly:
+its calls to action say "Ask about the next intake" and point at Contact rather
+than at a dead link. Set the constant to the deployed app's origin and the page
+switches to "Apply to join" and "Sign in" on its own.
 
 The theme has been PHP-syntax-checked and its patterns rendered and reviewed
 via `tools/preview-theme.php`, but it has **not yet run inside WordPress**.

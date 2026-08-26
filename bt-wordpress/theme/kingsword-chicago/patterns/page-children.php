@@ -126,7 +126,7 @@ $kw_programmes = array(
 			<?php foreach ( $kw_values as $kw_value ) : ?>
 				<article class="kw-path">
 					<h3><?php echo esc_html( $kw_value['title'] ); ?></h3>
-					<p class="kw-leader__role"><?php echo esc_html( $kw_value['verse'] ); ?></p>
+					<p class="kw-path__label"><?php echo esc_html( $kw_value['verse'] ); ?></p>
 					<p><?php echo esc_html( $kw_value['copy'] ); ?></p>
 				</article>
 			<?php endforeach; ?>
@@ -144,7 +144,7 @@ $kw_programmes = array(
 			<?php foreach ( $kw_habits as $kw_habit ) : ?>
 				<article class="kw-path">
 					<h3><?php echo esc_html( $kw_habit['title'] ); ?></h3>
-					<p class="kw-leader__role"><?php echo esc_html( $kw_habit['verse'] ); ?></p>
+					<p class="kw-path__label"><?php echo esc_html( $kw_habit['verse'] ); ?></p>
 					<p><?php echo esc_html( $kw_habit['copy'] ); ?></p>
 				</article>
 			<?php endforeach; ?>
@@ -163,7 +163,7 @@ $kw_programmes = array(
 				<article class="kw-path">
 					<h3><?php echo esc_html( $kw_programme['title'] ); ?></h3>
 					<p><?php echo esc_html( $kw_programme['copy'] ); ?></p>
-					<a class="kw-times__link" href="<?php echo esc_url( $kw_programme['href'] ); ?>">
+					<a class="kw-times__link" href="<?php echo esc_url( home_url( $kw_programme['href'] ) ); ?>">
 						<?php esc_html_e( 'Details →', 'kingsword-chicago' ); ?>
 					</a>
 				</article>
