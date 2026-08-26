@@ -95,15 +95,23 @@ $kw_programmes = array(
 			<p class="kw-lede">
 				<?php esc_html_e( 'At the heart of our children’s ministry is a joyful commitment to raising spirit-filled children. That journey starts with nurturing their faith, shaping their hearts with biblical truth, and encouraging a personal relationship with Jesus.', 'kingsword-chicago' ); ?>
 			</p>
-			<p class="kw-lede" style="margin-top: 1.1rem;">
-				<?php esc_html_e( '“Train up a child in the way he should go, and when he is old he will not depart from it.” — Proverbs 22:6', 'kingsword-chicago' ); ?>
-			</p>
 			<div class="kw-actions">
-				<a class="kw-btn kw-btn--ink" href="/contact/"><?php esc_html_e( 'Ask about Sundays', 'kingsword-chicago' ); ?></a>
+				<a class="kw-btn kw-btn--ink" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Ask about Sundays', 'kingsword-chicago' ); ?></a>
 			</div>
 		</div>
-		<figure class="kw-figure kw-figure--tall">
-			<img src="<?php echo kingsword_image( 'community.jpg' ); ?>" alt="<?php esc_attr_e( 'Children and volunteers at KingsWord Chicago', 'kingsword-chicago' ); ?>" />
+		<?php
+		/*
+		 * Scripture rather than a photograph. The theme ships three stock images
+		 * and every one of them shows adults, so putting one here would caption a
+		 * children's ministry with a picture of grown-ups — and repeat the image
+		 * already used on About. Swap this for a real photograph of the ministry
+		 * when the church supplies one.
+		 */
+		?>
+		<figure class="kw-quote">
+			<?php // Kept on one line: a newline here becomes a space, and the quote marks are generated, so it would show as “ text ”. ?>
+			<blockquote><?php esc_html_e( 'Train up a child in the way he should go, and when he is old he will not depart from it.', 'kingsword-chicago' ); ?></blockquote>
+			<figcaption><?php esc_html_e( 'Proverbs 22:6', 'kingsword-chicago' ); ?></figcaption>
 		</figure>
 	</div>
 </section>

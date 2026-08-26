@@ -17,9 +17,12 @@ hand.
 | Homepage design | **Built and reviewed** — `site/index.html` |
 | Content migration (7 modules / 77 lessons / 35 questions) | **Built and verified** — `content/bt-content-bundle.json` |
 | WordPress block theme | **Built, renders correctly** — `theme/kingsword-chicago/` |
+| About, Children Ministry, Contact pages | **Built and reviewed** — patterns + page templates |
+| Site navigation | **Built** — absolute links, working from every page |
+| Give | Not a page. The existing site links straight out to Square checkout, so the theme does the same. |
 | LearnDash importer | Not started |
 | Admissions + activation-link plugin | Not started |
-| Remaining pages (About, Children, Give, Contact) | Not started |
+| Believers Training section | Not started — the masthead links `/#training` on the homepage |
 
 The theme has been PHP-syntax-checked and its patterns rendered and reviewed
 via `tools/preview-theme.php`, but it has **not yet run inside WordPress**.
@@ -54,7 +57,7 @@ content/
 ```bash
 node tools/build-content-bundle.mjs          # regenerate the content bundle
 node tools/build-site.mjs                    # rebuild the standalone homepage
-php tools/preview-theme.php > site/theme-preview.html   # render theme patterns
+php tools/preview-theme.php <page> > site/preview-<page>.html   # home | about | children | contact
 node tools/shoot.mjs site/index.html out.png --scheme light --width 1440
 ```
 

@@ -65,3 +65,9 @@ add_action( 'init', 'kingsword_register_pattern_category' );
 function kingsword_image( string $file ): string {
 	return esc_url( get_stylesheet_directory_uri() . '/assets/images/' . ltrim( $file, '/' ) );
 }
+
+/**
+ * Shared link definitions, kept in their own file so the design-preview tool can
+ * load the same source the theme uses instead of restating it.
+ */
+require_once __DIR__ . "/inc/site-links.php";

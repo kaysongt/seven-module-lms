@@ -51,6 +51,10 @@ function kingsword_image( string $file ): string {
 	return esc_url( get_stylesheet_directory_uri() . '/assets/images/' . ltrim( $file, '/' ) );
 }
 
+// The navigation and the off-site URLs come from the theme itself, so a preview
+// cannot quietly disagree with what the real site links to.
+require_once THEME_DIR . '/inc/site-links.php';
+
 // --- Render ---------------------------------------------------------------
 
 /**

@@ -5,16 +5,13 @@
  * Categories: kingsword
  * Inserter: no
  *
+ * Links come from kingsword_nav_links() so the inline bar and the mobile
+ * disclosure panel can never disagree about what the navigation is.
+ *
  * @package kingsword-chicago
  */
 
-$kw_links = array(
-	'#welcome'  => __( 'About', 'kingsword-chicago' ),
-	'#involved' => __( 'Get Involved', 'kingsword-chicago' ),
-	'#training' => __( 'Believers Training', 'kingsword-chicago' ),
-	'#watch'    => __( 'Watch', 'kingsword-chicago' ),
-	'#visit'    => __( 'Visit', 'kingsword-chicago' ),
-);
+$kw_links = kingsword_nav_links();
 ?>
 <!-- wp:html -->
 <header class="kw-masthead">
@@ -23,8 +20,12 @@ $kw_links = array(
 			<img src="<?php echo kingsword_image( 'logo-white.png' ); ?>" alt="<?php esc_attr_e( 'KingsWord Everywhere', 'kingsword-chicago' ); ?>" />
 		</a>
 		<ul class="kw-nav">
-			<?php foreach ( $kw_links as $kw_href => $kw_label ) : ?>
-				<li><a href="<?php echo esc_attr( $kw_href ); ?>"><?php echo esc_html( $kw_label ); ?></a></li>
+			<?php foreach ( $kw_links as $kw_link ) : ?>
+				<li>
+					<a href="<?php echo esc_url( $kw_link['href'] ); ?>"<?php echo empty( $kw_link['external'] ) ? '' : ' target="_blank" rel="noopener"'; ?>>
+						<?php echo esc_html( $kw_link['label'] ); ?>
+					</a>
+				</li>
 			<?php endforeach; ?>
 			<li class="kw-nav__menu">
 				<details class="kw-mnav">
@@ -35,13 +36,22 @@ $kw_links = array(
 						<?php esc_html_e( 'Menu', 'kingsword-chicago' ); ?>
 					</summary>
 					<div class="kw-mnav__panel">
-						<?php foreach ( $kw_links as $kw_href => $kw_label ) : ?>
-							<a href="<?php echo esc_attr( $kw_href ); ?>"><?php echo esc_html( $kw_label ); ?></a>
+						<?php foreach ( $kw_links as $kw_link ) : ?>
+							<a href="<?php echo esc_url( $kw_link['href'] ); ?>"<?php echo empty( $kw_link['external'] ) ? '' : ' target="_blank" rel="noopener"'; ?>>
+								<?php echo esc_html( $kw_link['label'] ); ?>
+							</a>
 						<?php endforeach; ?>
+						<a href="<?php echo esc_url( KINGSWORD_GIVE_URL ); ?>" target="_blank" rel="noopener">
+							<?php esc_html_e( 'Give', 'kingsword-chicago' ); ?>
+						</a>
 					</div>
 				</details>
 			</li>
-			<li class="kw-nav__cta"><a class="kw-btn kw-btn--gold" href="#give"><?php esc_html_e( 'Give', 'kingsword-chicago' ); ?></a></li>
+			<li class="kw-nav__cta">
+				<a class="kw-btn kw-btn--gold" href="<?php echo esc_url( KINGSWORD_GIVE_URL ); ?>" target="_blank" rel="noopener">
+					<?php esc_html_e( 'Give', 'kingsword-chicago' ); ?>
+				</a>
+			</li>
 		</ul>
 	</div>
 </header>

@@ -5,12 +5,69 @@
  * Categories: kingsword
  * Inserter: no
  *
+ * Links are absolute from the site root. They were fragments, which resolved
+ * only on the homepage; from any interior page every one of them was inert.
+ * The footer also carried id="give" so the Give button scrolled here instead of
+ * going anywhere — giving now goes to the church's real Square checkout.
+ *
  * @package kingsword-chicago
  */
 
+$kw_gather = array(
+	array(
+		'label' => __( 'Plan a visit', 'kingsword-chicago' ),
+		'href'  => home_url( '/#visit' ),
+	),
+	array(
+		'label' => __( 'Get involved', 'kingsword-chicago' ),
+		'href'  => home_url( '/#involved' ),
+	),
+	array(
+		'label' => __( 'Believers Training', 'kingsword-chicago' ),
+		'href'  => home_url( '/#training' ),
+	),
+	array(
+		'label'    => __( 'Livestream', 'kingsword-chicago' ),
+		'href'     => KINGSWORD_WATCH_URL,
+		'external' => true,
+	),
+	array(
+		'label' => __( "Children's ministry", 'kingsword-chicago' ),
+		'href'  => home_url( '/children-ministry/' ),
+	),
+	array(
+		'label' => __( 'About us', 'kingsword-chicago' ),
+		'href'  => home_url( '/about-us/' ),
+	),
+	array(
+		'label' => __( 'Contact', 'kingsword-chicago' ),
+		'href'  => home_url( '/contact/' ),
+	),
+);
+
+$kw_connect = array(
+	array(
+		'label' => '+1 773 277 8701',
+		'href'  => 'tel:+17732778701',
+	),
+	array(
+		'label' => 'admin@kingsword.org',
+		'href'  => 'mailto:admin@kingsword.org',
+	),
+	array(
+		'label'    => __( 'YouTube', 'kingsword-chicago' ),
+		'href'     => KINGSWORD_WATCH_URL,
+		'external' => true,
+	),
+	array(
+		'label'    => __( '4250 W Walton St', 'kingsword-chicago' ),
+		'href'     => 'https://maps.google.com/?q=4250+W+Walton+Street+Chicago+IL+60651',
+		'external' => true,
+	),
+);
 ?>
 <!-- wp:html -->
-<footer class="kw-foot" id="give">
+<footer class="kw-foot">
 	<div class="kw-shell">
 		<div class="kw-foot__top">
 			<div>
@@ -19,26 +76,33 @@
 					<?php esc_html_e( 'The apostolic headquarters of a global ministry with churches in Africa, Europe and North America.', 'kingsword-chicago' ); ?>
 				</p>
 				<p style="margin-top: 1.2rem;">
-					<a class="kw-btn kw-btn--gold" href="#give"><?php esc_html_e( 'Give online', 'kingsword-chicago' ); ?></a>
+					<a class="kw-btn kw-btn--gold" href="<?php echo esc_url( KINGSWORD_GIVE_URL ); ?>" target="_blank" rel="noopener">
+						<?php esc_html_e( 'Give online', 'kingsword-chicago' ); ?>
+					</a>
 				</p>
 			</div>
 			<div>
 				<h2><?php esc_html_e( 'Gather', 'kingsword-chicago' ); ?></h2>
 				<ul>
-					<li><a href="#visit"><?php esc_html_e( 'Plan a visit', 'kingsword-chicago' ); ?></a></li>
-					<li><a href="#involved"><?php esc_html_e( 'Get involved', 'kingsword-chicago' ); ?></a></li>
-					<li><a href="#training"><?php esc_html_e( 'Believers Training', 'kingsword-chicago' ); ?></a></li>
-					<li><a href="#watch"><?php esc_html_e( 'Livestream', 'kingsword-chicago' ); ?></a></li>
-					<li><a href="#visit"><?php esc_html_e( "Children's ministry", 'kingsword-chicago' ); ?></a></li>
+					<?php foreach ( $kw_gather as $kw_link ) : ?>
+						<li>
+							<a href="<?php echo esc_url( $kw_link['href'] ); ?>"<?php echo empty( $kw_link['external'] ) ? '' : ' target="_blank" rel="noopener"'; ?>>
+								<?php echo esc_html( $kw_link['label'] ); ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
 				</ul>
 			</div>
 			<div>
 				<h2><?php esc_html_e( 'Connect', 'kingsword-chicago' ); ?></h2>
 				<ul>
-					<li><a href="tel:+17732778701">+1 773 277 8701</a></li>
-					<li><a href="mailto:admin@kingsword.org">admin@kingsword.org</a></li>
-					<li><a href="https://www.youtube.com/@KingsWordEveryWhere">YouTube</a></li>
-					<li><a href="https://maps.google.com/?q=4250+W+Walton+Street+Chicago+IL+60651">4250 W Walton St</a></li>
+					<?php foreach ( $kw_connect as $kw_link ) : ?>
+						<li>
+							<a href="<?php echo esc_url( $kw_link['href'] ); ?>"<?php echo empty( $kw_link['external'] ) ? '' : ' target="_blank" rel="noopener"'; ?>>
+								<?php echo esc_html( $kw_link['label'] ); ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
 				</ul>
 			</div>
 		</div>
