@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PublicNav } from "@/components/public-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { Reveal } from "@/components/reveal";
 import { CHURCH } from "@/lib/church";
 
 export const metadata = {
@@ -69,28 +71,39 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-[var(--paper-light)] py-24 md:py-32">
-        <div className="page-shell grid gap-12 lg:grid-cols-[0.75fr_1.25fr]">
-          <div>
+        <div className="page-shell grid items-center gap-14 lg:grid-cols-[1fr_0.9fr]">
+          <Reveal>
             <span className="eyebrow">Our mission</span>
-            <h2 className="display mt-6 max-w-md text-5xl leading-[0.95] font-medium tracking-[-0.04em] md:text-6xl">
+            <h2 className="display mt-6 max-w-lg text-5xl leading-[0.95] font-medium tracking-[-0.04em] md:text-6xl">
               A people of purpose, trained and released.
             </h2>
-          </div>
-          <div className="max-w-2xl">
-            <p className="text-lg leading-8 text-[var(--ink-soft)]">
+            <p className="mt-8 max-w-xl text-lg leading-8 text-[var(--ink-soft)]">
               We are committed to raising a people of purpose: to proclaim Jesus, the Anointed One,
               and to present Him clearly to a dying world.
             </p>
-            <p className="mt-5 text-lg leading-8 text-[var(--ink-soft)]">
+            <p className="mt-5 max-w-xl text-lg leading-8 text-[var(--ink-soft)]">
               We are called to help people build a stronger relationship with the Lord through the
               preaching and teaching of the Word. We emphasize victory in life by the Word and the
               ministry of the Holy Spirit. We are anointed to train, equip and release God&rsquo;s
               children into the fullness of their God-given purpose.
             </p>
-            <Link href="/contact" className="button-quiet mt-6 !px-0">
+            <Link href="/contact" className="button-quiet mt-7 !px-0">
               Talk to someone <ArrowRight size={16} />
             </Link>
-          </div>
+          </Reveal>
+
+          <Reveal delay={120} className="photo-offset">
+            <figure className="photo-frame aspect-[3/2] w-full">
+              <Image
+                src="/brand/welcome.jpg"
+                alt="Members of KingsWord Chicago together after a Sunday service"
+                width={1100}
+                height={733}
+                sizes="(max-width: 1024px) 100vw, 42vw"
+                className="h-full w-full object-cover"
+              />
+            </figure>
+          </Reveal>
         </div>
       </section>
 
@@ -102,7 +115,7 @@ export default function AboutPage() {
           </h2>
           <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 lg:grid-cols-4">
             {COMMITMENTS.map((item) => (
-              <article key={item.title} className="min-h-56 bg-[var(--paper-light)] p-8 md:p-9">
+              <article key={item.title} className="card-lift min-h-56 bg-[var(--paper-light)] p-8 md:p-9">
                 <h3 className="display text-2xl font-semibold">{item.title}</h3>
                 <p className="mt-4 text-sm leading-7 text-[var(--ink-soft)]">{item.body}</p>
               </article>
@@ -119,7 +132,7 @@ export default function AboutPage() {
           </h2>
           <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2">
             {LEADERS.map((leader) => (
-              <article key={leader.name} className="bg-[var(--paper-light)] p-8 md:p-10">
+              <article key={leader.name} className="card-lift bg-[var(--paper-light)] p-8 md:p-10">
                 <h3 className="display text-3xl font-semibold">{leader.name}</h3>
                 <p className="mt-2 text-xs font-extrabold tracking-[0.1em] text-[var(--clay)] uppercase">
                   {leader.role}

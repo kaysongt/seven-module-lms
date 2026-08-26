@@ -133,7 +133,7 @@ export default function ChildrenPage() {
           </h2>
           <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--line)] md:grid-cols-3">
             {VALUES.map((item) => (
-              <article key={item.title} className="min-h-60 bg-[var(--paper-light)] p-8 md:p-9">
+              <article key={item.title} className="card-lift min-h-60 bg-[var(--paper-light)] p-8 md:p-9">
                 <h3 className="display text-2xl font-semibold">{item.title}</h3>
                 <p className="mt-2 text-xs font-extrabold tracking-[0.1em] text-[var(--clay)] uppercase">
                   {item.verse}
@@ -153,7 +153,7 @@ export default function ChildrenPage() {
           </h2>
           <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--line)] md:grid-cols-3">
             {HABITS.map((item) => (
-              <article key={item.title} className="min-h-56 bg-[var(--paper-light)] p-8 md:p-9">
+              <article key={item.title} className="card-lift min-h-56 bg-[var(--paper-light)] p-8 md:p-9">
                 <h3 className="display text-2xl font-semibold">{item.title}</h3>
                 <p className="mt-2 text-xs font-extrabold tracking-[0.1em] text-[var(--clay)] uppercase">
                   {item.verse}
@@ -175,7 +175,7 @@ export default function ChildrenPage() {
           </h2>
           <div className="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {PROGRAMMES.map((item) => (
-              <article key={item.title} className="min-h-52 bg-[var(--forest-deep)] p-8">
+              <article key={item.title} className="card-lift min-h-52 bg-[var(--forest-deep)] p-8">
                 <h3 className="display text-2xl font-semibold">{item.title}</h3>
                 <p className="mt-4 text-sm leading-7 text-white/68">{item.body}</p>
               </article>
