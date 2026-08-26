@@ -1,19 +1,33 @@
 @import "tailwindcss";
 
+/*
+ * KingsWord Chicago identity.
+ *
+ * This application is the church site, with Believers Training inside it, so it
+ * carries the church palette: midnight and indigo grounds, antique gold as the
+ * single accent, bone as the light ground. Drawn from the sanctuary light in
+ * the hero photography and the ministry's existing navy-and-orange identity.
+ *
+ * The token NAMES are deliberately kept from the earlier forest theme. Every
+ * component in the app already references them, so re-pointing the values
+ * re-skins the whole thing — marketing pages, student dashboard and admin
+ * alike — from one place, rather than leaving the training half looking like a
+ * different product from the church that runs it.
+ */
 :root {
-  --ink: #14251e;
-  --ink-soft: #294238;
-  --forest: #234c3a;
-  --forest-deep: #102b22;
-  --sage: #b8cdbb;
-  --sage-light: #dbe6da;
-  --paper: #f2eee4;
-  --paper-light: #fbf8f1;
-  --sun: #e6a346;
-  --sun-soft: #f3d89d;
-  --clay: #b95f3f;
-  --line: rgba(20, 37, 30, 0.16);
-  --shadow: 0 24px 70px rgba(20, 37, 30, 0.12);
+  --ink: #171c30;
+  --ink-soft: #3a4160;
+  --forest: #16204a;
+  --forest-deep: #0a0f24;
+  --sage: #d9d3c6;
+  --sage-light: #ebe6dc;
+  --paper: #f5f2ec;
+  --paper-light: #ffffff;
+  --sun: #d9963a;
+  --sun-soft: #f0c579;
+  --clay: #8b3d24;
+  --line: rgba(23, 28, 48, 0.16);
+  --shadow: 0 24px 70px rgba(10, 15, 36, 0.14);
   --font-display: "Fraunces Variable", Georgia, serif;
   --font-body: "Manrope Variable", "Trebuchet MS", sans-serif;
 }
@@ -41,8 +55,8 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 9% 7%, rgba(230, 163, 70, 0.12), transparent 29rem),
-    radial-gradient(circle at 92% 20%, rgba(184, 205, 187, 0.25), transparent 32rem),
+    radial-gradient(circle at 9% 7%, rgba(217, 150, 58, 0.13), transparent 29rem),
+    radial-gradient(circle at 92% 20%, rgba(22, 32, 74, 0.10), transparent 32rem),
     var(--paper);
   font-family: var(--font-body);
   text-rendering: optimizeLegibility;
@@ -123,7 +137,7 @@ a {
   border: 1px solid var(--forest-deep);
   color: #fffdf6;
   background: var(--forest-deep);
-  box-shadow: 0 12px 28px rgba(16, 43, 34, 0.2);
+  box-shadow: 0 12px 28px rgba(10, 15, 36, 0.22);
 }
 
 .button-secondary {
@@ -143,7 +157,7 @@ a {
 .button-primary:hover,
 .button-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 32px rgba(16, 43, 34, 0.18);
+  box-shadow: 0 15px 32px rgba(10, 15, 36, 0.2);
 }
 
 .button-primary:disabled,
@@ -171,7 +185,7 @@ a {
 .field textarea,
 .input {
   width: 100%;
-  border: 1px solid rgba(20, 37, 30, 0.2);
+  border: 1px solid rgba(23, 28, 48, 0.2);
   border-radius: 0.85rem;
   color: var(--ink);
   background: rgba(255, 255, 255, 0.76);
@@ -185,7 +199,7 @@ a {
 .input:focus {
   border-color: var(--forest);
   outline: none;
-  box-shadow: 0 0 0 4px rgba(35, 76, 58, 0.11);
+  box-shadow: 0 0 0 4px rgba(22, 32, 74, 0.12);
 }
 
 .field textarea {
@@ -202,13 +216,13 @@ a {
 }
 
 .form-error {
-  border: 1px solid rgba(185, 95, 63, 0.3);
+  border: 1px solid rgba(139, 61, 36, 0.3);
   color: #7c3524;
   background: #fff0e9;
 }
 
 .form-success {
-  border: 1px solid rgba(35, 76, 58, 0.25);
+  border: 1px solid rgba(22, 32, 74, 0.25);
   color: var(--forest-deep);
   background: var(--sage-light);
 }
@@ -258,7 +272,7 @@ a {
 .prose-course blockquote {
   border-left: 3px solid var(--sun);
   color: var(--ink);
-  background: rgba(230, 163, 70, 0.08);
+  background: rgba(217, 150, 58, 0.09);
   padding: 1rem 1.25rem;
 }
 

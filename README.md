@@ -1,10 +1,25 @@
-# Seven-Module LMS
+# KingsWord Chicago
 
-A production-oriented learning platform for **KingsWord Training Institute's Believers Training** program. Program copy, modules, lessons, assessments, release dates, and publication status can be managed from the staff area.
+The church's website and its **Believers Training** programme, as one application.
+
+This replaces [chicago.kingsword.org](https://chicago.kingsword.org/) — a WordPress
+and Elementor site — and folds the seven-module training programme in as a tab
+rather than running it as a separate product.
+
+A parallel rebuild of the church site on WordPress + LearnDash was carried some
+way before being dropped: this app already worked, held the real curriculum and
+was deployed, so rebuilding it on a paid plugin would have bought consolidation
+rather than capability. Building the marketing site here instead gets the same
+consolidation the other way round — one codebase, one login, one design system.
+
+The church's own details live in `src/lib/church.ts`; the training programme's
+live in `src/lib/site-config.ts`. They are separate because "the phone number"
+and "the pass mark" belong to different things.
 
 ## What is included
 
-- Editorial public site with curriculum, application, privacy, and login pages
+- The church site: home, about, children's ministry, contact, and visiting details
+- Believers Training as a tab, with curriculum, application, privacy, and login pages
 - Admissions queue with approve/decline decisions and one-time activation links
 - Password-based authentication using scrypt, opaque database sessions, secure cookies, and login lockouts
 - Sequential seven-module student journey with lesson and release-date locks

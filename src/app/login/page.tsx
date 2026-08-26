@@ -21,12 +21,17 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       </section>
       <section className="relative hidden overflow-hidden bg-[var(--forest-deep)] p-14 text-white lg:block">
         <div className="absolute top-[-12rem] right-[-10rem] h-[38rem] w-[38rem] rounded-full border-[5rem] border-[var(--sun)]/15" />
-        <div className="absolute bottom-20 left-14 grid grid-cols-7 gap-2" aria-hidden="true">
+        {/* items-end puts the seven bars on a shared baseline so they rise
+            left-to-right, matching the wordmark. Without it they align to the
+            top of the grid row and hang downward, reading as a descent. */}
+        <div className="absolute bottom-20 left-14 grid grid-cols-7 items-end gap-2" aria-hidden="true">
           {[1, 2, 3, 4, 5, 6, 7].map((step) => <span key={step} className="w-8 rounded-full bg-[var(--sun)]/80" style={{ height: `${step * 24}px` }} />)}
         </div>
         <div className="relative flex h-full max-w-2xl flex-col justify-between">
           <span className="text-xs font-extrabold tracking-[0.2em] text-[var(--sun-soft)] uppercase">Continue the work</span>
-          <blockquote className="display mb-40 text-5xl leading-[1.02] font-medium italic">“A path becomes clear by walking it with attention.”</blockquote>
+          {/* Clears the decorative bars behind it: they sit 5rem off the bottom
+              and the tallest is 168px, so anything less than ~16rem overlaps. */}
+          <blockquote className="display mb-64 text-5xl leading-[1.02] font-medium italic">“A path becomes clear by walking it with attention.”</blockquote>
         </div>
       </section>
     </main>
