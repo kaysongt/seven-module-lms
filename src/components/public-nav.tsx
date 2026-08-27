@@ -80,6 +80,12 @@ export function PublicNav() {
               ),
             )}
             <Link
+              href="/signup"
+              className="rounded-xl px-4 py-3 text-sm font-bold hover:bg-[var(--sage-light)]"
+            >
+              Start Believers Training
+            </Link>
+            <Link
               href="/login"
               className="rounded-xl px-4 py-3 text-sm font-bold hover:bg-[var(--sage-light)]"
             >

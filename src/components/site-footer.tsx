@@ -48,6 +48,7 @@ export function SiteFooter() {
             <a href={address.mapUrl} target="_blank" rel="noopener">
               {address.street}
             </a>
+            <Link href="/signup">Start Believers Training</Link>
             <Link href="/login">Student login</Link>
             <Link href="/privacy">Privacy</Link>
           </div>

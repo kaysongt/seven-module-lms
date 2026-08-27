@@ -18,6 +18,20 @@ export const activationSchema = z
     path: ["confirmPassword"],
   });
 
+export const signupSchema = z
+  .object({
+    fullName: z.string().trim().min(2, "Enter your full name").max(120),
+    email,
+    password: z.string().min(12, "Use at least 12 characters").max(128),
+    confirmPassword: z.string(),
+    // Honeypot. Real people never see it; bots fill everything.
+    website: z.string().max(0).optional(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export const applicationSchema = z.object({
   fullName: z.string().trim().min(2, "Enter your full name").max(120),
   email,

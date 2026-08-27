@@ -265,10 +265,10 @@ export default function HomePage() {
                 Explore the programme <ArrowRight size={17} />
               </Link>
               <Link
-                href="/apply"
+                href="/signup"
                 className="button-secondary !border-white/25 !bg-white/5 !text-white"
               >
-                Apply to join
+                Start free
               </Link>
             </div>
           </Reveal>

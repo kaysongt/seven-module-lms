@@ -52,8 +52,26 @@ export default async function DashboardPage() {
               <h2 className="display mt-4 text-4xl font-medium md:text-5xl">{nextModule ? `Continue: ${nextModule.title}` : "The path is complete."}</h2>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-white/60">{nextModule?.summary ?? "Every module and checkpoint is complete. Your final record is ready for administrator review."}</p>
             </div>
-            <div className="relative grid h-36 w-36 shrink-0 place-items-center rounded-full" style={{ background: `conic-gradient(var(--sun) ${data.overallPercent * 3.6}deg, rgba(255,255,255,.12) 0deg)` }}>
-              <div className="grid h-[116px] w-[116px] place-items-center rounded-full bg-[var(--forest-deep)] text-center"><span><strong className="display block text-4xl">{data.overallPercent}%</strong><small className="text-[0.6rem] font-extrabold tracking-[0.14em] text-white/55 uppercase">complete</small></span></div>
+            {/* The unfilled track was 12% white on a near-black card, so on the
+                day a student signs up — the one day the ring reads 0% — the
+                whole thing was invisible. It has to look like a ring waiting to
+                be filled, not like nothing at all. */}
+            <div
+              className="relative grid h-36 w-36 shrink-0 place-items-center rounded-full"
+              role="img"
+              aria-label={`${data.overallPercent}% of the programme complete`}
+              style={{
+                background: `conic-gradient(var(--sun) ${data.overallPercent * 3.6}deg, rgba(255,255,255,.22) 0deg)`,
+              }}
+            >
+              <div className="grid h-[116px] w-[116px] place-items-center rounded-full bg-[var(--forest-deep)] text-center">
+                <span>
+                  <strong className="display block text-4xl">{data.overallPercent}%</strong>
+                  <small className="text-[0.6rem] font-extrabold tracking-[0.14em] text-white/70 uppercase">
+                    complete
+                  </small>
+                </span>
+              </div>
             </div>
           </div>
         </section>

@@ -49,9 +49,9 @@ export default async function CurriculumPage() {
         <div className="page-shell flex flex-col items-start justify-between gap-8 rounded-[2rem] bg-[var(--forest-deep)] p-8 text-white md:flex-row md:items-end md:p-12">
           <div>
             <span className="text-xs font-extrabold tracking-[0.16em] text-[var(--sun-soft)] uppercase">Your next step</span>
-            <h2 className="display mt-5 max-w-2xl text-4xl leading-none font-medium md:text-6xl">Apply when you are ready to finish what you begin.</h2>
+            <h2 className="display mt-5 max-w-2xl text-4xl leading-none font-medium md:text-6xl">Begin when you are ready to finish what you begin.</h2>
           </div>
-          <Link href="/apply" className="button-secondary !bg-[var(--sun)] !border-[var(--sun)]">Apply now <ArrowRight size={16} /></Link>
+          <Link href="/signup" className="button-secondary !bg-[var(--sun)] !border-[var(--sun)]">Start free <ArrowRight size={16} /></Link>
         </div>
       </section>
       <SiteFooter />

@@ -15,7 +15,7 @@ export function LoginForm({ next }: { next?: string }) {
       <div className="field"><label htmlFor="password">Password</label><input id="password" name="password" type="password" autoComplete="current-password" required /></div>
       {state.status === "error" && <p className="form-error" role="alert">{state.message}</p>}
       <FormButton pendingLabel="Signing in…">Sign in</FormButton>
-      <p className="text-center text-xs leading-5 text-[var(--ink-soft)]/70">Need an account? <Link href="/apply" className="font-extrabold text-[var(--forest)] underline underline-offset-4">Apply to the program</Link>.</p>
+      <p className="text-center text-xs leading-5 text-[var(--ink-soft)]/70">Need an account? <Link href="/signup" className="font-extrabold text-[var(--forest)] underline underline-offset-4">Create one free</Link>.</p>
     </form>
   );
 }

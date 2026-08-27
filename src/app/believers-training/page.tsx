@@ -33,7 +33,7 @@ export default async function BelieversTrainingPage() {
             </h1>
             <p className="mt-10 max-w-xl text-lg leading-8 text-[var(--ink-soft)]">{program.description}</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link href="/apply" className="button-primary">Apply for the program <ArrowRight size={17} /></Link>
+              <Link href="/signup" className="button-primary">Start the program free <ArrowRight size={17} /></Link>
               <Link href="/curriculum" className="button-secondary">Explore all seven modules</Link>
             </div>
           </div>
@@ -113,7 +113,7 @@ export default async function BelieversTrainingPage() {
             <span className="text-xs font-extrabold tracking-[0.17em] uppercase">Ready when the time is right</span>
             <h2 className="display mt-6 max-w-4xl text-5xl leading-[0.95] font-medium tracking-[-0.045em] md:text-8xl">Begin with a clear purpose.</h2>
           </div>
-          <Link href="/apply" className="button-primary whitespace-nowrap">Start your application <ArrowRight size={17} /></Link>
+          <Link href="/signup" className="button-primary whitespace-nowrap">Create your account <ArrowRight size={17} /></Link>
         </div>
       </section>
       <SiteFooter />
