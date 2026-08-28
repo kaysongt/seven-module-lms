@@ -22,8 +22,11 @@ export type SeedLesson = {
   slug: string;
   summary: string;
   body: string;
-  kind: "READING" | "ASSIGNMENT";
+  kind: "VIDEO" | "READING" | "DOWNLOAD" | "ASSIGNMENT";
   resourceUrl: string;
+  // Set on the first lesson of each module, once that module's recorded lecture has
+  // somewhere to live. Optional because most lessons are text-only.
+  videoUrl?: string;
   estimatedMinutes: number;
 };
 

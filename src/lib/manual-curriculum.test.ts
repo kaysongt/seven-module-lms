@@ -19,7 +19,11 @@ describe("manual curriculum", () => {
     for (const courseModule of SEED_MODULES) {
       expect(courseModule.objectives).toHaveLength(10);
       expect(courseModule.lessons).toHaveLength(11);
-      expect(courseModule.lessons.slice(0, 10).every((lesson) => lesson.kind === "READING")).toBe(true);
+      // Lesson 1 carries the module's recorded lecture; lessons 2-10 are the
+      // written reading; lesson 11 is always the module's assignment.
+      expect(courseModule.lessons[0]?.kind).toBe("VIDEO");
+      expect(courseModule.lessons[0]?.videoUrl).toMatch(/^https:\/\/www\.youtube\.com\/watch\?v=/);
+      expect(courseModule.lessons.slice(1, 10).every((lesson) => lesson.kind === "READING")).toBe(true);
       expect(courseModule.lessons.at(-1)?.kind).toBe("ASSIGNMENT");
       expect(courseModule.sourceUrl).toMatch(/^https:\/\/docs\.google\.com\/document\/d\//);
       expect(courseModule.lessons.every((lesson) => lesson.resourceUrl === courseModule.sourceUrl)).toBe(true);
