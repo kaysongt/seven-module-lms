@@ -44,6 +44,11 @@ for (const [slug, host] of locations) {
     assert.ok(domain.body.includes('href="/contact"'), "Domain contact stays at root");
     assert.ok(domain.body.includes('href="https://londonkingsword.org"'), "Production location switch uses domains");
   }
+  const globe = await request("/explore", host);
+  assert.equal(globe.status, 200, `${host}/explore`);
+  assert.ok(globe.body.includes('aria-label="Explore KingsWord locations"'));
+  assert.ok(globe.body.includes('href="https://londonkingsword.org"'));
+  checked++;
 }
 
 for (const host of ["localhost:3000", "chicago.kingsword.org.evil.test"]) {

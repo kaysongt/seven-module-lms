@@ -2,10 +2,12 @@
 
 The KingsWord network, five location sites and the **Believers Training** programme, as one application.
 
-The homepage is a KingsWord location chooser. Chicago, Nigeria, Calgary, Dallas
-and London each have their own local pages, contact details and hostname routing.
-Chicago's detailed church pages are preserved. The seven-module training portal
-remains shared across locations. See [DOMAINS.md](./DOMAINS.md) for domain mappings,
+The homepage is an interactive, rotating globe with clickable church locations,
+an automatic tour, draggable geography and location highlights. Chicago, Nigeria,
+Calgary, Dallas and London each have cinematic local pages, real photography,
+embedded teaching and worship videos, visiting information and hostname routing.
+The seven-module training portal remains shared across locations.
+See [DOMAINS.md](./DOMAINS.md) for domain mappings,
 content sources, DNS cutover instructions and the shared-account boundaries.
 
 Local preview: `/locations/chicago`, `/locations/nigeria`, `/locations/calgary`,
@@ -14,10 +16,15 @@ Local preview: `/locations/chicago`, `/locations/nigeria`, `/locations/calgary`,
 
 Location settings live in `src/lib/locations.ts`; Chicago's original details live
 in `src/lib/church.ts`; training settings live in `src/lib/site-config.ts`.
+Photography, videos and globe coordinates live in `src/lib/location-media.ts`.
+[MEDIA-SOURCES.md](./MEDIA-SOURCES.md) records the original media sources.
+`/explore` opens the global globe from any location hostname.
 
 ## What is included
 
-- KingsWord network homepage and a five-location directory
+- Interactive Natural Earth globe, automated location tour, accessible pause/reset and location controls
+- Fourteen real church photographs and nine official YouTube videos, with responsive image loading and click-to-play embeds
+- KingsWord network homepage and a five-location photo directory
 - Location sites: home, about, children's ministry, contact, and visiting details
 - Believers Training as a tab, with curriculum, application, privacy, and login pages
 - Admissions queue with approve/decline decisions and one-time activation links
@@ -37,6 +44,7 @@ in `src/lib/church.ts`; training settings live in `src/lib/site-config.ts`.
 - Prisma 6 and PostgreSQL (tested with Neon)
 - Zod validation and Vitest
 - Self-hosted Fraunces and Manrope variable fonts
+- D3 Geo and TopoJSON for a lightweight Canvas globe, with locally hosted geography
 
 ## Local setup
 
@@ -91,6 +99,8 @@ npm run build
 ```
 
 `npm run check` runs the complete sequence.
+With a local server running, `node scripts/verify-locations.mjs` checks all five
+hostnames, preview paths, the global globe route, local navigation and 404s.
 
 ## Current launch boundaries
 

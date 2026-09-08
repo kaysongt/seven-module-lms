@@ -16,7 +16,8 @@ Each location supports `/`, `/about`, `/contact` and `/children` on its hostname
 Those pages are also available beneath each preview path. `/locations` lists all
 five locations. On a known church hostname, location links switch domains; on a
 local or Vercel preview hostname, they stay within the preview using paths.
-The network homepage appears on other hosts, including the Vercel project URL
+The `/explore` route opens the global globe on every hostname, and each location
+links back to it. The network homepage appears on other hosts, including the Vercel project URL
 and `kingsword.org` if that domain is separately connected.
 
 ## Domain cutover
@@ -58,21 +59,26 @@ Do not use this setup to promise isolated regional administration. Keep
 
 ## Content maintenance and sources
 
-Edit `src/lib/locations.ts` for domains, service times, contacts and links.
-Chicago's existing detailed pages remain in `src/components/chicago/` and its
-original content settings remain in `src/lib/church.ts`.
+Edit `src/lib/locations.ts` for domains, service times, contacts and links, and
+`src/lib/location-media.ts` for photography, videos, location introductions and
+globe coordinates. The public pages use `src/components/location-site.tsx` and
+`src/components/cinematic-home.tsx`. Chicago's original content settings remain
+in `src/lib/church.ts`. See [MEDIA-SOURCES.md](./MEDIA-SOURCES.md) for media provenance.
 
 Published sources checked September 8, 2026:
 
 - Chicago: https://chicago.kingsword.org/
-- Nigeria congregations, Dallas address/phone, Calgary phone:
+- Nigeria congregations, Dallas phone, Calgary phone:
   https://www.kingsword.org/locations
 - Calgary address and Sunday time:
   https://kingswordcalgary.churchcenter.com/home
 - London address, contact and Sunday time: https://kingswordlondon.org/
 - London livestream: https://kingswordlondon.org/watch-live/live/
+- Dallas current address and Sunday time: https://kingsworddallas.org/visit/
 
 Nigeria is a regional directory, with four listed congregations and a link to
-the complete ministry directory. Dallas service times and unverified local
-giving/streaming links are omitted; visitors are directed to the local team.
+the complete ministry directory. Its globe point represents Lagos as a regional
+entry point, not every Nigerian congregation. Dallas now uses the local church's
+Celina address and published Sunday 11:00 AM service (doors open 10:30 AM).
+Unverified local giving links are omitted.
 Do not copy Chicago's donation destination into other location settings.
