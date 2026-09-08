@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@fontsource-variable/fraunces";
 import "@fontsource-variable/manrope";
 import "./globals.css";
+import "./kingsword.css";
 import { NETWORK } from "@/lib/locations";
 import { getAppUrl } from "@/lib/app-url";
 

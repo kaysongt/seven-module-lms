@@ -62,10 +62,11 @@ export const LOCATIONS: readonly ChurchLocation[] = [
   {
     slug: "dallas", name: "Dallas", region: "United States",
     domain: "dallas.kingsword.org", tagline: "Faith. Family. Purpose.",
-    description: "Find community at KingsWord Dallas. Connect with the congregation in The Colony and grow with us in faith and purpose.",
-    timezone: "America/Chicago", services: [],
-    congregations: [{ name: "KingsWord Dallas", address: "The Cascade Conference Center, 5909 Stone Creek Dr, The Colony, TX 75056", phone: "+1 847 910 6446" }],
-    sourceUrl: NETWORK.directoryUrl,
+    description: "Find community at KingsWord Dallas. Connect with the congregation in Celina and grow with us in faith and purpose.",
+    timezone: "America/Chicago", services: [{ day: "Sunday", time: "11:00 AM", note: "Doors open at 10:30 AM. All times are local." }],
+    congregations: [{ name: "KingsWord Dallas", address: "8170 County Road 101, Celina, TX 75009", phone: "+1 847 910 6446" }],
+    watchUrl: "https://www.youtube.com/watch?v=XABgiC2jMsE",
+    sourceUrl: "https://kingsworddallas.org/visit/",
   },
   {
     slug: "london", name: "London", region: "United Kingdom",
