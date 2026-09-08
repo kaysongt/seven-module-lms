@@ -9,6 +9,11 @@ export type LocationMedia = {
   coordinates: [number, number];
   accent: string;
   headline: string;
+  heroLead: string;
+  heroAccent: string;
+  story: string;
+  watchTitle: string;
+  watchIntro: string;
   intro: string;
   hero: ChurchPhoto;
   photos: ChurchPhoto[];
@@ -24,10 +29,17 @@ const chicagoHero = {
 export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   chicago: {
     coordinates: [-87.6298, 41.8781],
-    accent: "#e8bc7c",
-    headline: "A place to be built up.",
+    accent: "#245ce5",
+    headline: "The Apostolic Place, Chicago.",
+    heroLead: "Encounter God.",
+    heroAccent: "Right here in Chicago.",
     intro:
-      "Rooted in Chicago. Reaching the world. Come for the Word, stay for the family, and discover what God has placed inside you.",
+      "Join us on the West Side for worship, the Word and a Sunday that makes room for you. Your first visit starts at 10 AM.",
+    story:
+      "At The Apostolic Place, teaching and prayer are at the centre of church life. Meet the people behind the welcome, worship with us and discover how to get involved.",
+    watchTitle: "A closer look at the Word.",
+    watchIntro:
+      "Explore teaching from Dr. Kay Ijisesan, founder of KingsWord Ministries International.",
     hero: chicagoHero,
     photos: [
       {
@@ -59,10 +71,17 @@ export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   },
   nigeria: {
     coordinates: [3.3792, 6.5244],
-    accent: "#a9d0ad",
-    headline: "Faith that moves a nation.",
+    accent: "#137b4a",
+    headline: "From Lagos to Abuja and beyond.",
+    heroLead: "A movement of faith.",
+    heroAccent: "Across Nigeria.",
     intro:
-      "From Lagos to Abuja and beyond, find a family that will grow with you. Many congregations. One life-changing message.",
+      "Find KingsWord in your city. Explore our congregations, hear the worship and connect with the people who make each church home.",
+    story:
+      "Our churches in Nigeria bring the KingsWord message into their own neighbourhoods. Begin with a congregation near you, from Ikeja and Alagbado to Abuja and Ibadan.",
+    watchTitle: "Turn up the praise.",
+    watchIntro:
+      "Hear H.O.P leading worship at KingsWord Alagbado, Lagos. Join in wherever you are.",
     hero: {
       src: "/media/nigeria-service.jpg",
       alt: "A service at KingsWord Ikeja, Lagos",
@@ -102,10 +121,17 @@ export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   },
   calgary: {
     coordinates: [-114.0719, 51.0447],
-    accent: "#a6d4e6",
-    headline: "Find your people. Find your purpose.",
+    accent: "#0879aa",
+    headline: "A Sunday morning in southeast Calgary.",
+    heroLead: "New city?",
+    heroAccent: "Meet your community.",
     intro:
-      "A warm welcome in a new city, a fresh beginning, a deeper faith. There is a place for you in our Calgary family.",
+      "Whether Calgary is a new beginning or has always been home, join us for worship and teaching every Sunday at 9:30 AM.",
+    story:
+      "Led by Pastor Muyiwa Oseni, our Calgary church gathers in the southeast of the city. There is room to ask questions, build friendships and grow in your understanding of the Bible.",
+    watchTitle: "Hear the heart of Calgary.",
+    watchIntro:
+      "Get a feel for our Sunday teaching and spend a little time in worship with the Calgary church.",
     hero: {
       src: "/media/calgary-worship.webp",
       alt: "The congregation worshipping at KingsWord Calgary",
@@ -145,10 +171,17 @@ export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   },
   dallas: {
     coordinates: [-96.8005, 32.7767],
-    accent: "#edb593",
-    headline: "There is more ahead of you.",
+    accent: "#b54326",
+    headline: "Your Dallas-area church, gathering in Celina.",
+    heroLead: "Make Sunday",
+    heroAccent: "a fresh start.",
     intro:
-      "A family of faith in the Dallas area, making room for your story. Experience the Word, worship with us, and build a life of purpose.",
+      "Meet the KingsWord Dallas family in Celina. Doors open at 10:30 AM, with worship and teaching from 11 AM. Come and settle in.",
+    story:
+      "Pastors Dotun and Buki Oragbade lead a community where faith grows through the Word and relationships. Join a service, meet the team and discover church life in the Dallas area.",
+    watchTitle: "Build a living faith.",
+    watchIntro:
+      "Watch a Sunday message from KingsWord Dallas on developing the spirit of faith.",
     hero: {
       src: "/media/dallas-community.jpg",
       alt: "KingsWord Dallas church family gathered outdoors",
@@ -177,10 +210,17 @@ export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   },
   london: {
     coordinates: [-0.1276, 51.5072],
-    accent: "#c4b4ed",
-    headline: "A city of stories. A family for yours.",
+    accent: "#743abb",
+    headline: "The Graceland, in the heart of Charlton.",
+    heroLead: "London moves fast.",
+    heroAccent: "Make room for God.",
     intro:
-      "In the heart of Charlton, a community of faith is waiting to welcome you. Come as you are. Discover who you can become.",
+      "Take a breath and join us at The Graceland in Charlton. Every Sunday at 10 AM, we gather to worship, hear the Word and reconnect.",
+    story:
+      "Led by Pastors Emmy and Kemi Akinlaja, KingsWord London brings people together at The Graceland. Discover the faces, music and teaching at the heart of this Charlton community.",
+    watchTitle: "From The Graceland.",
+    watchIntro:
+      "Teaching with Pastor Emmy Akinlaja and worship from the KingsWord London family.",
     hero: {
       src: "/media/london-worship.jpg",
       alt: "The congregation gathered at KingsWord London",

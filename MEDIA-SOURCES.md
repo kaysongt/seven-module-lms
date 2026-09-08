@@ -73,3 +73,12 @@ The globe respects reduced motion, pauses automatically offscreen, supports
 dragging, and provides keyboard-accessible selection, pause and reset controls.
 All locations remain reachable through the photo directory if graphics or
 JavaScript are unavailable.
+
+## 4K Earth surface
+
+- Local asset: `public/geo/earth-4k.webp` (4096 × 2048; 889,478 bytes).
+- NASA Earth Observatory, Blue Marble Next Generation, July 2004; topography and bathymetry.
+- Source: https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/
+- Original: https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/bmng-topography-bathymetry/july/world.topo.bathy.200407.3x5400x2700.jpg
+- Original 5400 × 2700 image resized and compressed as WebP; no invented geography. Rendered with a bright atmospheric rim and directional lighting.
+- NASA media guidance: https://www.nasa.gov/nasa-brand-center/images-and-media/

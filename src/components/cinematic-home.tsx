@@ -24,14 +24,14 @@ export function CinematicDirectory({ context }: { context: PublicContext }) {
               src={media.hero.src}
               alt={media.hero.alt}
               fill
-              sizes="(max-width: 700px) 90vw, (max-width: 1000px) 45vw, 30vw"
+              sizes="(max-width: 700px) 90vw, (max-width: 1000px) 45vw, 50vw"
             />
             <div className="kw-card-top">
               <span>{location.region}</span>
               <span>0{index + 1}</span>
             </div>
             <div className="kw-card-bottom">
-              <p>{location.tagline}</p>
+              <p>{media.headline}</p>
               <h3>{location.name}</h3>
               <span className="kw-round-arrow">
                 <ArrowUpRight size={24} />
@@ -44,16 +44,34 @@ export function CinematicDirectory({ context }: { context: PublicContext }) {
   );
 }
 
-export function TrainingFeature() {
+export function TrainingFeature({ compact = false }: { compact?: boolean }) {
+  if (compact)
+    return (
+      <section className="kw-training-compact">
+        <div className="kw-shell">
+          <div>
+            <p className="kw-kicker">BELIEVERS TRAINING</p>
+            <h2>Give your faith a strong foundation.</h2>
+            <p>Seven modules. Study at your own pace, wherever you are.</p>
+          </div>
+          <Link
+            href="/believers-training"
+            className="kw-button kw-button-light"
+          >
+            See the programme <ArrowUpRight size={18} />
+          </Link>
+        </div>
+      </section>
+    );
   return (
     <section className="kw-training">
       <div className="kw-shell kw-training-inner">
         <div>
-          <p className="kw-kicker">YOUR NEXT CHAPTER</p>
+          <p className="kw-kicker">BUILD YOUR UNDERSTANDING</p>
           <h2>
-            Go deeper.
+            Faith, from
             <br />
-            <em>Grow stronger.</em>
+            <em>the foundation up.</em>
           </h2>
           <p>
             Build a faith that goes with you. Our seven-module Believers
@@ -98,6 +116,7 @@ export function CinematicHome({ context }: { context: PublicContext }) {
     image: LOCATION_MEDIA[location.slug].hero.src,
     caption: LOCATION_MEDIA[location.slug].hero.alt,
     headline: LOCATION_MEDIA[location.slug].headline,
+    photos: LOCATION_MEDIA[location.slug].photos,
   }));
   return (
     <div className="kw-site">
@@ -111,9 +130,9 @@ export function CinematicHome({ context }: { context: PublicContext }) {
             <Reveal>
               <p className="kw-kicker">THIS IS KINGSWORD</p>
               <h2>
-                Not just a place you go.
+                A worldwide church.
                 <br />
-                <span>A people you belong to.</span>
+                <span>Rooted in the Word.</span>
               </h2>
             </Reveal>
             <div className="kw-statement-bottom">
@@ -132,17 +151,16 @@ export function CinematicHome({ context }: { context: PublicContext }) {
           <div className="kw-shell">
             <div className="kw-section-heading">
               <div>
-                <p className="kw-kicker">FIND YOUR FAMILY</p>
+                <p className="kw-kicker">CHOOSE YOUR LOCATION</p>
                 <h2>
-                  Somewhere near.
+                  Where will we
                   <br />
-                  <em>Something greater.</em>
+                  <em>meet you?</em>
                 </h2>
               </div>
               <p>
-                Five destinations. One shared faith.
-                <br />
-                Choose a community and come as you are. <ArrowDown size={20} />
+                Take a look inside our churches, find service times and make
+                plans for your first Sunday. <ArrowDown size={20} />
               </p>
             </div>
             <CinematicDirectory context={context} />
@@ -156,29 +174,29 @@ export function CinematicHome({ context }: { context: PublicContext }) {
             sizes="100vw"
           />
           <div className="kw-shell">
-            <p className="kw-kicker">THE WORD. THE SPIRIT. YOUR PURPOSE.</p>
+            <p className="kw-kicker">IN THE ROOM · KINGSWORD IKEJA</p>
             <h2>
-              There is more
+              This is what
               <br />
-              <em>inside you.</em>
+              <em>faith sounds like.</em>
             </h2>
-            <Link href="/locations" className="kw-button kw-button-light">
-              Come and discover it <ArrowUpRight size={18} />
+            <Link href="#watch" className="kw-button kw-button-light">
+              Listen to our worship <ArrowUpRight size={18} />
             </Link>
             <span className="kw-photo-credit">
               KingsWord Ikeja · Lagos, Nigeria
             </span>
           </div>
         </section>
-        <section className="kw-section kw-watch">
+        <section id="watch" className="kw-section kw-watch">
           <div className="kw-shell">
             <div className="kw-section-heading">
               <div>
-                <p className="kw-kicker">FAITH FOR YOUR EVERYDAY</p>
+                <p className="kw-kicker">FROM OUR CHURCHES</p>
                 <h2>
-                  A message that stays.
+                  Take a moment.
                   <br />
-                  <em>A worship that rises.</em>
+                  <em>Press play.</em>
                 </h2>
               </div>
               <p>

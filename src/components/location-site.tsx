@@ -79,7 +79,7 @@ function SiteFrame({
 }) {
   const accent = context.location
     ? LOCATION_MEDIA[context.location.slug].accent
-    : "#e6bf86";
+    : "#245ce5";
   return (
     <div className="kw-site" style={{ "--kw-accent": accent } as CSSProperties}>
       <PublicNav context={context} />
@@ -104,20 +104,12 @@ export function VisitSection({ context }: { context: PublicContext }) {
       <div className="kw-shell">
         <div className="kw-section-heading">
           <div>
-            <p className="kw-kicker">WE SAVED YOU A PLACE</p>
+            <p className="kw-kicker">YOUR VISIT</p>
             <h2>
               {location.slug === "nigeria" ? (
-                <>
-                  Your city.
-                  <br />
-                  <em>Your community.</em>
-                </>
+                <>Find a congregation.</>
               ) : (
-                <>
-                  Make yourself
-                  <br />
-                  <em>at home.</em>
-                </>
+                <>See you on Sunday.</>
               )}
             </h2>
           </div>
@@ -201,16 +193,12 @@ function CommunityGallery({ context }: { context: PublicContext }) {
   const location = context.location!;
   const media = LOCATION_MEDIA[location.slug];
   return (
-    <section className="kw-section kw-community">
+    <section id="community" className="kw-section kw-community">
       <div className="kw-shell">
         <div className="kw-section-heading">
           <div>
             <p className="kw-kicker">MORE THAN SUNDAY</p>
-            <h2>
-              Real people.
-              <br />
-              <em>Life together.</em>
-            </h2>
+            <h2>A glimpse of {location.name}.</h2>
           </div>
           <Link className="kw-text-link" href={localHref(context, "contact")}>
             Get connected <ArrowUpRight size={18} />
@@ -229,13 +217,7 @@ function CommunityGallery({ context }: { context: PublicContext }) {
                   sizes="(max-width: 650px) 85vw, 32vw"
                 />
                 <figcaption>
-                  {
-                    [
-                      "A community that welcomes.",
-                      "A faith that grows.",
-                      "A life with purpose.",
-                    ][index]
-                  }
+                  {photo.alt}
                   <span>
                     {location.slug === "nigeria"
                       ? "KingsWord Ikeja · Lagos"
@@ -249,17 +231,17 @@ function CommunityGallery({ context }: { context: PublicContext }) {
         <div className="kw-community-paths">
           {[
             {
-              name: "Find your people",
+              name: "Membership & small groups",
               text: "Ask about membership and small groups.",
               path: "contact",
             },
             {
-              name: "Bring your family",
+              name: "Children & families",
               text: "Discover what a Sunday looks like for children.",
               path: "children",
             },
             {
-              name: "Make a difference",
+              name: "Join a serving team",
               text: "Connect with the team and explore serving.",
               path: "contact",
             },
@@ -284,25 +266,19 @@ export function CinematicLocationHome({ context }: { context: PublicContext }) {
   return (
     <SiteFrame context={context}>
       <section className={`kw-place-hero place-${location.slug}`}>
-        <Image
-          src={media.hero.src}
-          alt={media.hero.alt}
-          fill
-          preload
-          sizes="100vw"
-        />
-        <div className="kw-place-shade" />
         <div className="kw-shell kw-place-content">
           <Link href="/explore" className="kw-place-breadcrumb">
             KINGSWORD EVERYWHERE <span>/</span> {location.region.toUpperCase()}
           </Link>
           <div className="kw-place-main">
-            <div>
-              <p className="kw-kicker">{location.tagline}</p>
+            <div className="kw-place-copy">
+              <p className="kw-kicker">
+                KINGSWORD {location.name.toUpperCase()}
+              </p>
               <h1>
-                Welcome home,
+                {media.heroLead}
                 <br />
-                <em>{location.name}.</em>
+                <em>{media.heroAccent}</em>
               </h1>
               <p className="kw-place-intro">{media.intro}</p>
               <div className="kw-place-actions">
@@ -319,23 +295,40 @@ export function CinematicLocationHome({ context }: { context: PublicContext }) {
                   <Play size={15} /> Experience a service
                 </a>
               </div>
+              <div className="kw-hero-service">
+                <span className="kw-kicker">
+                  <span className="status-dot" />{" "}
+                  {location.slug === "nigeria"
+                    ? "ACROSS NIGERIA"
+                    : "JOIN US THIS SUNDAY"}
+                </span>
+                <strong>
+                  {location.services[0]?.time ?? "Find your nearest church"}
+                </strong>
+                <p>
+                  {location.slug === "nigeria"
+                    ? "Lagos. Abuja. Ibadan. And beyond."
+                    : location.congregations[0].address}
+                </p>
+                <a href="#visit">
+                  Service details & directions <ArrowDown size={17} />
+                </a>
+              </div>
             </div>
-            <div className="kw-hero-service">
-              <span className="kw-kicker">
-                <span className="status-dot" />{" "}
+            <div className="kw-place-photo">
+              <Image
+                src={media.hero.src}
+                alt={media.hero.alt}
+                fill
+                loading="eager"
+                fetchPriority="high"
+                sizes="(max-width: 900px) 100vw, 50vw"
+              />
+              <span>
                 {location.slug === "nigeria"
-                  ? "ACROSS NIGERIA"
-                  : "JOIN US THIS SUNDAY"}
+                  ? "Sunday at KingsWord Ikeja, Lagos"
+                  : `This is KingsWord ${location.name}`}
               </span>
-              <strong>{location.services[0]?.time ?? "One family."}</strong>
-              <p>
-                {location.slug === "nigeria"
-                  ? "Lagos. Abuja. Ibadan. And beyond."
-                  : location.congregations[0].address}
-              </p>
-              <a href="#visit">
-                We can’t wait to meet you <ArrowDown size={17} />
-              </a>
             </div>
           </div>
           <div className="kw-place-bottom">
@@ -356,10 +349,7 @@ export function CinematicLocationHome({ context }: { context: PublicContext }) {
             <p className="kw-kicker">YOU BELONG HERE</p>
             <h2>{media.headline}</h2>
             <p>{location.description}</p>
-            <p>
-              Whether you are taking your first step in faith or looking for a
-              church to call home, we would love to walk with you.
-            </p>
+            <p>{media.story}</p>
             <Link href={localHref(context, "about")} className="kw-text-link">
               Meet your church family <ArrowUpRight size={18} />
             </Link>
@@ -384,16 +374,9 @@ export function CinematicLocationHome({ context }: { context: PublicContext }) {
           <div className="kw-section-heading">
             <div>
               <p className="kw-kicker">A WORD FOR YOUR WORLD</p>
-              <h2>
-                Press play.
-                <br />
-                <em>Be built up.</em>
-              </h2>
+              <h2>{media.watchTitle}</h2>
             </div>
-            <p>
-              Teaching that grounds you. Worship that draws you closer. Take a
-              little of Sunday into your everyday.
-            </p>
+            <p>{media.watchIntro}</p>
           </div>
           <ChurchVideos videos={media.videos} />
           {location.watchUrl && (
@@ -410,7 +393,7 @@ export function CinematicLocationHome({ context }: { context: PublicContext }) {
       </section>
       <CommunityGallery context={context} />
       <VisitSection context={context} />
-      <TrainingFeature />
+      <TrainingFeature compact />
     </SiteFrame>
   );
 }
@@ -428,23 +411,17 @@ export function CinematicInformationPage({
   const titles = {
     about: (
       <>
-        A life of faith.
-        <br />
-        <em>A world of possibility.</em>
+        The story behind <em>{name}.</em>
       </>
     ),
     contact: (
       <>
-        Your next step
-        <br />
-        <em>starts here.</em>
+        Say hello. <em>Plan your visit.</em>
       </>
     ),
     children: (
       <>
-        Little people.
-        <br />
-        <em>Extraordinary purpose.</em>
+        Big beginnings for <em>little lives.</em>
       </>
     ),
   };
@@ -514,11 +491,7 @@ export function CinematicInformationPage({
               <div className="kw-section-heading">
                 <div>
                   <p className="kw-kicker">WHAT GUIDES US</p>
-                  <h2>
-                    Faith with
-                    <br />
-                    <em>roots and reach.</em>
-                  </h2>
+                  <h2>What we believe.</h2>
                 </div>
               </div>
               <div className="kw-values">
@@ -561,7 +534,7 @@ export function CinematicInformationPage({
               </div>
             </section>
           )}
-          <TrainingFeature />
+          <TrainingFeature compact />
         </>
       ) : (
         <>
@@ -596,11 +569,7 @@ export function CinematicInformationPage({
               <div className="kw-section-heading">
                 <div>
                   <p className="kw-kicker">FOR YOUR FIRST VISIT</p>
-                  <h2>
-                    Bring their wonder.
-                    <br />
-                    <em>We’ll welcome your family.</em>
-                  </h2>
+                  <h2>A little planning for your first Sunday.</h2>
                 </div>
               </div>
               <div className="kw-values">
@@ -669,13 +638,12 @@ export function CinematicLocationsPage({
         <div className="kw-shell">
           <p className="kw-kicker">KINGSWORD EVERYWHERE</p>
           <h1>
-            A world of faith.
-            <br />
-            <em>A place for you.</em>
+            Find your <em>KingsWord church.</em>
           </h1>
           <p>
             Explore our communities in Chicago, Nigeria, Calgary, Dallas and
-            London. Your next chapter could be closer than you think.
+            London. Find service times, directions and a look inside each
+            church.
           </p>
           <Link href="/explore" className="kw-text-link">
             Explore the globe <ArrowUpRight size={18} />

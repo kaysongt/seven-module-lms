@@ -3,8 +3,8 @@
 The KingsWord network, five location sites and the **Believers Training** programme, as one application.
 
 The homepage is an interactive, rotating globe with clickable church locations,
-an automatic tour, draggable geography and location highlights. Chicago, Nigeria,
-Calgary, Dallas and London each have cinematic local pages, real photography,
+an automatic tour, draggable geography and compact, swipeable location photo galleries. Chicago, Nigeria,
+Calgary, Dallas and London each have bright, distinct local pages, real photography,
 embedded teaching and worship videos, visiting information and hostname routing.
 The seven-module training portal remains shared across locations.
 See [DOMAINS.md](./DOMAINS.md) for domain mappings,
@@ -22,7 +22,7 @@ Photography, videos and globe coordinates live in `src/lib/location-media.ts`.
 
 ## What is included
 
-- Interactive Natural Earth globe, automated location tour, accessible pause/reset and location controls
+- Interactive 4K NASA Earth globe, automated location tour, mini photo galleries, accessible pause/reset and location controls
 - Fourteen real church photographs and nine official YouTube videos, with responsive image loading and click-to-play embeds
 - KingsWord network homepage and a five-location photo directory
 - Location sites: home, about, children's ministry, contact, and visiting details
@@ -44,7 +44,7 @@ Photography, videos and globe coordinates live in `src/lib/location-media.ts`.
 - Prisma 6 and PostgreSQL (tested with Neon)
 - Zod validation and Vitest
 - Self-hosted Fraunces and Manrope variable fonts
-- D3 Geo and TopoJSON for a lightweight Canvas globe, with locally hosted geography
+- WebGL for the 4096 × 2048 NASA Earth texture; D3 Geo and TopoJSON for aligned markers and a Canvas fallback
 
 ## Local setup
 

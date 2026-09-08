@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   ArrowUpRight,
   MoveUpRight,
   Pause,
@@ -19,6 +21,8 @@ import {
   type GeoPermissibleObjects,
 } from "d3-geo";
 import { feature, mesh } from "topojson-client";
+import { createEarthRenderer } from "@/lib/earth-renderer";
+import type { ChurchPhoto } from "@/lib/location-media";
 import type { Topology, GeometryCollection } from "topojson-specification";
 
 export type GlobeLocation = {
@@ -30,6 +34,7 @@ export type GlobeLocation = {
   image: string;
   headline: string;
   caption: string;
+  photos: ChurchPhoto[];
 };
 
 export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
@@ -37,6 +42,8 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
   const [paused, setPaused] = useState(false);
   const [available, setAvailable] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fallbackRef = useRef<HTMLCanvasElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const pinsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const engineRef = useRef({
@@ -67,8 +74,10 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const stage = stageRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !stage || !ctx) return;
+    const fallback = fallbackRef.current;
+    const ctx = fallback?.getContext("2d");
+    if (!canvas || !fallback || !stage || !ctx) return;
+    const earth = createEarthRenderer(canvas, "/geo/earth-4k.webp");
     const engine = engineRef.current;
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const controller = new AbortController();
@@ -86,8 +95,8 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
     const resize = () => {
       size = stage.clientWidth;
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = size * ratio;
-      canvas.height = size * ratio;
+      canvas.width = fallback.width = Math.round(size * ratio);
+      canvas.height = fallback.height = Math.round(size * ratio);
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       projection.scale(size * 0.405).translate([size / 2, size / 2]);
     };
@@ -168,95 +177,101 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
       const center = size / 2;
       ctx.clearRect(0, 0, size, size);
 
-      // Natural Earth geography rendered as an orthographic sphere.
-      const halo = ctx.createRadialGradient(
-        center,
-        center,
-        radius * 0.92,
-        center,
-        center,
-        radius * 1.16,
-      );
-      halo.addColorStop(0, "rgba(128,166,222,0)");
-      halo.addColorStop(0.48, "rgba(103,140,190,0.13)");
-      halo.addColorStop(1, "rgba(103,140,190,0)");
-      ctx.fillStyle = halo;
-      ctx.fillRect(0, 0, size, size);
-      ctx.beginPath();
-      path({ type: "Sphere" });
-      const ocean = ctx.createRadialGradient(
-        center - radius * 0.4,
-        center - radius * 0.5,
-        0,
-        center,
-        center,
-        radius * 1.2,
-      );
-      ocean.addColorStop(0, "#1d3046");
-      ocean.addColorStop(0.6, "#0d1827");
-      ocean.addColorStop(1, "#050910");
-      ctx.fillStyle = ocean;
-      ctx.fill();
-      ctx.save();
-      ctx.clip();
-
-      ctx.beginPath();
-      path(grid);
-      ctx.strokeStyle = "rgba(138,170,199,0.13)";
-      ctx.lineWidth = 0.6;
-      ctx.stroke();
-      if (land) {
+      if (earth?.ready) {
+        canvas.style.opacity = "1";
+        earth.render(engine.rotation);
+      } else {
+        canvas.style.opacity = "0";
+        // Natural Earth geography rendered as an orthographic sphere.
+        const halo = ctx.createRadialGradient(
+          center,
+          center,
+          radius * 0.92,
+          center,
+          center,
+          radius * 1.16,
+        );
+        halo.addColorStop(0, "rgba(128,166,222,0)");
+        halo.addColorStop(0.48, "rgba(103,140,190,0.13)");
+        halo.addColorStop(1, "rgba(103,140,190,0)");
+        ctx.fillStyle = halo;
+        ctx.fillRect(0, 0, size, size);
         ctx.beginPath();
-        path(land);
-        const continents = ctx.createLinearGradient(0, 0, size, size);
-        continents.addColorStop(0, "#9b9274");
-        continents.addColorStop(0.5, "#586761");
-        continents.addColorStop(1, "#243b45");
-        ctx.fillStyle = continents;
+        path({ type: "Sphere" });
+        const ocean = ctx.createRadialGradient(
+          center - radius * 0.4,
+          center - radius * 0.5,
+          0,
+          center,
+          center,
+          radius * 1.2,
+        );
+        ocean.addColorStop(0, "#2989d1");
+        ocean.addColorStop(0.6, "#1260bb");
+        ocean.addColorStop(1, "#214d9c");
+        ctx.fillStyle = ocean;
         ctx.fill();
-        ctx.lineWidth = 0.65;
-        ctx.strokeStyle = "rgba(213,219,191,0.38)";
-        ctx.stroke();
-      }
-      if (borders) {
+        ctx.save();
+        ctx.clip();
+
         ctx.beginPath();
-        path(borders);
-        ctx.lineWidth = 0.45;
-        ctx.strokeStyle = "rgba(13,24,35,0.45)";
+        path(grid);
+        ctx.strokeStyle = "rgba(138,170,199,0.13)";
+        ctx.lineWidth = 0.6;
         ctx.stroke();
-      }
-      // Great-circle connections between the ministry's locations.
-      for (const location of locations.slice(1)) {
+        if (land) {
+          ctx.beginPath();
+          path(land);
+          const continents = ctx.createLinearGradient(0, 0, size, size);
+          continents.addColorStop(0, "#bbd5a1");
+          continents.addColorStop(0.5, "#73a47a");
+          continents.addColorStop(1, "#4f886d");
+          ctx.fillStyle = continents;
+          ctx.fill();
+          ctx.lineWidth = 0.65;
+          ctx.strokeStyle = "rgba(213,219,191,0.38)";
+          ctx.stroke();
+        }
+        if (borders) {
+          ctx.beginPath();
+          path(borders);
+          ctx.lineWidth = 0.45;
+          ctx.strokeStyle = "rgba(13,24,35,0.45)";
+          ctx.stroke();
+        }
+        // Great-circle connections between the ministry's locations.
+        for (const location of locations.slice(1)) {
+          ctx.beginPath();
+          path({
+            type: "LineString",
+            coordinates: [locations[0].coordinates, location.coordinates],
+          });
+          ctx.setLineDash([2, 5]);
+          ctx.strokeStyle = "rgba(230,195,136,0.48)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        const shade = ctx.createRadialGradient(
+          center - radius * 0.5,
+          center - radius * 0.5,
+          radius * 0.15,
+          center,
+          center,
+          radius * 1.05,
+        );
+        shade.addColorStop(0, "rgba(5,9,16,0)");
+        shade.addColorStop(0.65, "rgba(5,9,16,0.1)");
+        shade.addColorStop(1, "rgba(5,9,16,0.25)");
+        ctx.fillStyle = shade;
+        ctx.fillRect(0, 0, size, size);
+        ctx.restore();
         ctx.beginPath();
-        path({
-          type: "LineString",
-          coordinates: [locations[0].coordinates, location.coordinates],
-        });
-        ctx.setLineDash([2, 5]);
-        ctx.strokeStyle = "rgba(230,195,136,0.48)";
+        path({ type: "Sphere" });
+        ctx.strokeStyle = "rgba(164,191,213,0.4)";
         ctx.lineWidth = 1;
         ctx.stroke();
-        ctx.setLineDash([]);
       }
-      const shade = ctx.createRadialGradient(
-        center - radius * 0.5,
-        center - radius * 0.5,
-        radius * 0.15,
-        center,
-        center,
-        radius * 1.05,
-      );
-      shade.addColorStop(0, "rgba(5,9,16,0)");
-      shade.addColorStop(0.65, "rgba(5,9,16,0.1)");
-      shade.addColorStop(1, "rgba(5,9,16,0.8)");
-      ctx.fillStyle = shade;
-      ctx.fillRect(0, 0, size, size);
-      ctx.restore();
-      ctx.beginPath();
-      path({ type: "Sphere" });
-      ctx.strokeStyle = "rgba(164,191,213,0.4)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
 
       for (let index = 0; index < locations.length; index++) {
         const pin = pinsRef.current[index];
@@ -288,6 +303,7 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
       disposed = true;
       cancelAnimationFrame(frame);
       controller.abort();
+      earth?.dispose();
       resizeObserver.disconnect();
       observer.disconnect();
       media.removeEventListener("change", motionChange);
@@ -302,30 +318,32 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
     >
       <div className="globe-copy">
         <p className="kw-kicker">
-          <span className="status-dot" /> A global family. A personal welcome.
+          <span className="status-dot" /> KINGSWORD MINISTRIES INTERNATIONAL
         </p>
         <h1>
-          One Word.
+          Faith beyond
           <br />
-          One Spirit.
-          <br />
-          <em>Everywhere.</em>
+          <em>borders.</em>
         </h1>
         <p className="globe-intro">
-          Different cities. One extraordinary family.
-          <br />
-          Find your place in the KingsWord story.
+          From Chicago to Lagos, Calgary to London. Discover the people, worship
+          and shared faith that connect our world.
         </p>
         <a href="#our-locations" className="kw-button kw-button-light">
-          Find your community <ArrowUpRight size={18} />
+          Explore our churches <ArrowUpRight size={18} />
         </a>
       </div>
 
       <div className="globe-visual">
         <div className="globe-coordinate">
-          CONNECTED BY FAITH <span>EST. 1997</span>
+          YOUR WORLD. YOUR CHURCH. <span>EST. 1997</span>
         </div>
         <div className="globe-stage" ref={stageRef}>
+          <canvas
+            ref={fallbackRef}
+            className="globe-fallback-canvas"
+            aria-hidden="true"
+          />
           <canvas
             ref={canvasRef}
             aria-label="Rotating globe showing KingsWord churches. Use the location buttons below or select a map marker."
@@ -427,16 +445,59 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
           engineRef.current.hovered = false;
         }}
       >
-        <div className="globe-highlight-image">
-          <Image src={current.image} alt={current.caption} fill sizes="100px" />
-        </div>
         <div className="globe-highlight-copy">
-          <span>In focus · {current.region}</span>
-          <h2>{current.name}</h2>
+          <span>Explore · {current.region}</span>
+          <div className="globe-highlight-heading">
+            <h2>{current.name}</h2>
+            <Link href={current.href}>
+              Visit church <ArrowUpRight size={16} />
+            </Link>
+          </div>
           <p>{current.headline}</p>
-          <Link href={current.href}>
-            Discover {current.name} <ArrowRight size={14} />
-          </Link>
+        </div>
+        <div className="globe-mini-gallery" key={current.slug}>
+          <div
+            className="globe-gallery-track"
+            ref={galleryRef}
+            aria-label={`Photos from KingsWord ${current.name}`}
+          >
+            {current.photos.map((photo) => (
+              <Link
+                key={photo.src}
+                href={`${current.href}#community`}
+                aria-label={photo.alt}
+              >
+                <Image src={photo.src} alt={photo.alt} fill sizes="160px" />
+              </Link>
+            ))}
+          </div>
+          <div className="globe-gallery-controls">
+            <span>A glimpse of {current.name}</span>
+            <div>
+              <button
+                aria-label="Previous location photos"
+                onClick={() =>
+                  galleryRef.current?.scrollBy({
+                    left: -170,
+                    behavior: engineRef.current.reduced ? "instant" : "smooth",
+                  })
+                }
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                aria-label="Next location photos"
+                onClick={() =>
+                  galleryRef.current?.scrollBy({
+                    left: 170,
+                    behavior: engineRef.current.reduced ? "instant" : "smooth",
+                  })
+                }
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
