@@ -1,7 +1,7 @@
 /* Public church experience; the learning portal keeps its own component styles. */
 .kw-site {
-  --kw-accent: #245ce5;
-  --kw-muted: #596b82;
+  --kw-accent: #1743ad;
+  --kw-muted: #34465e;
   --kw-line: #dce5ef;
   background: #fff;
   color: #172c45;
@@ -32,7 +32,7 @@
   line-height: 1.6;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--kw-accent, #245ce5);
+  color: var(--kw-accent, #1743ad);
 }
 .kw-button {
   min-height: 52px;
@@ -56,13 +56,13 @@
   background: #eef4ff;
 }
 .kw-button-light {
-  background: var(--kw-accent, #245ce5);
+  background: var(--kw-accent, #1743ad);
   color: white;
   border-color: transparent;
   box-shadow: 0 8px 22px #245ce51c;
 }
 .kw-button-light:hover {
-  background: color-mix(in srgb, var(--kw-accent, #245ce5), #172c45 15%);
+  background: color-mix(in srgb, var(--kw-accent, #1743ad), #172c45 15%);
 }
 .kw-text-link {
   display: inline-flex;
@@ -72,7 +72,7 @@
   font-weight: 800;
   border-bottom: 1px solid #bdcfe5;
   padding-bottom: 10px;
-  color: var(--kw-accent, #245ce5);
+  color: var(--kw-accent, #1743ad);
 }
 .kw-site :focus-visible,
 .kw-nav :focus-visible,
@@ -129,10 +129,10 @@
   font-weight: 700;
 }
 .kw-nav-links a:not(.kw-nav-action) {
-  color: #53657a;
+  color: #34465e;
 }
 .kw-nav-links a:hover {
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-nav-action {
   display: inline-flex;
@@ -142,7 +142,7 @@
   border: 1px solid #ccdaee;
   border-radius: 8px;
   background: #f1f6ff;
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-brand {
   display: flex;
@@ -246,12 +246,12 @@
   font-weight: 850;
 }
 .globe-copy h1 em {
-  color: #245ce5;
+  color: #1743ad;
   position: relative;
 }
 .globe-intro {
   margin: 24px 0 28px;
-  color: #536982;
+  color: #34465e;
   font-size: 17px;
   line-height: 1.85;
   max-width: 420px;
@@ -272,7 +272,7 @@
   line-height: 1.5;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #62758d;
+  color: #42566d;
   font-weight: 700;
 }
 .globe-highlight-heading {
@@ -289,7 +289,7 @@
 }
 .globe-highlight p {
   font-size: 14px;
-  color: #62758d;
+  color: #42566d;
   line-height: 1.5;
 }
 .globe-highlight-heading > a {
@@ -298,7 +298,7 @@
   gap: 8px;
   font-size: 13px;
   font-weight: 800;
-  color: #245ce5;
+  color: #1743ad;
   min-height: 44px;
 }
 .globe-mini-gallery {
@@ -338,7 +338,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  color: #64768b;
+  color: #42566d;
   font-size: 12px;
 }
 .globe-gallery-controls > div {
@@ -350,7 +350,7 @@
   display: grid;
   place-items: center;
   cursor: pointer;
-  color: #245ce5;
+  color: #1743ad;
   border-radius: 50%;
 }
 .globe-gallery-controls button:hover {
@@ -373,7 +373,7 @@
   right: 5%;
   display: flex;
   justify-content: space-between;
-  color: #71849b;
+  color: #42566d;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -460,11 +460,11 @@
   left: 20px;
 }
 .globe-pin.is-active .globe-pin-label {
-  color: #245ce5;
-  border-color: #245ce5;
+  color: #1743ad;
+  border-color: #1743ad;
 }
 .globe-pin:hover .globe-pin-label {
-  background: #245ce5;
+  background: #1743ad;
   color: #fff;
 }
 .globe-tools {
@@ -474,7 +474,7 @@
   gap: 15px;
   padding: 0 8%;
   margin-top: -12px;
-  color: #60728a;
+  color: #42566d;
   font-size: 12px;
 }
 .globe-tools > div {
@@ -489,7 +489,7 @@
   border: 1px solid #d3e0ee;
   border-radius: 50%;
   cursor: pointer;
-  color: #245ce5;
+  color: #1743ad;
   background: white;
 }
 .globe-tools button:hover {
@@ -518,7 +518,7 @@
   gap: 18px;
   font-size: 12px;
   letter-spacing: 0.08em;
-  color: #73859a;
+  color: #42566d;
   white-space: nowrap;
 }
 .globe-location-bar > div {
@@ -533,18 +533,18 @@
   gap: 12px;
   min-height: 44px;
   cursor: pointer;
-  color: #60738a;
+  color: #42566d;
   font-size: 14px;
   font-weight: 800;
   transition: color 0.3s;
 }
 .globe-location-bar button span {
   font-size: 12px;
-  color: #8a9bb0;
+  color: #42566d;
   font-weight: 500;
 }
 .globe-location-bar button.is-active {
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-statement {
   background: #f2f7ff;
@@ -557,7 +557,7 @@
   line-height: 1.13;
 }
 .kw-statement h2 span {
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-statement-bottom {
   display: flex;
@@ -567,7 +567,7 @@
 }
 .kw-statement-bottom p {
   max-width: 700px;
-  color: #596c83;
+  color: #34465e;
   font-size: 17px;
   line-height: 1.85;
 }
@@ -648,7 +648,7 @@
 }
 .kw-location-card:hover .kw-round-arrow {
   background: white;
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-photo-statement {
   position: relative;
@@ -687,7 +687,7 @@
 }
 .kw-photo-statement .kw-button {
   background: white;
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-photo-credit {
   position: absolute;
@@ -710,7 +710,7 @@
 }
 .kw-training p:not(.kw-kicker) {
   max-width: 500px;
-  color: #576b86;
+  color: #34465e;
   font-size: 16px;
   line-height: 1.85;
   margin: 25px 0;
@@ -727,7 +727,7 @@
 }
 .kw-training-list span {
   font-size: 12px;
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-training-list p:not(.kw-kicker) {
   margin: 0;
@@ -736,7 +736,7 @@
   color: #294565;
 }
 .kw-training-list svg {
-  color: #7d97b9;
+  color: #42566d;
 }
 .kw-training-compact {
   padding: 55px 0;
@@ -755,7 +755,7 @@
 }
 .kw-training-compact p:not(.kw-kicker) {
   font-size: 16px;
-  color: #576b86;
+  color: #34465e;
   line-height: 1.7;
 }
 .kw-training-compact .kw-button {
@@ -776,10 +776,10 @@
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #708197;
+  color: #42566d;
 }
 .kw-place-breadcrumb span {
-  color: #b7c7da;
+  color: #42566d;
 }
 .kw-place-main {
   display: grid;
@@ -801,7 +801,7 @@
   font-size: 17px;
   line-height: 1.85;
   max-width: 540px;
-  color: #5a6f87;
+  color: #34465e;
 }
 .kw-place-actions {
   display: flex;
@@ -854,7 +854,7 @@
   color: var(--kw-accent);
 }
 .kw-hero-service p {
-  color: #62758c;
+  color: #42566d;
   font-size: 14px;
   line-height: 1.7;
   grid-column: 1/-1;
@@ -875,7 +875,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: #73849b;
+  color: #42566d;
   gap: 20px;
 }
 .kw-place-bottom a {
@@ -901,7 +901,7 @@
 .kw-welcome p:not(.kw-kicker),
 .kw-children-intro p:not(.kw-kicker) {
   font-size: 16px;
-  color: #5b6e85;
+  color: #34465e;
   line-height: 1.9;
   margin-bottom: 18px;
 }
@@ -973,7 +973,7 @@
   width: 66px;
   height: 66px;
   background: #fffffff0;
-  color: #245ce5;
+  color: #1743ad;
   box-shadow: 0 8px 24px #11224430;
   display: grid;
   place-items: center;
@@ -1007,7 +1007,7 @@
   line-height: 1.3;
 }
 .kw-video-info > span {
-  color: #6b7f95;
+  color: #42566d;
   font-size: 13px;
 }
 .kw-watch-more {
@@ -1064,13 +1064,13 @@
   gap: 15px;
   padding: 19px 24px;
   font-size: 13px;
-  color: #61758e;
+  color: #42566d;
 }
 .kw-video-dialog-inner > p a {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #245ce5;
+  color: #1743ad;
   font-weight: 700;
 }
 .kw-gallery {
@@ -1144,7 +1144,7 @@
   color: var(--kw-accent);
 }
 .kw-community-paths p {
-  color: #64778d;
+  color: #42566d;
   font-size: 14px;
   line-height: 1.8;
   margin-top: 11px;
@@ -1184,20 +1184,20 @@
 }
 .kw-service-time span {
   display: block;
-  color: #5e738b;
+  color: #34465e;
   font-size: 14px;
   line-height: 1.8;
 }
 .kw-service-details > small {
   display: block;
-  color: #61768d;
+  color: #42566d;
   font-size: 12px;
   margin: 26px 0;
 }
 .kw-service-details .kw-body {
   font-size: 16px;
   line-height: 1.8;
-  color: #5e738b;
+  color: #34465e;
   max-width: 370px;
   margin-block: 20px;
 }
@@ -1224,7 +1224,7 @@
   font-size: 16px;
   line-height: 1.8;
   margin: 18px 0;
-  color: #5e738b;
+  color: #34465e;
   max-width: 420px;
 }
 .kw-address-list nav {
@@ -1257,7 +1257,7 @@
   max-width: 660px;
   font-size: 17px;
   line-height: 1.85;
-  color: #5b7089;
+  color: #34465e;
 }
 .kw-info-hero .kw-text-link {
   margin-top: 25px;
@@ -1282,7 +1282,7 @@
 .kw-values p {
   font-size: 16px;
   line-height: 1.85;
-  color: #5b7089;
+  color: #34465e;
 }
 .kw-leaders {
   display: grid;
@@ -1307,7 +1307,7 @@
   margin: 20px 0;
 }
 .kw-leaders span {
-  color: #5b7089;
+  color: #34465e;
   font-size: 16px;
   line-height: 1.85;
 }
@@ -1366,7 +1366,7 @@
   filter: brightness(0);
 }
 .kw-footer-brand p {
-  color: #60748c;
+  color: #42566d;
   font-size: 14px;
   line-height: 1.9;
   max-width: 360px;
@@ -1377,18 +1377,18 @@
   align-content: start;
   gap: 12px;
   font-size: 14px;
-  color: #60748c;
+  color: #42566d;
 }
 .kw-footer nav > p {
   margin: 5px 0 15px;
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: #245ce5;
+  color: #1743ad;
   font-weight: 800;
   text-transform: uppercase;
 }
 .kw-footer nav a:hover {
-  color: #245ce5;
+  color: #1743ad;
 }
 .kw-footer-bottom {
   display: flex;
@@ -1397,7 +1397,7 @@
   gap: 15px;
   padding: 23px 0;
   border-top: 1px solid #dce7f5;
-  color: #72859c;
+  color: #42566d;
   font-size: 12px;
 }
 @media (min-width: 1600px) {

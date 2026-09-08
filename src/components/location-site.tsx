@@ -79,7 +79,7 @@ function SiteFrame({
 }) {
   const accent = context.location
     ? LOCATION_MEDIA[context.location.slug].accent
-    : "#245ce5";
+    : "#1743ad";
   return (
     <div className="kw-site" style={{ "--kw-accent": accent } as CSSProperties}>
       <PublicNav context={context} />

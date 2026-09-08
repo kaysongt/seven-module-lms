@@ -29,7 +29,7 @@ const chicagoHero = {
 export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   chicago: {
     coordinates: [-87.6298, 41.8781],
-    accent: "#245ce5",
+    accent: "#1743ad",
     headline: "The Apostolic Place, Chicago.",
     heroLead: "Encounter God.",
     heroAccent: "Right here in Chicago.",
@@ -121,7 +121,7 @@ export const LOCATION_MEDIA: Record<string, LocationMedia> = {
   },
   calgary: {
     coordinates: [-114.0719, 51.0447],
-    accent: "#0879aa",
+    accent: "#08648e",
     headline: "A Sunday morning in southeast Calgary.",
     heroLead: "New city?",
     heroAccent: "Meet your community.",
