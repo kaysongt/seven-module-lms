@@ -156,7 +156,9 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
       }
       if (!engine.dragging) {
         const distance =
-          ((engine.target[0] - engine.rotation[0] + 540) % 360) - 180;
+          ((((engine.target[0] - engine.rotation[0] + 180) % 360) + 360) %
+            360) -
+          180;
         const ease = engine.reduced ? 1 : 0.055;
         engine.rotation[0] += distance * ease;
         engine.rotation[1] += (engine.target[1] - engine.rotation[1]) * ease;
