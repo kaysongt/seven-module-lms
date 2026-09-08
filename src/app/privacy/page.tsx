@@ -9,7 +9,7 @@ export default function PrivacyPage() {
   return (
     <main>
       <PublicNav />
-      <article className="page-shell max-w-4xl py-20 md:py-28">
+      <article id="main-content" className="page-shell max-w-4xl py-20 md:py-28">
         <span className="eyebrow">Privacy notice</span>
         <h1 className="display mt-6 text-6xl font-medium tracking-[-0.05em]">Your information deserves careful handling.</h1>
         <div className="prose-course mt-12">

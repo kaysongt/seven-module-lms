@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Check } from "lucide-react";
 import { Brand } from "@/components/brand";
 import { SignupForm } from "@/app/signup/signup-form";
-import { CHURCH } from "@/lib/church";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const metadata = {
   title: "Start Believers Training",
@@ -77,7 +77,7 @@ export default function SignupPage() {
           </div>
 
           <p className="text-xs leading-6 text-white/45">
-            Taught by {CHURCH.name}. Questions? {CHURCH.email}
+            Taught by {SITE_CONFIG.organization}. Questions? {SITE_CONFIG.supportEmail}
           </p>
         </div>
       </section>
