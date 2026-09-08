@@ -1,6 +1,10 @@
 # Production Deployment
 
-Deploy this LMS as a **new Vercel project**. Do not attach it to or overwrite an existing KTI website project.
+This repository is already linked to the **seven-module-lms** Vercel project in
+**kaysongts-projects**. Use that project for this KingsWord network update and
+retain its database configuration. Do not overwrite a separate KTI project.
+See [DOMAINS.md](./DOMAINS.md) for the five-domain cutover. The setup steps below
+also cover a fresh installation when no existing deployment is available.
 
 ## 1. Approve launch content
 

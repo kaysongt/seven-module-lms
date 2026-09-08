@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CHURCH } from "@/lib/church";
+import { NETWORK } from "@/lib/locations";
 
 /**
  * The church wordmark.
@@ -12,16 +12,20 @@ export function Brand({
   compact = false,
   href = "/",
   inverted = false,
+  name = NETWORK.name,
+  tagline = NETWORK.tagline,
 }: {
   compact?: boolean;
   href?: string;
   inverted?: boolean;
+  name?: string;
+  tagline?: string;
 }) {
   return (
     <Link
       href={href}
       className="inline-flex items-center gap-3 no-underline"
-      aria-label={`${CHURCH.name} home`}
+      aria-label={`${name} home`}
     >
       <span
         className={`relative grid h-10 w-10 grid-cols-3 items-end gap-1 rounded-full p-2 ${
@@ -39,7 +43,7 @@ export function Brand({
             inverted ? "text-[var(--sun-soft)]" : "text-[var(--sun)]"
           }`}
         >
-          {CHURCH.tagline}
+          {tagline}
         </span>
         {!compact && (
           <span
@@ -47,7 +51,7 @@ export function Brand({
               inverted ? "text-white" : "text-[var(--ink)]"
             }`}
           >
-            {CHURCH.name}
+            {name}
           </span>
         )}
       </span>

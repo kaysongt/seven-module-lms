@@ -18,7 +18,7 @@ export default async function BelieversTrainingPage() {
   return (
     <main className="overflow-hidden">
       <PublicNav />
-      <section className="relative border-b border-[var(--line)]">
+      <section id="main-content" className="relative border-b border-[var(--line)]">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="absolute -top-44 right-[-8rem] h-[34rem] w-[34rem] rounded-full border border-[var(--forest)]/10" />
           <div className="absolute top-12 right-16 h-48 w-48 rounded-full bg-[var(--sun)]/12 blur-3xl" />

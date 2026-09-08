@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import "@fontsource-variable/fraunces";
 import "@fontsource-variable/manrope";
 import "./globals.css";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { NETWORK } from "@/lib/locations";
 import { getAppUrl } from "@/lib/app-url";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getAppUrl()),
   title: {
-    default: `${SITE_CONFIG.name} | ${SITE_CONFIG.organization}`,
-    template: `%s | ${SITE_CONFIG.shortName}`,
+    default: NETWORK.name,
+    template: `%s | KingsWord`,
   },
-  description: SITE_CONFIG.description,
+  description: NETWORK.description,
   openGraph: {
-    title: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
+    title: NETWORK.name,
+    description: NETWORK.description,
     type: "website",
   },
 };

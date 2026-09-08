@@ -1,24 +1,24 @@
-# KingsWord Chicago
+# KingsWord
 
-The church's website and its **Believers Training** programme, as one application.
+The KingsWord network, five location sites and the **Believers Training** programme, as one application.
 
-This replaces [chicago.kingsword.org](https://chicago.kingsword.org/) — a WordPress
-and Elementor site — and folds the seven-module training programme in as a tab
-rather than running it as a separate product.
+The homepage is a KingsWord location chooser. Chicago, Nigeria, Calgary, Dallas
+and London each have their own local pages, contact details and hostname routing.
+Chicago's detailed church pages are preserved. The seven-module training portal
+remains shared across locations. See [DOMAINS.md](./DOMAINS.md) for domain mappings,
+content sources, DNS cutover instructions and the shared-account boundaries.
 
-A parallel rebuild of the church site on WordPress + LearnDash was carried some
-way before being dropped: this app already worked, held the real curriculum and
-was deployed, so rebuilding it on a paid plugin would have bought consolidation
-rather than capability. Building the marketing site here instead gets the same
-consolidation the other way round — one codebase, one login, one design system.
+Local preview: `/locations/chicago`, `/locations/nigeria`, `/locations/calgary`,
+`/locations/dallas` and `/locations/london`. Each includes `about`, `contact` and
+`children` subpages. On a configured church hostname these pages live at the root.
 
-The church's own details live in `src/lib/church.ts`; the training programme's
-live in `src/lib/site-config.ts`. They are separate because "the phone number"
-and "the pass mark" belong to different things.
+Location settings live in `src/lib/locations.ts`; Chicago's original details live
+in `src/lib/church.ts`; training settings live in `src/lib/site-config.ts`.
 
 ## What is included
 
-- The church site: home, about, children's ministry, contact, and visiting details
+- KingsWord network homepage and a five-location directory
+- Location sites: home, about, children's ministry, contact, and visiting details
 - Believers Training as a tab, with curriculum, application, privacy, and login pages
 - Admissions queue with approve/decline decisions and one-time activation links
 - Password-based authentication using scrypt, opaque database sessions, secure cookies, and login lockouts

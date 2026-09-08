@@ -14,7 +14,7 @@ export default async function CurriculumPage() {
   return (
     <main>
       <PublicNav />
-      <section className="border-b border-[var(--line)] py-20 md:py-28">
+      <section id="main-content" className="border-b border-[var(--line)] py-20 md:py-28">
         <div className="page-shell grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
           <span className="eyebrow">Believers Training curriculum</span>
           <div>
