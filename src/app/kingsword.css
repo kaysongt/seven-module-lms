@@ -1871,3 +1871,9 @@
     animation: none !important;
   }
 }
+
+/* Keep the expanded public menu comfortable on smaller laptops. */
+@media (max-width: 1150px) {
+  .kw-nav-links { display: none; }
+  .kw-nav-mobile { display: block; }
+}

@@ -17,6 +17,7 @@ export async function PublicNav({
       : []),
     { label: "Believers Training", href: "/believers-training" },
     { label: "Connect", href: localHref(context, "contact") },
+    { label: "Ministers Login", href: "/ministers/login" },
   ];
   return (
     <header className="kw-nav">
