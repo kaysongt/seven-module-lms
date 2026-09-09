@@ -1,5 +1,5 @@
 .ministry-main {
-  background: #f5f8fd;
+  background: var(--kw-canvas);
   min-height: 65vh;
   padding: 64px 0 80px;
   color: #172c45;
@@ -28,7 +28,7 @@
   width: 62px;
   height: 62px;
   border: 1px solid #d5e2f5;
-  background: white;
+  background: var(--kw-surface);
   color: #1743ad;
   border-radius: 18px;
   margin-bottom: 28px;
@@ -49,8 +49,8 @@
   margin-top: 3px;
 }
 .ministry-panel {
-  background: white;
-  border: 1px solid #dce5ef;
+  background: var(--kw-surface);
+  border: 1px solid var(--kw-line);
   border-radius: 20px;
   padding: 36px;
   box-shadow: 0 15px 50px #16345b08;
@@ -73,7 +73,7 @@
 .ministry-panel .field input,
 .ministry-panel .field select,
 .ministry-panel .field textarea {
-  background: white;
+  background: var(--kw-surface);
   color: #172c45;
   font-size: 16px;
 }
@@ -140,8 +140,8 @@
   gap: 22px;
 }
 .ministry-file {
-  background: white;
-  border: 1px solid #dce5ef;
+  background: var(--kw-surface);
+  border: 1px solid var(--kw-line);
   border-radius: 16px;
   padding: 27px;
   display: flex;
