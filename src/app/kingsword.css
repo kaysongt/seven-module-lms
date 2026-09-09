@@ -1,9 +1,16 @@
 /* Public church experience; the learning portal keeps its own component styles. */
+:root {
+  --kw-canvas: #f5f2ec;
+  --kw-surface: #fcf9f3;
+  --kw-surface-soft: #eee9df;
+  --kw-surface-cool: #eaf0f3;
+  --kw-line: #dedbd3;
+}
+
 .kw-site {
   --kw-accent: #1743ad;
   --kw-muted: #34465e;
-  --kw-line: #dce5ef;
-  background: #fff;
+  background: var(--kw-canvas);
   color: #172c45;
   overflow-x: clip;
 }
@@ -110,9 +117,9 @@
 .kw-nav {
   position: relative;
   z-index: 40;
-  background: #fff;
+  background: var(--kw-surface);
   color: #172c45;
-  border-bottom: 1px solid #e5ecf4;
+  border-bottom: 1px solid var(--kw-line);
 }
 .kw-nav-inner {
   display: flex;
@@ -157,7 +164,7 @@
   filter: brightness(0);
 }
 .kw-brand-location {
-  border-left: 1px solid #dce5ef;
+  border-left: 1px solid var(--kw-line);
   padding-left: 17px;
   font-size: 12px;
   letter-spacing: 0.1em;
@@ -188,8 +195,8 @@
   max-width: calc(100vw - 40px);
   display: grid;
   padding: 14px;
-  background: white;
-  border: 1px solid #dce5ef;
+  background: var(--kw-surface);
+  border: 1px solid var(--kw-line);
   border-radius: 12px;
   box-shadow: 0 25px 70px #23456920;
 }
@@ -205,7 +212,7 @@
   top: 0;
   left: 20px;
   padding: 12px;
-  background: white;
+  background: var(--kw-surface);
   color: #111;
   transform: translateY(-200%);
   z-index: 80;
@@ -258,7 +265,7 @@
 }
 .globe-highlight {
   display: block;
-  border-top: 1px solid #dce5ef;
+  border-top: 1px solid var(--kw-line);
   padding: 20px 0 0;
   margin: 4px 0 14px;
   width: 100%;
@@ -444,7 +451,7 @@
   white-space: nowrap;
   font-size: 12px;
   font-weight: 800;
-  background: #fffffff5;
+  background: #fcf9f3f5;
   border: 1px solid #ffffff;
   border-radius: 6px;
   box-shadow: 0 4px 16px #14346330;
@@ -490,7 +497,7 @@
   border-radius: 50%;
   cursor: pointer;
   color: #1743ad;
-  background: white;
+  background: var(--kw-surface);
 }
 .globe-tools button:hover {
   background: #eef4ff;
@@ -507,7 +514,7 @@
   grid-row: 3;
   margin-top: 18px;
   padding: 20px 0 23px;
-  border-top: 1px solid #dce5ef;
+  border-top: 1px solid var(--kw-line);
   display: flex;
   align-items: center;
   gap: 36px;
@@ -547,8 +554,8 @@
   color: #1743ad;
 }
 .kw-statement {
-  background: #f2f7ff;
-  border-block: 1px solid #e4edf9;
+  background: var(--kw-surface-soft);
+  border-block: 1px solid var(--kw-line);
   padding: 80px 0;
 }
 .kw-statement h2 {
@@ -647,7 +654,7 @@
     color 0.3s;
 }
 .kw-location-card:hover .kw-round-arrow {
-  background: white;
+  background: var(--kw-surface);
   color: #1743ad;
 }
 .kw-photo-statement {
@@ -686,7 +693,7 @@
   text-shadow: 0 2px 32px #07182a55;
 }
 .kw-photo-statement .kw-button {
-  background: white;
+  background: var(--kw-surface);
   color: #1743ad;
 }
 .kw-photo-credit {
@@ -699,8 +706,8 @@
 }
 .kw-training {
   padding: 90px 0;
-  background: #edf4ff;
-  border-top: 1px solid #dce7f7;
+  background: var(--kw-surface-cool);
+  border-top: 1px solid var(--kw-line);
 }
 .kw-training-inner {
   display: grid;
@@ -740,7 +747,7 @@
 }
 .kw-training-compact {
   padding: 55px 0;
-  background: #f0f5ff;
+  background: var(--kw-surface-cool);
 }
 .kw-training-compact > .kw-shell {
   display: flex;
@@ -764,7 +771,7 @@
 /* Location pages put the welcome and a bright, unfiltered photograph side by side. */
 .kw-place-hero {
   position: relative;
-  background: linear-gradient(150deg, #fff 45%, #f0f6ff);
+  background: linear-gradient(150deg, var(--kw-canvas) 45%, var(--kw-surface-cool));
 }
 .kw-place-content {
   padding-top: 30px;
@@ -827,7 +834,7 @@
   bottom: 26px;
   left: 24px;
   padding: 10px 14px;
-  background: #ffffffed;
+  background: #fcf9f3ed;
   color: #294565;
   border-radius: 8px;
   font-size: 12px;
@@ -871,7 +878,7 @@
 }
 .kw-place-bottom {
   padding: 22px 0;
-  border-top: 1px solid #dce5ef;
+  border-top: 1px solid var(--kw-line);
   display: flex;
   justify-content: space-between;
   font-size: 12px;
@@ -924,13 +931,13 @@
   font-size: 12px;
   letter-spacing: 0.07em;
   padding: 9px 13px;
-  background: #fffffff0;
+  background: #fcf9f3f0;
   border-radius: 6px;
   color: #294565;
 }
 .kw-watch {
-  background: #f3f7fc;
-  border-block: 1px solid #e4edf7;
+  background: var(--kw-surface-soft);
+  border-block: 1px solid var(--kw-line);
 }
 .kw-video-grid {
   display: grid;
@@ -972,7 +979,7 @@
   transform: translate(-50%, -50%);
   width: 66px;
   height: 66px;
-  background: #fffffff0;
+  background: #fcf9f3f0;
   color: #1743ad;
   box-shadow: 0 8px 24px #11224430;
   display: grid;
@@ -1020,7 +1027,7 @@
   padding: 0;
   border: 0;
   border-radius: 14px;
-  background: white;
+  background: var(--kw-surface);
   color: #172c45;
 }
 .kw-video-dialog::backdrop {
@@ -1150,7 +1157,7 @@
   margin-top: 11px;
 }
 .kw-visit {
-  background: #f1f7fc;
+  background: var(--kw-surface-soft);
 }
 .kw-visit-layout {
   display: grid;
@@ -1202,8 +1209,8 @@
   margin-block: 20px;
 }
 .kw-address-list article {
-  background: white;
-  border: 1px solid #dbe6f0;
+  background: var(--kw-surface);
+  border: 1px solid var(--kw-line);
   padding: 30px;
   margin-bottom: 15px;
   border-radius: 14px;
@@ -1244,8 +1251,8 @@
 }
 .kw-info-hero {
   padding: 80px 0;
-  background: linear-gradient(125deg, #fff, #edf5ff);
-  border-bottom: 1px solid #dce7f5;
+  background: linear-gradient(125deg, var(--kw-canvas), #ebe6dc);
+  border-bottom: 1px solid var(--kw-line);
 }
 .kw-info-hero h1 {
   font-size: clamp(44px, 5.8vw, 80px);
@@ -1312,7 +1319,7 @@
   line-height: 1.85;
 }
 .kw-connect-strip {
-  border-top: 1px solid #dce7f5;
+  border-top: 1px solid var(--kw-line);
   padding: 58px 0;
 }
 .kw-connect-strip > .kw-shell {
@@ -1349,9 +1356,9 @@
   color: var(--kw-accent);
 }
 .kw-footer {
-  background: #fff;
+  background: var(--kw-surface-soft);
   color: #172c45;
-  border-top: 1px solid #dce7f5;
+  border-top: 1px solid var(--kw-line);
   padding: 65px 0 0;
 }
 .kw-footer-main {
@@ -1396,7 +1403,7 @@
   flex-wrap: wrap;
   gap: 15px;
   padding: 23px 0;
-  border-top: 1px solid #dce7f5;
+  border-top: 1px solid var(--kw-line);
   color: #42566d;
   font-size: 12px;
 }
