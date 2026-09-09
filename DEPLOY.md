@@ -17,7 +17,7 @@ also cover a fresh installation when no existing deployment is available.
 
 ## 2. Prepare PostgreSQL
 
-Use the database already connected to the `seven-module-lms` Vercel project. The original development installation used `formation_lms`; production is connected through the project's Neon integration. Verify the selected project and branch before applying migrations, and do not mix tables with another KTI application.
+The existing LMS records are in the isolated `formation_lms` database in the `neon-kti` Neon project. Use that database for production to preserve the administrator, student and curriculum records. The separate `neon-emerald-cave` integration contains an empty LMS schema and is not the source of the existing records. Verify the database as well as the integration name before changing connection settings or applying migrations. Use an isolated database branch for preview testing.
 
 Set these locally or in a secure deployment shell:
 
