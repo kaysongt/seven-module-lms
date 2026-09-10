@@ -17,7 +17,7 @@ also cover a fresh installation when no existing deployment is available.
 
 ## 2. Prepare PostgreSQL
 
-Use a separate database for this LMS. The current development setup uses the isolated `formation_lms` database rather than mixing tables with another KTI application.
+The existing LMS records are in the isolated `formation_lms` database in the `neon-kti` Neon project. Use that database for production to preserve the administrator, student and curriculum records. The separate `neon-emerald-cave` integration contains an empty LMS schema and is not the source of the existing records. Verify the database as well as the integration name before changing connection settings or applying migrations. Use an isolated database branch for preview testing.
 
 Set these locally or in a secure deployment shell:
 
@@ -72,3 +72,17 @@ Delete all test applications, accounts, submissions, posts, and progress after v
 - **Payments:** define tuition, currency, full-program versus module pricing, refund terms, scholarships, and whether successful payment should auto-enroll a student.
 - **Operations:** assign owners for admissions, curriculum publication, assignment review, moderation, and support.
 - **Monitoring:** enable Vercel Web Analytics, Speed Insights, and runtime alerts as appropriate for the organization.
+
+## Ministers portal
+
+Apply `20260909000000_ministers_portal` with `npm run db:deploy` before deploying the portal. The migration adds minister profiles, private file metadata/content, request counters, and constraints without changing existing learning records. Do not run the curriculum seed as part of this update.
+
+- The public **Ministers Login** menu opens `/ministers/login`. Existing accounts can request minister access; new accounts start as pending with clearance 0. Login lets pending applicants check their status, but does not grant document access.
+- Existing `ADMIN` users review accounts at `/admin/ministers`. Instructors cannot approve requests. Administrators should verify the applicant's identity before approval.
+- Clearance levels are cumulative: **1 General Ministry**, **2 Leadership**, **3 Restricted**. Approval is required at every level. Declining or suspending access resets clearance to 0; every download rechecks authorization.
+- Administrators upload and manage documents at `/admin/ministry-files`. PDF, DOCX, XLSX and PPTX files up to **3 MB each** are supported. New uploads default to Draft. Only published documents appear to eligible ministers; archiving removes access.
+- File bytes stay in PostgreSQL and are delivered as private, uncached attachments through `/ministers/files/[id]`. There are no public storage URLs. Monitor database storage as the library grows; larger files require a private object-storage upload/download design.
+- Approval changes, document changes and downloads are recorded in the audit log. Concurrent edits require a refresh instead of silently replacing another administrator's decision.
+- No automatic approval emails are sent. Applicants see their current status when they sign in; staff can notify them separately.
+
+Before release, verify registration, existing-account requests, approval, all three clearance levels, copied download links, suspension, draft/archive access, and administrator-only actions using an isolated database branch.

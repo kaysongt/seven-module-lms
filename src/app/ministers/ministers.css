@@ -1,0 +1,239 @@
+.ministry-main {
+  background: var(--kw-canvas);
+  min-height: 65vh;
+  padding: 64px 0 80px;
+  color: #172c45;
+}
+.ministry-auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+  max-width: 1150px;
+}
+.ministry-intro h1 {
+  font-size: clamp(40px, 4.5vw, 62px);
+  line-height: 1.08;
+  margin: 20px 0 25px;
+}
+.ministry-intro > p:not(.kw-kicker) {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #34465e;
+  max-width: 460px;
+}
+.ministry-icon {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border: 1px solid #d5e2f5;
+  background: var(--kw-surface);
+  color: #1743ad;
+  border-radius: 18px;
+  margin-bottom: 28px;
+}
+.ministry-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px 0;
+  margin: 14px 0;
+  color: #42566d;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.ministry-note svg {
+  flex-shrink: 0;
+  color: #1743ad;
+  margin-top: 3px;
+}
+.ministry-panel {
+  background: var(--kw-surface);
+  border: 1px solid var(--kw-line);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 15px 50px #16345b08;
+}
+.ministry-panel h2 {
+  font-size: 29px;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+.ministry-panel > p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #42566d;
+  margin: 14px 0 26px;
+}
+.ministry-panel .field label {
+  font-size: 14px;
+  color: #34465e;
+}
+.ministry-panel .field input,
+.ministry-panel .field select,
+.ministry-panel .field textarea {
+  background: var(--kw-surface);
+  color: #172c45;
+  font-size: 16px;
+}
+.ministry-panel .button-primary {
+  background: #1743ad;
+  color: white;
+  border-radius: 9px;
+}
+.ministry-panel .form-error {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.ministry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 28px;
+  margin-bottom: 32px;
+}
+.ministry-header h1 {
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.1;
+  margin: 14px 0;
+}
+.ministry-header p:not(.kw-kicker) {
+  color: #42566d;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.ministry-header nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ministry-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 30px;
+  background: #e8f0fe;
+  color: #1743ad;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.ministry-empty {
+  padding: 45px;
+  max-width: 800px;
+}
+.ministry-empty h2 {
+  margin-bottom: 16px;
+}
+.ministry-empty p {
+  color: #42566d;
+  line-height: 1.8;
+  font-size: 16px;
+}
+.ministry-empty .kw-button {
+  margin-top: 24px;
+}
+.ministry-files {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.ministry-file {
+  background: var(--kw-surface);
+  border: 1px solid var(--kw-line);
+  border-radius: 16px;
+  padding: 27px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.ministry-file h2 {
+  font-size: 25px;
+  line-height: 1.3;
+}
+.ministry-file p {
+  color: #42566d;
+  font-size: 15px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+.ministry-file-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  color: #42566d;
+  font-size: 13px;
+}
+.ministry-file .kw-text-link {
+  margin-top: auto;
+}
+.ministry-filter {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin: 24px 0;
+}
+.ministry-filter .field {
+  flex: 1;
+  min-width: 220px;
+}
+.ministry-admin-link {
+  margin-top: 28px;
+}
+@media (max-width: 1150px) {
+  .kw-nav-links {
+    gap: 16px;
+    font-size: 13px;
+  }
+  .kw-nav-inner {
+    gap: 20px;
+  }
+  .kw-brand-location {
+    padding-left: 12px;
+  }
+  .ministry-auth {
+    gap: 45px;
+  }
+}
+@media (max-width: 1000px) {
+  .kw-nav-links {
+    display: none;
+  }
+  .kw-nav-mobile {
+    display: block;
+  }
+}
+@media (max-width: 750px) {
+  .ministry-main {
+    padding: 36px 0 55px;
+  }
+  .ministry-auth {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .ministry-intro h1 {
+    font-size: 40px;
+  }
+  .ministry-panel {
+    padding: 26px;
+  }
+  .ministry-icon {
+    display: none;
+  }
+  .ministry-note {
+    margin: 0;
+    padding: 18px 0;
+  }
+  .ministry-header {
+    flex-direction: column;
+  }
+  .ministry-files {
+    grid-template-columns: 1fr;
+  }
+  .ministry-empty {
+    padding: 28px;
+  }
+}

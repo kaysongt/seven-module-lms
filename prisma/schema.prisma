@@ -58,6 +58,13 @@ enum PostStatus {
   HIDDEN
 }
 
+enum MinisterStatus {
+  PENDING
+  APPROVED
+  DECLINED
+  SUSPENDED
+}
+
 model User {
   id                  String                 @id @default(uuid())
   email               String                 @unique
@@ -82,6 +89,63 @@ model User {
   certificatesIssued  Certificate[]          @relation("IssuedCertificates")
   announcements       Announcement[]
   auditLogs           AuditLog[]
+  ministerProfile     MinisterProfile?       @relation("MinisterAccount")
+  ministersReviewed   MinisterProfile[]      @relation("MinisterReviewer")
+  ministryFiles       MinistryFile[]
+}
+
+model MinisterProfile {
+  userId       String         @id
+  phone        String
+  church       String
+  ministryRole String
+  requestNote  String
+  status       MinisterStatus @default(PENDING)
+  clearance    Int            @default(0)
+  adminNotes   String?
+  reviewedById String?
+  reviewedAt   DateTime?
+  version      Int            @default(0)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  user         User           @relation("MinisterAccount", fields: [userId], references: [id], onDelete: Cascade)
+  reviewedBy   User?          @relation("MinisterReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+}
+
+model MinistryFile {
+  id           String               @id @default(uuid())
+  title        String
+  description  String
+  fileName     String
+  mimeType     String
+  byteSize     Int
+  clearance    Int                  @default(1)
+  status       ContentStatus        @default(DRAFT)
+  uploadedById String
+  version      Int                  @default(0)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  uploadedBy   User                 @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
+  content      MinistryFileContent?
+
+  @@index([status, clearance, createdAt])
+}
+
+// Kept separate so list queries never fetch or serialize private file contents.
+model MinistryFileContent {
+  fileId String       @id
+  data   Bytes
+  file   MinistryFile @relation(fields: [fileId], references: [id], onDelete: Cascade)
+}
+
+model MinistryRequestLimit {
+  key       String   @id
+  attempts  Int      @default(1)
+  expiresAt DateTime
+
+  @@index([expiresAt])
 }
 
 model Session {
