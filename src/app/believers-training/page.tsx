@@ -34,6 +34,7 @@ export default async function BelieversTrainingPage() {
             <p className="mt-10 max-w-xl text-lg leading-8 text-[var(--ink-soft)]">{program.description}</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <Link href="/signup" className="button-primary">Start the program free <ArrowRight size={17} /></Link>
+              <Link href="/login" className="button-secondary">Student login</Link>
               <Link href="/curriculum" className="button-secondary">Explore all seven modules</Link>
             </div>
           </div>

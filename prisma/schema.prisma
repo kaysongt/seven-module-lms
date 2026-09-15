@@ -80,6 +80,7 @@ model User {
   invitations         Invitation[]
   enrollments         Enrollment[]
   lessonProgress      LessonProgress[]
+  videoProgress       VideoProgress[]
   assessmentAttempts  AssessmentAttempt[]
   submissions         AssignmentSubmission[] @relation("StudentSubmissions")
   submissionsReviewed AssignmentSubmission[] @relation("ReviewerSubmissions")
@@ -234,6 +235,7 @@ model Lesson {
   updatedAt        DateTime               @updatedAt
   module           Module                 @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   progress         LessonProgress[]
+  videoProgress    VideoProgress[]
   submissions      AssignmentSubmission[]
 
   @@unique([moduleId, order])
@@ -290,6 +292,24 @@ model LessonProgress {
   completedAt DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@id([userId, lessonId])
+  @@index([lessonId])
+}
+
+model VideoProgress {
+  userId         String
+  lessonId       String
+  videoId        String
+  watchedSeconds Float    @default(0)
+  budgetSeconds  Float    @default(0)
+  position       Float    @default(0)
+  sessionId      String
+  version        Int      @default(0)
+  heartbeatAt    DateTime @default(now())
+  completedAt    DateTime?
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson         Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   @@id([userId, lessonId])
   @@index([lessonId])

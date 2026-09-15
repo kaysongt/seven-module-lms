@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-assign-module-variable */
 import { ContentStatus, EnrollmentStatus } from "@prisma/client";
+import { hasVerifiedVideoCompletion, requiresVideoCompletion } from "@/lib/video-progress";
 import { db } from "@/lib/db";
 import { calculateProgramPercent, deriveModuleProgress } from "@/lib/learning";
 
@@ -29,16 +30,21 @@ export async function getStudentProgram(userId: string) {
 
   if (!enrollment) return null;
 
-  const [lessonProgress, passedAttempts] = await Promise.all([
+  const [lessonProgress, passedAttempts, videoProgress] = await Promise.all([
     db.lessonProgress.findMany({ where: { userId }, select: { lessonId: true, completedAt: true } }),
     db.assessmentAttempt.findMany({
       where: { userId, status: "PASSED" },
       select: { assessmentId: true, scorePct: true, submittedAt: true },
       orderBy: { submittedAt: "desc" },
     }),
+    db.videoProgress.findMany({ where: { userId } }),
   ]);
 
   const completedLessonIds = new Set(lessonProgress.map((item) => item.lessonId));
+  const videoByLesson = new Map(videoProgress.map((item) => [item.lessonId, item]));
+  for (const lesson of enrollment.program.modules.flatMap((item) => item.lessons)) {
+    if (requiresVideoCompletion(lesson) && !hasVerifiedVideoCompletion(lesson, videoByLesson.get(lesson.id))) completedLessonIds.delete(lesson.id);
+  }
   const passedAssessmentIds = new Set(passedAttempts.map((item) => item.assessmentId));
   const states = deriveModuleProgress(
     enrollment.program.modules.map((module) => ({
@@ -58,6 +64,7 @@ export async function getStudentProgram(userId: string) {
     lessons: module.lessons.map((lesson) => ({
       ...lesson,
       isComplete: completedLessonIds.has(lesson.id),
+      watchedSeconds: videoByLesson.get(lesson.id)?.watchedSeconds ?? 0,
     })),
     bestScore: module.assessment
       ? passedAttempts.find((attempt) => attempt.assessmentId === module.assessment?.id)?.scorePct ?? null
@@ -95,4 +102,13 @@ export function getContinueHref(data: NonNullable<Awaited<ReturnType<typeof getS
     return `/dashboard/modules/${module.slug}`;
   }
   return "/dashboard";
+}
+
+export async function requireAccessibleLesson(userId: string, lessonId: string) {
+  const data = await getStudentProgram(userId);
+  if (!data) throw new Error("Active enrollment required");
+  const module = data.modules.find((item) => item.lessons.some((lesson) => lesson.id === lessonId));
+  const lesson = module?.lessons.find((item) => item.id === lessonId);
+  if (!module || !lesson || !module.progressState.isUnlocked || !isLessonSequentiallyUnlocked(module.lessons, lesson.id)) throw new Error("Lesson is not available");
+  return { module, lesson };
 }
