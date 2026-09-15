@@ -53,3 +53,12 @@ describe("sequential module progress", () => {
     expect(states[1].isUnlocked).toBe(false);
   });
 });
+
+ it("does not unlock later modules using a legacy pass beyond an incomplete prerequisite", () => {
+  const states = deriveModuleProgress([
+    { id: "one", order: 1, lessonIds: ["a"], assessmentPassed: true },
+    { id: "two", order: 2, lessonIds: ["b"], assessmentPassed: true },
+    { id: "three", order: 3, lessonIds: ["c"], assessmentPassed: false },
+  ], new Set(["b"]));
+  expect(states.map((item) => item.isUnlocked)).toEqual([true, false, false]);
+});

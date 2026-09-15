@@ -5,6 +5,7 @@ import { getAppUrl } from "@/lib/app-url";
 import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { createOpaqueToken, hashToken } from "@/lib/tokens";
+import { getStudentProgram } from "@/lib/student-data";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 export async function setEnrollmentStatus(enrollmentId: string, status: "ACTIVE" | "PAUSED" | "REVOKED") {
@@ -34,6 +35,8 @@ export async function issueCertificate(enrollmentId: string) {
   const admin = await requireAdmin();
   const enrollment = await db.enrollment.findUnique({ where: { id: enrollmentId } });
   if (!enrollment || enrollment.status !== "COMPLETED") throw new Error("Only completed enrollments can receive a certificate");
+  const learning = await getStudentProgram(enrollment.userId);
+  if (!learning || learning.enrollment.id !== enrollment.id || learning.modules.length === 0 || !learning.modules.every((item) => item.progressState.isUnlocked && item.progressState.isComplete)) throw new Error("All videos, lessons, and checkpoints must be completed before issuing a certificate");
   const serial = `FP-${new Date().getFullYear()}-${createOpaqueToken().slice(0, 8).toUpperCase()}`;
   await db.$transaction([
     db.certificate.upsert({ where: { programId_studentId: { programId: enrollment.programId, studentId: enrollment.userId } }, update: {}, create: { serial, programId: enrollment.programId, studentId: enrollment.userId, issuedById: admin.id } }),

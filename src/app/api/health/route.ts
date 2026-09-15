@@ -3,8 +3,11 @@ import { db } from "@/lib/db";
 
 export async function GET() {
   try {
-    // Readiness includes the portal migration, without reading private file data.
-    await db.$queryRaw`SELECT "id" FROM "MinistryFile" LIMIT 0`;
+    // Readiness includes both private files and student video progress.
+    await Promise.all([
+      db.$queryRaw`SELECT "id" FROM "MinistryFile" LIMIT 0`,
+      db.$queryRaw`SELECT "lessonId" FROM "VideoProgress" LIMIT 0`,
+    ]);
     return NextResponse.json({
       status: "ok",
       database: "connected",

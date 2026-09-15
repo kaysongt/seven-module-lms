@@ -62,7 +62,7 @@ export async function PublicNav({
             </a>
           ) : (
             <Link className="kw-nav-action" href="/login">
-              My account <ArrowUpRight size={14} />
+              Student login <ArrowUpRight size={14} />
             </Link>
           )}
         </nav>

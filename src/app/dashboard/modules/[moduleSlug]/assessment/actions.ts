@@ -23,7 +23,7 @@ export async function submitAssessment(formData: FormData) {
   for (const question of assessment.questions) {
     const raw = formData.get(`question-${question.id}`);
     const answer = Number(raw);
-    if (!Number.isInteger(answer) || answer < 0 || answer > 3) throw new Error("Answer every question before submitting");
+    if (typeof raw !== "string" || !/^\d+$/.test(raw) || !Number.isInteger(answer) || answer < 0 || !Array.isArray(question.options) || answer >= question.options.length) throw new Error("Answer every question before submitting");
     answers[question.id] = answer;
     if (answer === question.correctIndex) correct += 1;
   }
@@ -37,7 +37,7 @@ export async function submitAssessment(formData: FormData) {
   if (passed) {
     const publishedAssessmentIds = data.modules.map((item) => item.assessment?.id).filter((id): id is string => Boolean(id));
     const passedAssessments = await db.assessmentAttempt.findMany({ where: { userId: user.id, assessmentId: { in: publishedAssessmentIds }, status: "PASSED" }, distinct: ["assessmentId"], select: { assessmentId: true } });
-    const completedLessonCount = await db.lessonProgress.count({ where: { userId: user.id, lessonId: { in: data.modules.flatMap((item) => item.lessons.map((lesson) => lesson.id)) } } });
+    const completedLessonCount = data.modules.flatMap((item) => item.lessons).filter((lesson) => lesson.isComplete).length;
     const totalLessons = data.modules.reduce((sum, item) => sum + item.lessons.length, 0);
     if (passedAssessments.length === publishedAssessmentIds.length && completedLessonCount === totalLessons) {
       await db.enrollment.update({ where: { id: data.enrollment.id }, data: { status: "COMPLETED", completedAt: new Date() } });

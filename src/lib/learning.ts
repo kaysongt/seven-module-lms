@@ -45,7 +45,7 @@ export function deriveModuleProgress(
     const isAvailable = !module.availableAt || module.availableAt <= now;
     const isUnlocked = previousComplete && isAvailable;
 
-    previousComplete = isComplete;
+    previousComplete = isUnlocked && isComplete;
 
     return {
       id: module.id,
