@@ -21,9 +21,9 @@ export async function SiteFooter({
           <div className="kw-footer-brand">
             <Link href={localHref(context)} aria-label="KingsWord home">
               <Image
-                src="/brand/logo-white.png"
+                src="/brand/kingsword-complete.png"
                 width={175}
-                height={79}
+                height={113}
                 alt="KingsWord Everywhere"
               />
             </Link>

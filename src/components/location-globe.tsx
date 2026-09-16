@@ -12,7 +12,8 @@ import {
   Play,
   RotateCcw,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { coastGlobe, COAST_STOP_SPEED } from "@/lib/globe-motion";
 import {
   geoDistance,
   geoGraticule10,
@@ -55,6 +56,11 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
     dragging: false,
     lastX: 0,
     lastY: 0,
+    lastMove: 0,
+    pointerId: null as number | null,
+    velocity: [0, 0] as [number, number],
+    userPaused: false,
+    tourElapsed: 0,
     reduced: false,
     inView: true,
   });
@@ -62,6 +68,8 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
   function select(index: number, pause = true) {
     const engine = engineRef.current;
     engine.active = index;
+    engine.velocity = [0, 0];
+    engine.tourElapsed = 0;
     engine.target = [
       -locations[index].coordinates[0],
       -locations[index].coordinates[1] + 12,
@@ -69,6 +77,23 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
     engine.paused = pause;
     setActive(index);
     setPaused(pause);
+  }
+
+  function finishDrag(event: PointerEvent<HTMLCanvasElement>, cancelled = false) {
+    const engine = engineRef.current;
+    if (!engine.dragging || engine.pointerId !== event.pointerId) return;
+    engine.dragging = false;
+    engine.pointerId = null;
+    const age = performance.now() - engine.lastMove;
+    const releaseDecay = Math.exp(-Math.max(0, age - 80) / 90);
+    engine.velocity = cancelled || engine.reduced || engine.userPaused
+      ? [0, 0]
+      : [engine.velocity[0] * releaseDecay, engine.velocity[1] * releaseDecay];
+    engine.target = [...engine.rotation];
+    engine.tourElapsed = 0;
+    engine.paused = engine.userPaused || engine.reduced;
+    setPaused(engine.paused);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   }
 
   useEffect(() => {
@@ -85,7 +110,6 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
     let frame = 0;
     let size = 700;
     let last = 0;
-    let tourElapsed = 0;
     let land: GeoPermissibleObjects | undefined;
     let borders: GeoPermissibleObjects | undefined;
     const grid = geoGraticule10();
@@ -109,10 +133,9 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
     observer.observe(stage);
     const motionChange = () => {
       engine.reduced = media.matches;
-      if (media.matches) {
-        engine.paused = true;
-        setPaused(true);
-      }
+      engine.paused = engine.userPaused || media.matches;
+      engine.velocity = [0, 0];
+      setPaused(engine.paused);
     };
     motionChange();
     media.addEventListener("change", motionChange);
@@ -149,11 +172,19 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
       if (now - last < 32) return;
       last = now;
       if (document.hidden || !engine.inView) return;
-      if (!engine.paused && !engine.hovered && !engine.dragging) {
-        tourElapsed += delta;
+      const canMove = !engine.paused && !engine.hovered && !engine.dragging;
+      const coasting = canMove && !engine.reduced && Math.hypot(...engine.velocity) >= COAST_STOP_SPEED;
+      if (coasting) {
+        const next = coastGlobe(engine.rotation, engine.velocity, delta);
+        engine.rotation = next.rotation;
+        engine.velocity = next.velocity;
+        engine.target = [...engine.rotation];
+        engine.tourElapsed = 0;
+      } else if (canMove) {
+        engine.tourElapsed += delta;
         engine.target[0] += delta * 0.0018;
-        if (tourElapsed > 6500) {
-          tourElapsed = 0;
+        if (engine.tourElapsed > 6500) {
+          engine.tourElapsed = 0;
           const index = (engine.active + 1) % locations.length;
           engine.active = index;
           engine.target = [
@@ -163,7 +194,7 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
           setActive(index);
         }
       }
-      if (!engine.dragging) {
+      if (!engine.dragging && !coasting) {
         const distance =
           ((((engine.target[0] - engine.rotation[0] + 180) % 360) + 360) %
             360) -
@@ -350,31 +381,38 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
             role="img"
             onPointerDown={(event) => {
               const e = engineRef.current;
+              if (!event.isPrimary || event.button !== 0 || e.dragging) return;
               e.dragging = true;
+              e.pointerId = event.pointerId;
+              e.velocity = [0, 0];
+              e.lastMove = performance.now();
               e.lastX = event.clientX;
               e.lastY = event.clientY;
-              e.paused = true;
-              setPaused(true);
               event.currentTarget.setPointerCapture(event.pointerId);
             }}
             onPointerMove={(event) => {
               const e = engineRef.current;
-              if (!e.dragging) return;
-              e.rotation[0] += (event.clientX - e.lastX) * 0.3;
-              e.rotation[1] = Math.max(
-                -65,
-                Math.min(65, e.rotation[1] - (event.clientY - e.lastY) * 0.25),
-              );
+              if (!e.dragging || e.pointerId !== event.pointerId) return;
+              const now = performance.now();
+              const elapsed = Math.max(8, now - e.lastMove);
+              const dx = (event.clientX - e.lastX) * 0.3;
+              const dy = -(event.clientY - e.lastY) * 0.25;
+              const latitude = Math.max(-65, Math.min(65, e.rotation[1] + dy));
+              const smooth = 1 - Math.exp(-elapsed / 35);
+              const previousDecay = Math.exp(-elapsed / 150);
+              e.velocity = [dx / elapsed, (latitude - e.rotation[1]) / elapsed].map((speed, axis) =>
+                Math.max(-0.18, Math.min(0.18, e.velocity[axis] * previousDecay * (1 - smooth) + speed * smooth)),
+              ) as [number, number];
+              e.rotation[0] += dx;
+              e.rotation[1] = latitude;
+              e.lastMove = now;
               e.target = [...e.rotation];
               e.lastX = event.clientX;
               e.lastY = event.clientY;
             }}
-            onPointerUp={() => {
-              engineRef.current.dragging = false;
-            }}
-            onPointerCancel={() => {
-              engineRef.current.dragging = false;
-            }}
+            onPointerUp={(event) => finishDrag(event)}
+            onPointerCancel={(event) => finishDrag(event, true)}
+            onLostPointerCapture={(event) => finishDrag(event, true)}
           />
           {locations.map((location, index) => (
             <Link
@@ -412,18 +450,23 @@ export function LocationGlobe({ locations }: { locations: GlobeLocation[] }) {
           )}
         </div>
         <div className="globe-tools">
-          <span>Drag to explore · Select a location</span>
+          <span>Drag & release to explore · Select a location</span>
           <div>
             <button
               aria-label={paused ? "Play globe tour" : "Pause globe tour"}
               onClick={() => {
-                engineRef.current.paused = !paused;
+                const engine = engineRef.current;
+                engine.paused = !paused;
+                engine.userPaused = !paused;
+                engine.velocity = [0, 0];
+                engine.target = [...engine.rotation];
+                engine.tourElapsed = 0;
                 setPaused(!paused);
               }}
             >
               {paused ? <Play size={15} /> : <Pause size={15} />}
             </button>
-            <button aria-label="Reset globe view" onClick={() => select(0)}>
+            <button aria-label="Reset globe view" onClick={() => { engineRef.current.userPaused = false; select(0, engineRef.current.reduced); }}>
               <RotateCcw size={15} />
             </button>
           </div>
