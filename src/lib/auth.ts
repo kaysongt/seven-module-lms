@@ -35,7 +35,7 @@ export async function destroySession(): Promise<void> {
   cookieStore.delete(SESSION_COOKIE);
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser({ allowPasswordChange = false }: { allowPasswordChange?: boolean } = {}) {
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
 
@@ -48,6 +48,7 @@ export async function getCurrentUser() {
     return null;
   }
 
+  if (session.user.mustChangePassword && !allowPasswordChange) redirect("/change-password");
   return session.user;
 }
 

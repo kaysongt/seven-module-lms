@@ -63,6 +63,7 @@ export async function login(
     data: { failedLoginCount: 0, lockedUntil: null, lastLoginAt: new Date() },
   });
   await createSession(user.id);
+  if (user.mustChangePassword) redirect("/change-password");
 
   const requestedNext = String(formData.get("next") ?? "");
   const destination = safeReturnPath(

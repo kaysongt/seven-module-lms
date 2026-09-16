@@ -7,6 +7,7 @@ export async function GET() {
     await Promise.all([
       db.$queryRaw`SELECT "id" FROM "MinistryFile" LIMIT 0`,
       db.$queryRaw`SELECT "lessonId" FROM "VideoProgress" LIMIT 0`,
+      db.$queryRaw`SELECT "mustChangePassword" FROM "User" LIMIT 0`,
     ]);
     return NextResponse.json({
       status: "ok",
