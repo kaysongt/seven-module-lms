@@ -1,8 +1,8 @@
 /* Public church experience; the learning portal keeps its own component styles. */
 :root {
-  --kw-canvas: #f5f2ec;
-  --kw-surface: #fcf9f3;
-  --kw-surface-soft: #eee9df;
+  --kw-canvas: #eeeae3;
+  --kw-surface: #f4f0e8;
+  --kw-surface-soft: #e6e0d6;
   --kw-surface-cool: #eaf0f3;
   --kw-line: #dedbd3;
 }
@@ -126,7 +126,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 30px;
-  min-height: 92px;
+  min-height: 112px;
+  padding-block: 6px;
 }
 .kw-nav-links {
   display: flex;
@@ -158,10 +159,10 @@
   flex-shrink: 0;
 }
 .kw-brand img {
-  width: 142px;
-  height: 64px;
+  display: block;
+  width: 154px;
+  height: auto;
   object-fit: contain;
-  filter: brightness(0);
 }
 .kw-brand-location {
   border-left: 1px solid var(--kw-line);
@@ -1364,9 +1365,10 @@
   padding-bottom: 60px;
 }
 .kw-footer-brand img {
+  display: block;
   width: 175px;
   height: auto;
-  filter: brightness(0);
+  object-fit: contain;
 }
 .kw-footer-brand p {
   color: #42566d;
@@ -1538,12 +1540,15 @@
   }
 }
 @media (max-width: 650px) {
+  .kw-nav-inner {
+    min-height: 92px;
+  }
   .kw-shell {
     width: calc(100% - 40px);
   }
   .kw-brand img {
     width: 117px;
-    height: 54px;
+    height: auto;
   }
   .kw-brand-location {
     font-size: 12px;

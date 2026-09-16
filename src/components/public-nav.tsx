@@ -35,9 +35,9 @@ export async function PublicNav({
           }
         >
           <Image
-            src="/brand/logo-white.png"
-            width={142}
-            height={64}
+            src="/brand/kingsword-complete.png"
+            width={154}
+            height={100}
             alt="KingsWord Everywhere"
             preload
           />
