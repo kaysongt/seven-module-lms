@@ -70,6 +70,7 @@ model User {
   email               String                 @unique
   fullName            String
   passwordHash        String?
+  mustChangePassword  Boolean                @default(false)
   role                UserRole               @default(STUDENT)
   failedLoginCount    Int                    @default(0)
   lockedUntil         DateTime?

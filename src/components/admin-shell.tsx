@@ -8,6 +8,7 @@ import {
   FolderLock,
   ShieldCheck,
   LogOut,
+  KeyRound,
   Megaphone,
   MessageSquareText,
   UsersRound,
@@ -24,6 +25,7 @@ const adminLinks = [
   { href: "/admin/submissions", label: "Submissions", icon: ClipboardCheck },
   { href: "/admin/community", label: "Community", icon: MessageSquareText },
   { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
+  { href: "/change-password", label: "Change password", icon: KeyRound },
 ];
 
 export function AdminShell({
