@@ -19,6 +19,7 @@ import { Brand } from "@/components/brand";
 
 const adminLinks = [
   { href: "/admin", label: "Overview", icon: Gauge },
+  { href: "/admin/course", label: "Review course & videos", icon: GraduationCap },
   { href: "/admin/applications", label: "Applications", icon: FileText },
   { href: "/admin/students", label: "Students", icon: UsersRound },
   { href: "/admin/curriculum", label: "Curriculum", icon: BookCopy },
@@ -74,10 +75,10 @@ export function AdminShell({
           </p>
           <div className="mt-4 flex gap-4">
             <Link
-              href="/dashboard"
+              href="/admin/course"
               className="inline-flex items-center gap-2 text-xs font-extrabold text-[var(--sun-soft)]"
             >
-              <GraduationCap size={15} /> Student view
+              <GraduationCap size={15} /> Review course
             </Link>
             <form action={logout}>
               <button className="inline-flex items-center gap-2 text-xs font-extrabold text-white/55">
@@ -106,11 +107,11 @@ export function AdminShell({
                 </Link>
               ))}
               <Link
-                href="/dashboard"
+                href="/admin/course"
                 className="flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold"
               >
                 <GraduationCap size={16} />
-                Student view
+                Review course
               </Link>
             </nav>
           </details>

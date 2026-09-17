@@ -35,5 +35,5 @@ export async function changePassword(_previous: ActionState, formData: FormData)
   });
   if (!updated) return { status: "error", message: "Your account changed in another session. Sign in again and retry." };
   await createSession(user.id);
-  redirect(user.role === "ADMIN" ? "/admin" : "/dashboard");
+  redirect(user.role === "ADMIN" ? "/admin/course" : "/dashboard");
 }

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-assign-module-variable */
 import Link from "next/link";
+import { redirectStaffToCourse } from "@/lib/staff-course";
 import { ArrowLeft, ArrowRight, Check, CheckCircle2, Clock3, LockKeyhole, MessageCircle } from "lucide-react";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth";
@@ -8,6 +9,7 @@ import { findStudentModule, getStudentProgram, isLessonSequentiallyUnlocked } fr
 export default async function ModulePage({ params }: { params: Promise<{ moduleSlug: string }> }) {
   const user = await requireUser();
   const { moduleSlug } = await params;
+  await redirectStaffToCourse(user.role, moduleSlug);
   const data = await getStudentProgram(user.id);
   const module = findStudentModule(data, moduleSlug);
   if (!data || !module) notFound();

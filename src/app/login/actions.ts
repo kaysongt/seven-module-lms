@@ -68,7 +68,7 @@ export async function login(
   const requestedNext = String(formData.get("next") ?? "");
   const destination = safeReturnPath(
     requestedNext,
-    user.role === "ADMIN" ? "/admin" : "/dashboard",
+    user.role === "ADMIN" ? "/admin/course" : "/dashboard",
   );
   redirect(destination);
 }

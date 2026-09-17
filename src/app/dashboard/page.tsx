@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirectStaffToCourse } from "@/lib/staff-course";
 import { ArrowRight, CalendarDays, MessageCircle, ShieldCheck } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -7,6 +8,7 @@ import { ModuleProgressCard } from "@/components/module-progress-card";
 
 export default async function DashboardPage() {
   const user = await requireUser();
+  await redirectStaffToCourse(user.role);
   const data = await getStudentProgram(user.id);
 
   if (!data) {
