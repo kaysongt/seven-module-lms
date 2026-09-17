@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-assign-module-variable */
 import Link from "next/link";
+import { redirectStaffToCourse } from "@/lib/staff-course";
 import { ArrowLeft, ArrowRight, CheckCircle2, RotateCcw, XCircle } from "lucide-react";
 import { notFound } from "next/navigation";
 import { submitAssessment } from "@/app/dashboard/modules/[moduleSlug]/assessment/actions";
@@ -11,6 +12,7 @@ import { findStudentModule, getStudentProgram } from "@/lib/student-data";
 export default async function AssessmentPage({ params, searchParams }: { params: Promise<{ moduleSlug: string }>; searchParams: Promise<{ result?: string }> }) {
   const user = await requireUser();
   const [{ moduleSlug }, { result }] = await Promise.all([params, searchParams]);
+  await redirectStaffToCourse(user.role, moduleSlug, undefined, true);
   const data = await getStudentProgram(user.id);
   const module = findStudentModule(data, moduleSlug);
   if (!data || !module?.assessment) notFound();

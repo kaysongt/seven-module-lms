@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-assign-module-variable */
 import Link from "next/link";
+import { redirectStaffToCourse } from "@/lib/staff-course";
 import { ArrowLeft, ArrowRight, Check, Clock3, Download, LockKeyhole } from "lucide-react";
 import { notFound } from "next/navigation";
 import { LessonBody } from "@/components/lesson-body";
@@ -13,6 +14,7 @@ import { TrackedVideo } from "@/components/tracked-video";
 export default async function LessonPage({ params }: { params: Promise<{ moduleSlug: string; lessonSlug: string }> }) {
   const user = await requireUser();
   const { moduleSlug, lessonSlug } = await params;
+  await redirectStaffToCourse(user.role, moduleSlug, lessonSlug);
   const data = await getStudentProgram(user.id);
   const module = findStudentModule(data, moduleSlug);
   const lesson = module?.lessons.find((item) => item.slug === lessonSlug);
