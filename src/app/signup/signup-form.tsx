@@ -6,12 +6,13 @@ import { FormButton } from "@/components/form-button";
 import { INITIAL_ACTION_STATE } from "@/lib/action-state";
 import { signUp } from "@/app/signup/actions";
 
-export function SignupForm() {
+export function SignupForm({ next }: { next?: string }) {
   const [state, action] = useActionState(signUp, INITIAL_ACTION_STATE);
   const errors = state.fieldErrors ?? {};
 
   return (
     <form action={action} className="grid gap-5">
+      <input type="hidden" name="next" value={next === "/final-assessment" ? next : ""} />
       <div className="field">
         <label htmlFor="fullName">Full name</label>
         <input id="fullName" name="fullName" type="text" autoComplete="name" required autoFocus />
@@ -76,7 +77,7 @@ export function SignupForm() {
 
       <p className="text-center text-xs leading-5 text-[var(--ink-soft)]/70">
         Already enrolled?{" "}
-        <Link href="/login" className="font-extrabold text-[var(--forest)] underline underline-offset-4">
+        <Link href={next === "/final-assessment" ? "/login?next=/final-assessment" : "/login"} className="font-extrabold text-[var(--forest)] underline underline-offset-4">
           Sign in
         </Link>
         .

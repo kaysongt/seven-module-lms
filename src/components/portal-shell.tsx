@@ -7,6 +7,7 @@ import { logout } from "@/app/logout/actions";
 const studentLinks = [
   { href: "/dashboard", label: "Overview", icon: Gauge },
   { href: "/dashboard#modules", label: "Modules", icon: BookOpenText },
+  { href: "/final-assessment", label: "Final assessment", icon: BookOpenText },
   { href: "/dashboard/community", label: "Community", icon: MessageCircle },
 ];
 
@@ -30,6 +31,7 @@ export function PortalShell({ user, children }: { user: User; children: React.Re
           <Brand compact />
           <nav className="flex items-center gap-1" aria-label="Mobile student portal">
             <Link href="/dashboard" className="grid h-10 w-10 place-items-center rounded-full hover:bg-[var(--sage-light)]" aria-label="Dashboard"><Gauge size={18} /></Link>
+            <Link href="/final-assessment" className="grid h-10 w-10 place-items-center rounded-full hover:bg-[var(--sage-light)]" aria-label="Final assessment"><BookOpenText size={18} /></Link>
             <Link href="/dashboard/community" className="grid h-10 w-10 place-items-center rounded-full hover:bg-[var(--sage-light)]" aria-label="Community"><MessageCircle size={18} /></Link>
             {user.role !== "STUDENT" && <Link href="/admin" className="grid h-10 w-10 place-items-center rounded-full hover:bg-[var(--sage-light)]" aria-label="Administration"><Settings2 size={18} /></Link>}
             <form action={logout}><button className="grid h-10 w-10 place-items-center rounded-full hover:bg-[var(--sage-light)]" aria-label="Sign out"><LogOut size={18} /></button></form>

@@ -93,5 +93,5 @@ export async function signUp(_previous: ActionState, formData: FormData): Promis
   });
 
   await createSession(user.id);
-  redirect("/dashboard");
+  redirect(formData.get("next") === "/final-assessment" ? "/final-assessment" : "/dashboard");
 }

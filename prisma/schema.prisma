@@ -66,34 +66,35 @@ enum MinisterStatus {
 }
 
 model User {
-  id                  String                 @id @default(uuid())
-  email               String                 @unique
-  fullName            String
-  passwordHash        String?
-  mustChangePassword  Boolean                @default(false)
-  role                UserRole               @default(STUDENT)
-  failedLoginCount    Int                    @default(0)
-  lockedUntil         DateTime?
-  lastLoginAt         DateTime?
-  createdAt           DateTime               @default(now())
-  updatedAt           DateTime               @updatedAt
-  sessions            Session[]
-  invitations         Invitation[]
-  enrollments         Enrollment[]
-  lessonProgress      LessonProgress[]
-  videoProgress       VideoProgress[]
-  assessmentAttempts  AssessmentAttempt[]
-  submissions         AssignmentSubmission[] @relation("StudentSubmissions")
-  submissionsReviewed AssignmentSubmission[] @relation("ReviewerSubmissions")
-  posts               DiscussionPost[]       @relation("PostAuthor")
-  postsModerated      DiscussionPost[]       @relation("PostModerator")
-  certificates        Certificate[]          @relation("StudentCertificates")
-  certificatesIssued  Certificate[]          @relation("IssuedCertificates")
-  announcements       Announcement[]
-  auditLogs           AuditLog[]
-  ministerProfile     MinisterProfile?       @relation("MinisterAccount")
-  ministersReviewed   MinisterProfile[]      @relation("MinisterReviewer")
-  ministryFiles       MinistryFile[]
+  finalExamRegistrations FinalExamRegistration[]
+  id                     String                  @id @default(uuid())
+  email                  String                  @unique
+  fullName               String
+  passwordHash           String?
+  mustChangePassword     Boolean                 @default(false)
+  role                   UserRole                @default(STUDENT)
+  failedLoginCount       Int                     @default(0)
+  lockedUntil            DateTime?
+  lastLoginAt            DateTime?
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  sessions               Session[]
+  invitations            Invitation[]
+  enrollments            Enrollment[]
+  lessonProgress         LessonProgress[]
+  videoProgress          VideoProgress[]
+  assessmentAttempts     AssessmentAttempt[]
+  submissions            AssignmentSubmission[]  @relation("StudentSubmissions")
+  submissionsReviewed    AssignmentSubmission[]  @relation("ReviewerSubmissions")
+  posts                  DiscussionPost[]        @relation("PostAuthor")
+  postsModerated         DiscussionPost[]        @relation("PostModerator")
+  certificates           Certificate[]           @relation("StudentCertificates")
+  certificatesIssued     Certificate[]           @relation("IssuedCertificates")
+  announcements          Announcement[]
+  auditLogs              AuditLog[]
+  ministerProfile        MinisterProfile?        @relation("MinisterAccount")
+  ministersReviewed      MinisterProfile[]       @relation("MinisterReviewer")
+  ministryFiles          MinistryFile[]
 }
 
 model MinisterProfile {
@@ -175,6 +176,7 @@ model Invitation {
 }
 
 model Program {
+  finalExam        FinalExam?
   id               String         @id @default(uuid())
   slug             String         @unique
   name             String
@@ -302,15 +304,15 @@ model VideoProgress {
   userId         String
   lessonId       String
   videoId        String
-  watchedSeconds Float    @default(0)
-  budgetSeconds  Float    @default(0)
-  position       Float    @default(0)
+  watchedSeconds Float     @default(0)
+  budgetSeconds  Float     @default(0)
+  position       Float     @default(0)
   sessionId      String
-  version        Int      @default(0)
-  heartbeatAt    DateTime @default(now())
+  version        Int       @default(0)
+  heartbeatAt    DateTime  @default(now())
   completedAt    DateTime?
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  lesson         Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson         Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
   @@id([userId, lessonId])
   @@index([lessonId])
@@ -438,4 +440,53 @@ model AuditLog {
 
   @@index([actorId, createdAt])
   @@index([entityType, entityId])
+}
+
+model FinalExam {
+  id              String                  @id @default(uuid())
+  programId       String                  @unique
+  title           String
+  durationSeconds Int                     @default(3600)
+  passMark        Int                     @default(70)
+  questions       Json
+  published       Boolean                 @default(false)
+  createdAt       DateTime                @default(now())
+  program         Program                 @relation(fields: [programId], references: [id], onDelete: Restrict)
+  registrations   FinalExamRegistration[]
+}
+
+model FinalExamRegistration {
+  id              String             @id @default(uuid())
+  examId          String
+  userId          String
+  church          String             @default("")
+  localApproved   Boolean            @default(false)
+  attemptsAllowed Int                @default(1)
+  version         Int                @default(0)
+  createdAt       DateTime           @default(now())
+  exam            FinalExam          @relation(fields: [examId], references: [id], onDelete: Restrict)
+  user            User               @relation(fields: [userId], references: [id], onDelete: Restrict)
+  attempts        FinalExamAttempt[]
+
+  @@unique([examId, userId])
+}
+
+model FinalExamAttempt {
+  id             String                @id @default(uuid())
+  registrationId String
+  number         Int
+  questions      Json
+  passMark       Int
+  answers        Json
+  version        Int                   @default(0)
+  startedAt      DateTime              @default(now())
+  expiresAt      DateTime
+  submittedAt    DateTime?
+  scorePct       Int?
+  correct        Int?
+  moduleResults  Json?
+  registration   FinalExamRegistration @relation(fields: [registrationId], references: [id], onDelete: Restrict)
+
+  @@unique([registrationId, number])
+  @@index([submittedAt, expiresAt])
 }

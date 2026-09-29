@@ -16,7 +16,8 @@ const PROMISES = [
   "A certificate when you finish the seventh module",
 ];
 
-export default function SignupPage() {
+export default async function SignupPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
+  const { next } = await searchParams;
   return (
     <main className="grid min-h-screen lg:grid-cols-[1fr_1fr]">
       <section className="flex flex-col justify-center px-6 py-14 md:px-14">
@@ -43,7 +44,7 @@ export default function SignupPage() {
           </div>
 
           <div className="mt-9">
-            <SignupForm />
+            <SignupForm next={next} />
           </div>
         </div>
       </section>
