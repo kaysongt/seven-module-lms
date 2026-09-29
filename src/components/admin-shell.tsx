@@ -20,6 +20,7 @@ import { Brand } from "@/components/brand";
 const adminLinks = [
   { href: "/admin", label: "Overview", icon: Gauge },
   { href: "/admin/course", label: "Review course & videos", icon: GraduationCap },
+  { href: "/admin/final-assessment", label: "Final assessment", icon: ClipboardCheck },
   { href: "/admin/applications", label: "Applications", icon: FileText },
   { href: "/admin/students", label: "Students", icon: UsersRound },
   { href: "/admin/curriculum", label: "Curriculum", icon: BookCopy },
