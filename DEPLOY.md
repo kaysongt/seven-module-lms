@@ -86,3 +86,17 @@ Apply `20260909000000_ministers_portal` with `npm run db:deploy` before deployin
 - No automatic approval emails are sent. Applicants see their current status when they sign in; staff can notify them separately.
 
 Before release, verify registration, existing-account requests, approval, all three clearance levels, copied download links, suspension, draft/archive access, and administrator-only actions using an isolated database branch.
+
+## GitHub Actions and hosting
+
+The `LMS checks` workflow runs on main pushes, pull requests, and manual dispatch.
+It installs the lockfile, validates Prisma, applies all migrations to a disposable
+PostgreSQL service, runs lint and tests, builds the server application (including
+TypeScript checks), and smoke-tests public pages and authentication guards.
+No production database or deployment secrets are needed for these checks.
+
+The old `Deploy Next.js site to Pages` runs failed because static export cannot
+serve the LMS's authenticated dynamic routes and Server Actions. That workflow
+was removed before this CI replacement; old red runs remain historical records.
+Do not reintroduce `output: export` or a Pages artifact upload for the full LMS.
+Vercel's existing Git integration continues to deploy main as a server application.

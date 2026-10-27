@@ -1,0 +1,75 @@
+name: LMS checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lms-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Lint, tests, migrations and production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: lms_ci
+          POSTGRES_PASSWORD: local_ci_only
+          POSTGRES_DB: lms_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lms_ci -d lms_ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      # Disposable runner-local database; never production credentials.
+      DATABASE_URL: postgresql://lms_ci:local_ci_only@localhost:5432/lms_ci
+      DIRECT_URL: postgresql://lms_ci:local_ci_only@localhost:5432/lms_ci
+      APP_URL: http://localhost:3000
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies and generate Prisma client
+        run: npm ci
+      - name: Validate schema
+        run: npx --no-install prisma validate
+      - name: Apply all migrations to empty test database
+        run: npm run db:deploy
+      - name: Lint
+        run: npm run lint
+      - name: Unit tests
+        run: npm test
+      - name: Build server application and check types
+        run: npm run build
+      - name: Smoke test production server
+        shell: bash
+        run: |
+          npm run start > /tmp/lms-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --silent --fail http://localhost:3000/api/health > /tmp/lms-health.json; then
+              break
+            fi
+            sleep 2
+          done
+          node scripts/ci-smoke.mjs
+      - name: Print server diagnostics on failure
+        if: failure()
+        run: test ! -f /tmp/lms-server.log || cat /tmp/lms-server.log
